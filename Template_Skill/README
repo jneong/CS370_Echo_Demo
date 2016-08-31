@@ -1,0 +1,6 @@
+To compile the Maven project and produce the JAR with dependencies that you will upload to AWS Lambda:
+Execute within terminal in the project folder:
+
+mvn assembly:assembly -DdescriptorId=jar-with-dependencies package
+
+The build artifacts will be produced in the ./target folder.
