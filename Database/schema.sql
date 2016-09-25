@@ -2,9 +2,18 @@
 -- Roles
 --
 
-CREATE ROLE scraper;
 CREATE ROLE ssuadmin WITH ROLE wolfpack;
-CREATE ROLE alexaskill;
+
+-- Remember to set a password (but never commit it)
+CREATE ROLE scraper WITH
+  CONNECTION LIMIT 1
+  LOGIN
+  PASSWORD '';
+
+-- Remember to set a password (but never commit it)
+CREATE ROLE alexaskill WITH
+  LOGIN
+  PASSWORD '';
 
 
 --
