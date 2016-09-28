@@ -27,7 +27,8 @@ DATABASE_CONNECT_ARGS = dict(
     sslmode = 'verify-full',
     sslrootcert = 'root.crt',
     sslcrl = '',
-).update(credentials)
+    **credentials
+)
 
 DEFAULT = AsIs('DEFAULT')
 
