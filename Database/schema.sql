@@ -34,7 +34,7 @@ SET search_path TO pg_catalog,public,ssucalendar;
 -- categories.  There are many categories, and each event can have more than one
 -- category, so this table keeps track of which events have which categories.
 CREATE TABLE ssucalendar.event_categories(
-  event_id smallint NOT NULL,
+  event_id integer NOT NULL,
   category_id smallint NOT NULL,
   CONSTRAINT event_categories_id PRIMARY KEY (event_id,category_id)
 );
@@ -63,11 +63,11 @@ CREATE TABLE ssucalendar.events(
   event_id integer NOT NULL,
   summary text NOT NULL, -- The summary is the "title" or "name" of the event
   description text NOT NULL, -- The description is long, may contain HTML
-  location_id smallint NOT NULL,
   all_day_event boolean NOT NULL DEFAULT FALSE,
   start timestamp with time zone NOT NULL,
   "end" timestamp with time zone NOT NULL,
   event_type_id smallint NOT NULL,
+  location_id smallint,
   general_admission_fee text,
   student_admission_fee text,
   open_to_public boolean,
@@ -83,7 +83,7 @@ ALTER TABLE ssucalendar.events OWNER TO ssuadmin;
 -- "speech-friendly" version of the values.
 CREATE TABLE ssucalendar.locations(
   location_id smallserial NOT NULL,
-  name text NOT NULL, -- The values here can be a bit weird | see the calendar
+  name text UNIQUE NOT NULL, -- The values here can be a bit weird | see the calendar
   CONSTRAINT location_id PRIMARY KEY (location_id)
 );
 ALTER TABLE ssucalendar.locations OWNER TO ssuadmin;
@@ -92,7 +92,7 @@ ALTER TABLE ssucalendar.locations OWNER TO ssuadmin;
 -- different types so far.
 CREATE TABLE ssucalendar.event_types(
   event_type_id smallserial NOT NULL,
-  name text NOT NULL, -- Some contain / or ,
+  name text UNIQUE NOT NULL, -- Some contain / or ,
   CONSTRAINT event_type_id PRIMARY KEY (event_type_id)
 );
 ALTER TABLE ssucalendar.event_types OWNER TO ssuadmin;
@@ -101,10 +101,11 @@ ALTER TABLE ssucalendar.event_types OWNER TO ssuadmin;
 -- fields are optional.  It's gross.
 CREATE TABLE ssucalendar.contacts(
   contact_id smallserial NOT NULL,
-  name text,
-  phone text,
-  email text,
-  CONSTRAINT contact_id PRIMARY KEY (contact_id)
+  name text NOT NULL DEFAULT '',
+  phone text NOT NULL DEFAULT '',
+  email text NOT NULL DEFAULT '',
+  CONSTRAINT contact_id PRIMARY KEY (contact_id),
+  CONSTRAINT name_phone_email UNIQUE (name,phone,email)
 );
 ALTER TABLE ssucalendar.contacts OWNER TO ssuadmin;
 
@@ -113,7 +114,7 @@ ALTER TABLE ssucalendar.contacts OWNER TO ssuadmin;
 -- to be an additional column for an "speech-friendly" version of these values.
 CREATE TABLE ssucalendar.categories(
   category_id smallserial NOT NULL,
-  name text NOT NULL, -- These can have really weird values
+  name text UNIQUE NOT NULL, -- These can have really weird values
   CONSTRAINT category_id PRIMARY KEY (category_id)
 );
 ALTER TABLE ssucalendar.categories OWNER TO ssuadmin;
@@ -127,23 +128,28 @@ ALTER TABLE ssucalendar.categories OWNER TO ssuadmin;
 
 ALTER TABLE ssucalendar.event_categories ADD CONSTRAINT event_id FOREIGN KEY (event_id)
   REFERENCES ssucalendar.events (event_id) MATCH FULL
-  ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+  INITIALLY DEFERRED;
 
 ALTER TABLE ssucalendar.event_categories ADD CONSTRAINT category_id FOREIGN KEY (category_id)
   REFERENCES ssucalendar.categories (category_id) MATCH FULL
-  ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+  INITIALLY DEFERRED;
 
 ALTER TABLE ssucalendar.events ADD CONSTRAINT location_id FOREIGN KEY (location_id)
   REFERENCES ssucalendar.locations (location_id) MATCH FULL
-  ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+  INITIALLY DEFERRED;
 
 ALTER TABLE ssucalendar.events ADD CONSTRAINT event_type_id FOREIGN KEY (event_type_id)
   REFERENCES ssucalendar.event_types (event_type_id) MATCH FULL
-  ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+  INITIALLY DEFERRED;
 
 ALTER TABLE ssucalendar.events ADD CONSTRAINT contact_id FOREIGN KEY (contact_id)
   REFERENCES ssucalendar.contacts (contact_id) MATCH FULL
-  ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ON DELETE NO ACTION ON UPDATE NO ACTION
+  INITIALLY DEFERRED;
 
 
 --
@@ -151,11 +157,11 @@ ALTER TABLE ssucalendar.events ADD CONSTRAINT contact_id FOREIGN KEY (contact_id
 --
 
 GRANT CONNECT
-  ON DATABASE "SSUCalendar"
+  ON DATABASE ssunews
   TO scraper,alexaskill;
 
 GRANT CREATE,CONNECT
-  ON DATABASE "SSUCalendar"
+  ON DATABASE ssunews
   TO ssuadmin;
 
 GRANT CREATE,USAGE
@@ -167,9 +173,23 @@ GRANT USAGE
   TO alexaskill,scraper;
 
 GRANT SELECT
-  ON TABLE ssucalendar.events
+  ON TABLE ssucalendar.events, ssucalendar.event_categories,
+           ssucalendar.locations, ssucalendar.event_types,
+           ssucalendar.contacts, ssucalendar.categories
   TO alexaskill;
 
 GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER
-  ON TABLE ssucalendar.events
+  ON TABLE ssucalendar.events, ssucalendar.event_categories,
+           ssucalendar.locations, ssucalendar.event_types,
+           ssucalendar.contacts, ssucalendar.categories
+  TO scraper;
+
+GRANT SELECT
+  ON SEQUENCE contacts_contact_id_seq, categories_category_id_seq,
+              locations_location_id_seq, event_types_event_type_id_seq
+  TO alexaskill;
+
+GRANT USAGE,SELECT,UPDATE
+  ON SEQUENCE contacts_contact_id_seq, categories_category_id_seq,
+              locations_location_id_seq, event_types_event_type_id_seq
   TO scraper;
