@@ -56,7 +56,7 @@ ALTER TABLE ssucalendar.event_categories OWNER TO ssuadmin;
 --
 -- The summary text and description text in the calendar aren't necessarily in a
 -- "speech-friendly" form, it is not practical to manually translate each event.
--- It may be desireable instead to design a translation function that can strip
+-- It may be desirable instead to design a translation function that can strip
 -- unspeakable items (eg. HTML, URLs), and translate a few important words into
 -- the proper SSML (eg. how to pronounce "Beaujolais").
 CREATE TABLE ssucalendar.events(
