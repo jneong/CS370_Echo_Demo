@@ -22,6 +22,8 @@ repositories {
 }
 
 dependencies {
+    compile 'org.postgresql:postgresql:9.4.1211'
+
     compile 'com.amazon.alexa:alexa-skills-kit:1.1.2'
     compile 'com.amazonaws:aws-lambda-java-core:1.0.0'
     compile 'com.amazonaws:aws-java-sdk-dynamodb:1.9.40'
