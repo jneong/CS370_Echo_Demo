@@ -4,7 +4,7 @@
  * to make sure you have everything set up properly. Examples of how to use this class
  * are also provided.
  * 
- * This class can be used to simplify the process of connecting to a postgresql database.
+ * This class can be used to simplify the process of connecting to a PostgreSQL database.
  * In order to connect to the database, you should call getCredentials() before calling
  * getRemoteConnection(). Then you can run your queries with runQuery().
  */
@@ -56,16 +56,16 @@ public class DbConnection {
 	/**
 	 * This method will attempt to get the user's credentials (username,
 	 * password, etc) so that they can log into the database. Since this file
-	 * will be posted on github (and apparently even when it is running), people
+	 * will be posted on GitHub (and apparently even when it is running), people
 	 * are able to see the source code, but we do not want them to see that kind
-	 * of information. Therefore, you must create a file in the connections
-	 * folder called db_credentials.xml with the appropriate information to be
+	 * of information. Therefore, you must create a file in the resources
+	 * folder called DbConnection.xml with the appropriate information to be
 	 * able to log in. (See the wiki for information about how to set that up).
 	 * 
 	 * @param pathToCredentials
 	 *            - The path to the .xml file that contains the credentials for
-	 *            accessing the database. The path should be from the project's
-	 *            outermost folder.
+	 *            accessing the database. The path should be relative to
+	 *            src/main/resources.
 	 * 
 	 * @post If there were no errors, dbName, username, password, hostname, and
 	 *       port private data members will be initialized.
@@ -82,7 +82,7 @@ public class DbConnection {
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(new File(credsResourcePath));
 
-			// normalize text representation
+			// Normalize text representation
 			doc.getDocumentElement().normalize();
 
 			// Get the appropriate data from the file.
@@ -116,7 +116,7 @@ public class DbConnection {
 	}
 
 	/**
-	 * This method is what establishes a connection to the postgresql database,
+	 * This method is what establishes a connection to the PostgreSQL database,
 	 * based on the credentials that the class has been given. If there are any
 	 * errors while trying to connect, the program will give an error message.
 	 * The method should be called before attempting to make any queries to the
@@ -133,7 +133,7 @@ public class DbConnection {
 	 */
 	public boolean getRemoteConnection() {
 
-		// Create a url to be able to connect to the database.
+		// Create a URL to be able to connect to the database.
 		String jdbcUrl = "jdbc:postgresql://" + hostName + ":" + port + "/" + dbName + "?user=" + username
 				+ "&password=" + password + "&sslmode=verify-full&sslrootcert=" + localPathToSSL;
 
@@ -143,7 +143,7 @@ public class DbConnection {
 
 		// Error handling
 		} catch (ClassNotFoundException e1) {
-			System.out.println("Driver needed for connecting to the postgresql database.");
+			System.out.println("Driver needed for connecting to the PostgreSQL database.");
 			return false;
 		} catch (SQLException e2) {
 			System.out.println("Unable to establish a connection to the database.");
@@ -166,39 +166,38 @@ public class DbConnection {
 	 * The runQuery() method will attempt to run the SQL query passed to it and
 	 * then return a Map object that uses the column names as they keys and
 	 * vectors of what was in the columns as the values for the map. All of the
-	 * values get stored as strings in the vectors.
+	 * values get stored as Objects in the vectors.
 	 * 
 	 * As an example, if your query returned this table: movieId | name
 	 * ---------------------- 123 | Tron 456 | Harry Potter
 	 * 
-	 * The resulting map would look like this: Key = "movieId" : Value = {"123",
-	 * "456"} Key = "name" : Value = {"Tron", "Harry Potter"}
+	 * The resulting map would look like this: { "movieId" : [ 123, 456 ],
+	 * "name" : ["Tron", "Harry Potter"] }
 	 * 
 	 * In the vectors, the items from a row will all share the same index. So in
 	 * the example, the first row's information could be grabbed by:
 	 * vectorName.get("movieId")[0]; vectorName.get("name")[0];
 	 * 
-	 * @return Map<String, Vector<String>> object representing the query's
+	 * @return Map<String, Vector<Object>> object representing the query's
 	 *         results if everything went successfully. Otherwise, null.
 	 */
-	public Map<String, Vector<String>> runQuery(String query) {
-		Map<String, Vector<String>> resultMap = new HashMap<String, Vector<String>>();
+	public Map<String, Vector<Object>> runQuery(String query) {
+		Map<String, Vector<Object>> resultMap = new HashMap<String, Vector<Object>>();
 		try {
 			Statement st = dbConnection.createStatement();
 			ResultSet rawResults = st.executeQuery(query);
 			ResultSetMetaData rsmd = rawResults.getMetaData();
 
-			// Set up all of the keys (column names) with empty vectors as the
-			// values
+			// Set up all of the keys (column names) with empty vectors as the values.
 			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 				String name = rsmd.getColumnName(i);
-				resultMap.put(name, new Vector<String>());
+				resultMap.put(name, new Vector<Object>());
 			}
 
-			// Push the values into the vectors
+			// Push the values into the vectors.
 			while (rawResults.next()) {
 				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-					resultMap.get(rsmd.getColumnName(i)).addElement(rawResults.getString(i));
+					resultMap.get(rsmd.getColumnName(i)).addElement(rawResults.getObject(i));
 				}
 			}
 		}
@@ -214,7 +213,7 @@ public class DbConnection {
 
 	/**
 	 * This is for debugging purposes to be able to see what a Map<String,
-	 * Vector<String>> object looks like. It will be printed in the format of:
+	 * Vector<Object>> object looks like. It will be printed in the format of:
 	 * key1: vectorElement[0] [1] vectorElement[1]... key2: vectorElement[0] [2]
 	 * vectorElement[2]...
 	 * 
@@ -225,16 +224,16 @@ public class DbConnection {
 	 * out the first 50. This is because sometimes if nothing gets printed out
 	 * at all if you try to print out too many things at once.
 	 */
-	public static void printResultMap(Map<String, Vector<String>> resultMap) {
+	public static void printResultMap(Map<String, Vector<Object>> resultMap) {
 		if (resultMap != null) {
 			System.out.println("Printing the Results as a map:");
 
-			for (Map.Entry<String, Vector<String>> entry : resultMap.entrySet()) {
+			for (Map.Entry<String, Vector<Object>> entry : resultMap.entrySet()) {
 				String aKey = entry.getKey();
 				System.out.printf("%s:  ", aKey);
 
 				// Print out the first 50 values from the vector
-				Vector<String> values = entry.getValue();
+				Vector<Object> values = entry.getValue();
 				for (int i = 0; i < Math.min(values.size(), 50); i++) {
 					System.out.printf("|[%d]  %s  ", i, values.get(i));
 				}
