@@ -26,7 +26,7 @@ import java.time.ZonedDateTime;
 public class CalendarConversation extends Conversation {
     //Intent names
     private final static String INTENT_NEXTEVENT = "NextEventIntent";
-    private final static TimeZone PST = TimeZone.getTimeZone("America/Los Angeles");
+    private final static TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
     private final static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("h:mm a");
     private final static DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("????MMdd");
 
