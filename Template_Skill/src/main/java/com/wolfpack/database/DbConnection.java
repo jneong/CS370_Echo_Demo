@@ -31,6 +31,7 @@ public class DbConnection {
 	private static String hostName; // The url to the database
 	private static String port;
 	private static String localPathToSSL;
+	private static String schema;
 	private static Connection dbConnection;
 	private static boolean connected;
 
@@ -62,13 +63,18 @@ public class DbConnection {
 	 * folder called DbConnection.xml with the appropriate information to be
 	 * able to log in. (See the wiki for information about how to set that up).
 	 * 
+	 * When reading the credentials, there is an optional tag for the schema.
+	 * This can be left blank if queries will be accessing
+	 * multiple schemas, or it can be given the name of a schema in the
+	 * database to reduce the length of queries.
+	 * 
 	 * @param pathToCredentials
 	 *            - The path to the .xml file that contains the credentials for
 	 *            accessing the database. The path should be relative to
 	 *            src/main/resources.
 	 * 
-	 * @post If there were no errors, dbName, username, password, hostname, and
-	 *       port private data members will be initialized.
+	 * @post If there were no errors, dbName, username, password, hostname,
+	 *       port, localPathToSSL, and schema private data members will be initialized.
 	 * 
 	 * @return true if the function successfully reads the credentials, and
 	 *         false if there was any type of error (unable to find the file,
@@ -92,6 +98,7 @@ public class DbConnection {
 			hostName = doc.getElementsByTagName("hostName").item(0).getTextContent();
 			port = doc.getElementsByTagName("port").item(0).getTextContent();
 			localPathToSSL = doc.getElementsByTagName("localPathToSSL").item(0).getTextContent();
+			schema = doc.getElementsByTagName("schema").item(0).getTextContent();
 
 			// Error catching
 		} catch (java.io.FileNotFoundException fnfe) {
@@ -140,6 +147,8 @@ public class DbConnection {
 		try {
 			Class.forName("org.postgresql.Driver");
 			dbConnection = DriverManager.getConnection(jdbcUrl);
+			if(schema != null)
+				dbConnection.setSchema(schema);
 
 		// Error handling
 		} catch (ClassNotFoundException e1) {
