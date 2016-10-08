@@ -19,6 +19,7 @@ public class CalendarConversation extends Conversation {
 
 	private final static ZoneId PST = ZoneId.of("America/Los_Angeles");
 	private final static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("h:mm a");
+	private final static DateTimeFormatter DAYFORMATTER = DateTimeFormatter.ofPattern("EEEE");
 	private final static DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("????MMdd");
 
 	private DbConnection db;
@@ -63,10 +64,11 @@ public class CalendarConversation extends Conversation {
 
 		ZonedDateTime zonedDateTime = start.toLocalDateTime().atZone(PST);
 		String date = zonedDateTime.format(DATEFORMATTER);
+		String day = zonedDateTime.format(DAYFORMATTER);
 		String time = zonedDateTime.format(TIMEFORMATTER);
 
 		return newTellResponse("<speak> Okay, the next event is " + summary +
-				" on <say-as interpret-as=\"date\">" + date +
+				" on " + day +  " <say-as interpret-as=\"date\">" + date +
 				"</say-as> at <say-as interpret-as=\"time\">" + time + "</say-as> at "
 				+ location + ". </speak>", true);
 	}
