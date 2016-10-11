@@ -61,6 +61,7 @@ def pad(iterable, end):
     """
     return chain(iterable, repeat(end))
 
+
 def padded(func):
     """
     Pads the result of func() with repeated end value.
@@ -69,6 +70,7 @@ def padded(func):
     def f(*args, **kwargs):
         return pad(func(*args, **kwargs), None)
     return f
+
 
 def headonly(func):
     """
@@ -84,6 +86,7 @@ def headonly(func):
 # Generic getters for basic and custom fields
 #
 
+# decorators
 @headonly
 @padded
 def get_value(key, event):
@@ -92,6 +95,7 @@ def get_value(key, event):
     the specified event.
     """
     return (content.value for content in event.contents.get(key, ()))
+
 
 @headonly
 @padded
@@ -194,7 +198,7 @@ def get_record(event):
 
         "event_type": custom_getter(12),
         "general_admission_fee": custom_getter(3124),
-        "student_admission_fee": custom_getter(3138),
+        "student_admission_fee": custom_getter(3111),
         "website_url": custom_getter(3109),
         "ticket_sales_url": custom_getter(13402),
 
