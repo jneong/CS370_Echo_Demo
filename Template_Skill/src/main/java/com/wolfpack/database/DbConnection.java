@@ -33,7 +33,6 @@ public class DbConnection {
 	private static String localPathToSSL;
 	private static String schema;
 	private static Connection dbConnection;
-	private static boolean connected;
 
 	/**
 	 * When the main constructor is used, the object will attempt to get the
@@ -41,7 +40,6 @@ public class DbConnection {
 	 * database.
 	 */
 	public DbConnection() {
-		connected = false;
 	}
 
 	/**
@@ -164,11 +162,24 @@ public class DbConnection {
 	}
 
 	/**
+	 * The isValid() method in the Connection class is used to determine if the
+	 * database is connected to or not. According to
+	 * http://docs.oracle.com/javase/6/docs/api/java/sql/Connection.html#isValid%28int%29 ,
+	 * the method will send a simple query to the database to see if
+	 * there is a connection.
+	 * 
 	 * @return true if the database has been connected to, otherwise false if
-	 *         there is not a current connection.
+	 *         there is not a current connection. If the test query times out, 
+	 *         the method will return false.
 	 */
-	public static boolean isConnected() {
-		return connected;
+	public boolean isConnected() {
+		final int TIMEOUT = 10; 			//In seconds
+		try{
+			return dbConnection.isValid(TIMEOUT);
+		} catch(SQLException e){
+			System.out.println(e.getMessage());
+			return false;
+		}
 	}
 
 	/**
