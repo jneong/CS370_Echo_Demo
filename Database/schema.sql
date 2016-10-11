@@ -103,6 +103,13 @@ CREATE TABLE categories(
 ALTER TABLE categories OWNER TO ssuadmin;
 
 
+-- Views
+CREATE OR REPLACE VIEW ssucalendar.event_info AS
+SELECT e.summary, l.location, e.start FROM ssucalendar.events e
+JOIN ssucalendar.locations l ON l.location_id = e.location_id
+ORDER BY e.start ASC;
+
+
 --
 -- Foreign key constraints
 --
