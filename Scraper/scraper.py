@@ -11,7 +11,7 @@ from psycopg2.extensions import AsIs
 
 # This import comes from secrets.py in the same directory as this script.
 # If that file does not exist, create one using secrets.py-sample as a template.
-from secrets import credentials
+from secrets import credentials, schema
 
 
 CALENDAR_URLS = [
@@ -32,6 +32,7 @@ DATABASE_CONNECT_ARGS = dict(
     sslcrl = '',
     **credentials
 )
+DATABASE_SCHEMA = schema
 
 
 # Normally, values passed to the database cursor get quoted and escaped
@@ -380,7 +381,7 @@ def make_common_insert(statement_template, *fields):
 
 insert_contact = make_common_insert(
     """
-    INSERT INTO ssucalendar.contacts(name, phone, email)
+    INSERT INTO contacts(name, phone, email)
         VALUES {:s}
         ON CONFLICT DO NOTHING
     """,
@@ -390,7 +391,7 @@ insert_contact = make_common_insert(
 
 insert_location = make_common_insert(
     """
-    INSERT INTO ssucalendar.locations(name)
+    INSERT INTO locations(name)
         VALUES {:s}
         ON CONFLICT DO NOTHING
     """,
@@ -400,7 +401,7 @@ insert_location = make_common_insert(
 
 insert_event_type = make_common_insert(
     """
-    INSERT INTO ssucalendar.event_types(name)
+    INSERT INTO event_types(name)
         VALUES {:s}
         ON CONFLICT DO NOTHING
     """,
@@ -415,7 +416,7 @@ insert_event_type = make_common_insert(
 def insert_categories(cursor, event):
     statement = \
 """
-INSERT INTO ssucalendar.categories(name)
+INSERT INTO categories(name)
     VALUES (%s)
     ON CONFLICT DO NOTHING
 """
@@ -440,7 +441,7 @@ set_values_sql = ', '.join('EXCLUDED.' + field for field in event_fields[1:])
 
 @uses_values_fields(*event_fields)
 @uses_statement_template("""
-INSERT INTO ssucalendar.events({event_fields:s})
+INSERT INTO events({event_fields:s})
     VALUES {{:s}}
     ON CONFLICT (event_id) DO UPDATE
         SET ({set_fields:s}) = ({set_values:s});
@@ -454,7 +455,7 @@ def insert_event(statement, cursor, event):
     # so the value may be None instead.
     if has_location(event):
         cursor.execute(
-            """SELECT location_id FROM ssucalendar.locations
+            """SELECT location_id FROM locations
                    WHERE name = %(location)s;""",
             event
         )
@@ -464,7 +465,7 @@ def insert_event(statement, cursor, event):
 
     # Set event_type_id in the event dict.  This value is always present.
     cursor.execute(
-        """SELECT event_type_id FROM ssucalendar.event_types
+        """SELECT event_type_id FROM event_types
                WHERE name = %(event_type)s;""",
         event
     )
@@ -474,7 +475,7 @@ def insert_event(statement, cursor, event):
     # so this value may be None instead.
     if has_contact_info(event):
         cursor.execute(
-            """SELECT contact_id FROM ssucalendar.contacts
+            """SELECT contact_id FROM contacts
                    WHERE (name, phone, email)
                        = (%(contact_name)s,
                           %(contact_phone)s,
@@ -495,10 +496,10 @@ def insert_event_categories(cursor, event):
     statement = \
 """
 WITH cat(id) AS (
-    SELECT category_id FROM ssucalendar.categories
+    SELECT category_id FROM categories
         WHERE name = %(name)s
 )
-INSERT INTO ssucalendar.event_categories(event_id, category_id)
+INSERT INTO event_categories(event_id, category_id)
     SELECT %(event_id)s, id FROM cat
     ON CONFLICT DO NOTHING;
 """
@@ -539,6 +540,7 @@ def handler(event, context):
     """
     with psycopg2.connect(**DATABASE_CONNECT_ARGS) as connection:
         with connection.cursor() as cursor:
+            cursor.execute("SET search_path TO %()s", (DATABASE_SCHEMA,))
             populate_database(cursor)
 
 
