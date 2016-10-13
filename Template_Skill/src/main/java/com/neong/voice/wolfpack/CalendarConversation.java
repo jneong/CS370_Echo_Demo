@@ -11,11 +11,16 @@ import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import org.joda.time.DateTime;
+
 import java.time.ZonedDateTime;
 
 public class CalendarConversation extends Conversation {
 	// Intent names
 	private final static String INTENT_NEXTEVENT = "NextEventIntent";
+	private final static String INTENT_GETEVENTSONDATE = "GetEventsOnDateIntent";
+	private final static String AMAZON_DATE = "date";
 
 	private final static ZoneId PST = ZoneId.of("America/Los_Angeles");
 	private final static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("h:mm a");
@@ -32,8 +37,8 @@ public class CalendarConversation extends Conversation {
 
 		// Add custom intent names for dispatcher use.
 		supportedIntentNames.add(INTENT_NEXTEVENT);
+		supportedIntentNames.add(INTENT_GETEVENTSONDATE);
 	}
-
 
 	@Override
 	public SpeechletResponse respondToIntentRequest(IntentRequest intentReq, Session session) {
@@ -44,13 +49,16 @@ public class CalendarConversation extends Conversation {
 		if (INTENT_NEXTEVENT.equals(intentName))
 			response = handleNextEventIntent(intentReq, session);
 
+		if (INTENT_GETEVENTSONDATE.equals(intentName))
+			response = handleGetEventsOnDateIntent(intentReq, session);
+
 		return response;
+
 	}
 
-
 	private SpeechletResponse handleNextEventIntent(IntentRequest intentReq, Session session) {
-		Map<String, Vector<Object>> results =
-				db.runQuery("SELECT * FROM ssucalendar.event_info WHERE start > now() LIMIT 1;");
+		Map<String, Vector<Object>> results = db
+				.runQuery("SELECT * FROM ssucalendar.event_info WHERE start > now() LIMIT 1;");
 
 		if (results == null)
 			return newTellResponse("Sorry, I'm on break", false);
@@ -67,10 +75,29 @@ public class CalendarConversation extends Conversation {
 		String day = zonedDateTime.format(DAYFORMATTER);
 		String time = zonedDateTime.format(TIMEFORMATTER);
 
-		return newTellResponse("<speak> Okay, the next event is " + summary +
-				" on " + day +  " <say-as interpret-as=\"date\">" + date +
-				"</say-as> at <say-as interpret-as=\"time\">" + time + "</say-as> at "
-				+ location + ". </speak>", true);
+		return newTellResponse("<speak> Okay, the next event is " + summary + " on " + day
+				+ " <say-as interpret-as=\"date\">" + date + "</say-as> at <say-as interpret-as=\"time\">" + time
+				+ "</say-as> at " + location + ". </speak>", true);
 	}
 
+	private SpeechletResponse handleGetEventsOnDateIntent(IntentRequest intentReq, Session session) {
+		Intent theIntent = intentReq.getIntent();
+		String givenDate = theIntent.getSlot(AMAZON_DATE).getValue();
+
+		Map<String, Vector<Object>> results = db
+				.runQuery("SELECT * FROM ssucalendar.event_info WHERE start = '" + givenDate + " 00:00:00.000000';");
+
+		if (results == null)
+			return newTellResponse("Sorry, I'm on break", false);
+
+		String summary = (String) results.get("summary").get(0);
+		Timestamp start = (Timestamp) results.get("start").get(0);
+		ZonedDateTime zonedDateTime = start.toLocalDateTime().atZone(PST);
+		String time = zonedDateTime.format(TIMEFORMATTER);
+
+		return newTellResponse(
+				"<speak> Okay, " + summary + "</say-as> is at <say-as interpret-as=\"time\">" + time + ". </speak>",
+				true);
+
+	}
 }
