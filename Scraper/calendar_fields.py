@@ -461,6 +461,7 @@ if __name__ == "__main__":
     # We won't waste space printing out all the locations.  Just a count is fine.
     heading("Locations")
     print "count = %d" % count_iter(reducer(get_location))
+    print
     if all(e.contents.get('location', None) != None for e in events):
         italic("all events have a location")
     else:

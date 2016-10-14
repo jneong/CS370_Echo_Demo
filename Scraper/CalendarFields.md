@@ -30,6 +30,7 @@
 
 ### Locations
 count = 68
+
 *there are some events without a location*
 
 ### Custom Fields (id, name, type)
