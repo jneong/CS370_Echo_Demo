@@ -62,7 +62,7 @@ public class CalendarConversation extends Conversation {
 		if (location == null)
 			location = "Sonoma State University";
 
-		ZonedDateTime zonedDateTime = start.toLocalDateTime().atZone(PST);
+		ZonedDateTime zonedDateTime = start.toInstant().atZone(PST);
 		String date = zonedDateTime.format(DATEFORMATTER);
 		String day = zonedDateTime.format(DAYFORMATTER);
 		String time = zonedDateTime.format(TIMEFORMATTER);
