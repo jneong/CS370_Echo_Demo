@@ -75,3 +75,6 @@ count = 68
 * Student Calendar
 
 *some events are tagged with multiple custom categories*
+
+### Timestamps
+*all events specify either PDT or PST as the time zone*
