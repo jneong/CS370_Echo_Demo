@@ -100,7 +100,7 @@ def secrets_wizard(args=None):
         write_secret(secret); f.write('\n')
 
 
-def ensure_secrets():
+def require_secrets():
     """
     Import and return the secrets module.  If the file does not exist, the
     user is prompted for the values to create it.
@@ -127,8 +127,16 @@ def get_schema_list(cursor):
     return [result[0] for result in cursor.fetchall()]
 
 
-def execute_schema_action(cursor, sql, schema):
+def create_sql_template(filename):
+    with open(filename) as f:
+        return f.read().replace(REPLACE_SCHEMA_NAME, '%(schema)s')
+
+
+def execute_schema_action(cursor, sql_file_path, schema):
+    sql = create_sql_template(sql_file_path)
     cursor.execute(sql, dict(schema=AsIs(schema)))
+    print("ok")
+
 
 def with_cursor(func):
     """
@@ -144,10 +152,6 @@ def with_cursor(func):
     return inner
 
 
-def create_sql_template(f):
-    return f.read().replace(REPLACE_SCHEMA_NAME, '%(schema)s')
-
-
 @with_cursor
 def list_schema(cursor, args):
     internal_schema = ('pg_catalog', 'information_schema')
@@ -161,31 +165,28 @@ def create_schema(cursor, args):
     schema = args.schema
     if schema in get_schema_list(cursor):
         print("schema already exists (drop first to replace)")
-    else:
-        with open(SCHEMA_PATH) as f:
-            sql = create_sql_template(f)
-        execute_schema_action(cursor, sql, schema)
-        print("ok")
+        return
+
+    execute_schema_action(cursor, SCHEMA_PATH, schema)
 
 
 @with_cursor
 def drop_schema(cursor, args):
+    protected = ('pg_catalog', 'information_schema', 'ssucalendar')
+    if schema in protected:
+        print("dropping that schema is not allowed")
+        return
+
     schema = args.schema
     if schema not in get_schema_list(cursor):
         print("schema does not exist")
-    else:
-        protected = ('pg_catalog', 'information_schema', 'ssucalendar')
-        if schema in protected:
-            print("dropping that schema is not allowed")
-        else:
-            with open(OBLITERATE_PATH) as f:
-                sql = create_sql_template(f)
-            execute_schema_action(cursor, sql, schema)
-            print("ok")
+        return
+
+    execute_schema_action(cursor, OBLITERATE_PATH, schema)
 
 
 if __name__ == "__main__":
-    secrets = ensure_secrets()
+    secrets = require_secrets()
 
     def register_handler(parser, handler):
         parser.set_defaults(func=partial(handler, secrets))
