@@ -540,7 +540,7 @@ def handler(event, context):
     """
     with psycopg2.connect(**DATABASE_CONNECT_ARGS) as connection:
         with connection.cursor() as cursor:
-            cursor.execute("SET search_path TO %()s", (DATABASE_SCHEMA,))
+            cursor.execute("SET search_path TO %s", (DATABASE_SCHEMA,))
             populate_database(cursor)
 
 
