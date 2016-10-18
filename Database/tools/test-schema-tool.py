@@ -13,7 +13,6 @@ from psycopg2.extensions import AsIs
 DESCRIPTION = "Manipulate database schema"
 EPILOG = """
 examples:
-
   Generate a secrets file for the scraper:
     %(prog)s secrets ../../Scraper/secrets.py
 
@@ -25,6 +24,16 @@ examples:
 
   Drop the schema named "foo_testing":
     %(prog)s drop foo_testing
+
+hints:
+  This tool uses schema.sql from the parent directory.  Modifications to
+  that file can be tested by creating a new schema on the testing database
+  with this tool.
+
+  A different schema file can be specified by setting SCHEMA_PATH in the
+  environment when running this script.  See the top of the source for this
+  script for additional environment variables that can be used to control
+  additional settings.
 """
 
 
@@ -198,6 +207,21 @@ def create_schema(cursor, args):
 
     execute_schema_action(cursor, SCHEMA_PATH, schema)
 
+    print("""
+Hint:
+
+First, make sure you set the correct schema in ../../Scraper/secrets.py
+For example:
+
+	schema = "{:s}"
+
+Now to populate the tables, activate the virtualenv in ../../Scraper/ and
+run scraper.py:
+
+	cd ../../Scraper/
+	. bin/activate
+	./scraper.py
+""".format(schema))
 
 @with_cursor
 def drop_schema(cursor, args):
