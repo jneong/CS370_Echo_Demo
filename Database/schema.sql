@@ -56,7 +56,8 @@ CREATE TABLE events(
   website_url text,
   ticket_sales_url text,
   contact_id smallint,
-  CONSTRAINT event_id PRIMARY KEY (event_id)
+  CONSTRAINT event_id PRIMARY KEY (event_id),
+  UNIQUE (summary, start)
 );
 ALTER TABLE events OWNER TO ssuadmin;
 
