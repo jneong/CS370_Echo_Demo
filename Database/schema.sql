@@ -1,29 +1,11 @@
 --
--- Roles
---
-
-CREATE ROLE ssuadmin WITH ROLE wolfpack;
-
--- Remember to set a password (but never commit it)
-CREATE ROLE scraper WITH
-  CONNECTION LIMIT 1
-  LOGIN
-  PASSWORD '';
-
--- Remember to set a password (but never commit it)
-CREATE ROLE alexaskill WITH
-  LOGIN
-  PASSWORD '';
-
-
---
 -- Schema
 --
 
 CREATE SCHEMA ssucalendar;
 ALTER SCHEMA ssucalendar OWNER TO ssuadmin;
 
-SET search_path TO pg_catalog,public,ssucalendar;
+SET search_path TO ssucalendar;
 
 
 --
@@ -33,12 +15,12 @@ SET search_path TO pg_catalog,public,ssucalendar;
 -- `event_categories` stores a "many-to-many relationship" between events and
 -- categories.  There are many categories, and each event can have more than one
 -- category, so this table keeps track of which events have which categories.
-CREATE TABLE ssucalendar.event_categories(
+CREATE TABLE event_categories(
   event_id integer NOT NULL,
   category_id smallint NOT NULL,
   CONSTRAINT event_categories_id PRIMARY KEY (event_id,category_id)
 );
-ALTER TABLE ssucalendar.event_categories OWNER TO ssuadmin;
+ALTER TABLE event_categories OWNER TO ssuadmin;
 
 -- The fields that are unique to every event are kept here, with a few minor
 -- exceptions.
@@ -59,7 +41,7 @@ ALTER TABLE ssucalendar.event_categories OWNER TO ssuadmin;
 -- It may be desirable instead to design a translation function that can strip
 -- unspeakable items (eg. HTML, URLs), and translate a few important words into
 -- the proper SSML (eg. how to pronounce "Beaujolais").
-CREATE TABLE ssucalendar.events(
+CREATE TABLE events(
   event_id integer NOT NULL,
   summary text NOT NULL, -- The summary is the "title" or "name" of the event
   description text NOT NULL, -- The description is long, may contain HTML
@@ -76,30 +58,30 @@ CREATE TABLE ssucalendar.events(
   contact_id smallint,
   CONSTRAINT event_id PRIMARY KEY (event_id)
 );
-ALTER TABLE ssucalendar.events OWNER TO ssuadmin;
+ALTER TABLE events OWNER TO ssuadmin;
 
 -- There are about 70 or so different locations encountered for >900 events, so
 -- that merits a separate table.  We may want an additional column for adding an
 -- "speech-friendly" version of the values.
-CREATE TABLE ssucalendar.locations(
+CREATE TABLE locations(
   location_id smallserial NOT NULL,
   name text UNIQUE NOT NULL, -- The values here can be a bit weird | see the calendar
   CONSTRAINT location_id PRIMARY KEY (location_id)
 );
-ALTER TABLE ssucalendar.locations OWNER TO ssuadmin;
+ALTER TABLE locations OWNER TO ssuadmin;
 
 -- Every event has an event type in addition to categories.  There are 15
 -- different types so far.
-CREATE TABLE ssucalendar.event_types(
+CREATE TABLE event_types(
   event_type_id smallserial NOT NULL,
   name text UNIQUE NOT NULL, -- Some contain / or ,
   CONSTRAINT event_type_id PRIMARY KEY (event_type_id)
 );
-ALTER TABLE ssucalendar.event_types OWNER TO ssuadmin;
+ALTER TABLE event_types OWNER TO ssuadmin;
 
 -- The contacts table is very lazy.  Contact information is optional and all
 -- fields are optional.  It's gross.
-CREATE TABLE ssucalendar.contacts(
+CREATE TABLE contacts(
   contact_id smallserial NOT NULL,
   name text NOT NULL DEFAULT '',
   phone text NOT NULL DEFAULT '',
@@ -107,17 +89,17 @@ CREATE TABLE ssucalendar.contacts(
   CONSTRAINT contact_id PRIMARY KEY (contact_id),
   CONSTRAINT name_phone_email UNIQUE (name,phone,email)
 );
-ALTER TABLE ssucalendar.contacts OWNER TO ssuadmin;
+ALTER TABLE contacts OWNER TO ssuadmin;
 
 -- There are 9 main categories and 24 custom categories.  We just throw them all
 -- together.  The category names can be very awkward, so there will likely need
 -- to be an additional column for an "speech-friendly" version of these values.
-CREATE TABLE ssucalendar.categories(
+CREATE TABLE categories(
   category_id smallserial NOT NULL,
   name text UNIQUE NOT NULL, -- These can have really weird values
   CONSTRAINT category_id PRIMARY KEY (category_id)
 );
-ALTER TABLE ssucalendar.categories OWNER TO ssuadmin;
+ALTER TABLE categories OWNER TO ssuadmin;
 
 
 --
@@ -126,28 +108,28 @@ ALTER TABLE ssucalendar.categories OWNER TO ssuadmin;
 
 -- TODO: figure out correct ON DELETE behaviors
 
-ALTER TABLE ssucalendar.event_categories ADD CONSTRAINT event_id FOREIGN KEY (event_id)
-  REFERENCES ssucalendar.events (event_id) MATCH FULL
+ALTER TABLE event_categories ADD CONSTRAINT event_id FOREIGN KEY (event_id)
+  REFERENCES events (event_id) MATCH FULL
   ON DELETE NO ACTION ON UPDATE NO ACTION
   INITIALLY DEFERRED;
 
-ALTER TABLE ssucalendar.event_categories ADD CONSTRAINT category_id FOREIGN KEY (category_id)
-  REFERENCES ssucalendar.categories (category_id) MATCH FULL
+ALTER TABLE event_categories ADD CONSTRAINT category_id FOREIGN KEY (category_id)
+  REFERENCES categories (category_id) MATCH FULL
   ON DELETE NO ACTION ON UPDATE NO ACTION
   INITIALLY DEFERRED;
 
-ALTER TABLE ssucalendar.events ADD CONSTRAINT location_id FOREIGN KEY (location_id)
-  REFERENCES ssucalendar.locations (location_id) MATCH FULL
+ALTER TABLE events ADD CONSTRAINT location_id FOREIGN KEY (location_id)
+  REFERENCES locations (location_id) MATCH FULL
   ON DELETE NO ACTION ON UPDATE NO ACTION
   INITIALLY DEFERRED;
 
-ALTER TABLE ssucalendar.events ADD CONSTRAINT event_type_id FOREIGN KEY (event_type_id)
-  REFERENCES ssucalendar.event_types (event_type_id) MATCH FULL
+ALTER TABLE events ADD CONSTRAINT event_type_id FOREIGN KEY (event_type_id)
+  REFERENCES event_types (event_type_id) MATCH FULL
   ON DELETE NO ACTION ON UPDATE NO ACTION
   INITIALLY DEFERRED;
 
-ALTER TABLE ssucalendar.events ADD CONSTRAINT contact_id FOREIGN KEY (contact_id)
-  REFERENCES ssucalendar.contacts (contact_id) MATCH FULL
+ALTER TABLE events ADD CONSTRAINT contact_id FOREIGN KEY (contact_id)
+  REFERENCES contacts (contact_id) MATCH FULL
   ON DELETE NO ACTION ON UPDATE NO ACTION
   INITIALLY DEFERRED;
 
@@ -155,14 +137,6 @@ ALTER TABLE ssucalendar.events ADD CONSTRAINT contact_id FOREIGN KEY (contact_id
 --
 -- Permissions
 --
-
-GRANT CONNECT
-  ON DATABASE ssunews
-  TO scraper,alexaskill;
-
-GRANT CREATE,CONNECT
-  ON DATABASE ssunews
-  TO ssuadmin;
 
 GRANT CREATE,USAGE
   ON SCHEMA ssucalendar
@@ -173,15 +147,15 @@ GRANT USAGE
   TO alexaskill,scraper;
 
 GRANT SELECT
-  ON TABLE ssucalendar.events, ssucalendar.event_categories,
-           ssucalendar.locations, ssucalendar.event_types,
-           ssucalendar.contacts, ssucalendar.categories
+  ON TABLE events, event_categories,
+           locations, event_types,
+           contacts, categories
   TO alexaskill;
 
 GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER
-  ON TABLE ssucalendar.events, ssucalendar.event_categories,
-           ssucalendar.locations, ssucalendar.event_types,
-           ssucalendar.contacts, ssucalendar.categories
+  ON TABLE events, event_categories,
+           locations, event_types,
+           contacts, categories
   TO scraper;
 
 GRANT SELECT
