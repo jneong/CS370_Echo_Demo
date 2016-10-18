@@ -30,6 +30,7 @@
 
 ### Locations
 count = 68
+
 *there are some events without a location*
 
 ### Custom Fields (id, name, type)
@@ -75,3 +76,6 @@ count = 68
 * Student Calendar
 
 *some events are tagged with multiple custom categories*
+
+### Timestamps
+*all events specify either PDT or PST as the time zone*

@@ -461,6 +461,7 @@ if __name__ == "__main__":
     # We won't waste space printing out all the locations.  Just a count is fine.
     heading("Locations")
     print "count = %d" % count_iter(reducer(get_location))
+    print
     if all(e.contents.get('location', None) != None for e in events):
         italic("all events have a location")
     else:
@@ -488,3 +489,17 @@ if __name__ == "__main__":
         "some events are tagged with multiple custom categories",
         "each event has only one custom category"
     )
+
+    heading("Timestamps")
+
+    def in_local_zones(field):
+        return field.value.tzname() in ('PDT', 'PST')
+
+    def timestamps_are_local(event):
+        fields = (event.dtstart, event.dtend)
+        return all(in_local_zones(field) for field in fields)
+
+    if all(timestamps_are_local(e) for e in events):
+        italic("all events specify either PDT or PST as the time zone")
+    else:
+        italic("some events specify a time zone other than PDT or PST")

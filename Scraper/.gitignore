@@ -3,6 +3,7 @@ include/
 local/
 lib/
 lib64/
+share/
 *.pyc
 pip-selfcheck.json
 secrets.py
