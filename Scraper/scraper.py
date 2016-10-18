@@ -435,20 +435,15 @@ event_fields = (
     'website_url', 'ticket_sales_url', 'contact_id'
 )
 event_fields_sql = ', '.join(event_fields)
-set_fields_sql = ', '.join(event_fields[1:])
-set_values_sql = ', '.join('EXCLUDED.' + field for field in event_fields[1:])
 
 
 @uses_values_fields(*event_fields)
 @uses_statement_template("""
 INSERT INTO events({event_fields:s})
     VALUES {{:s}}
-    ON CONFLICT (event_id) DO UPDATE
-        SET ({set_fields:s}) = ({set_values:s});
+    ON CONFLICT DO NOTHING;
 """.format(
-    event_fields = event_fields_sql,
-    set_fields = set_fields_sql,
-    set_values = set_values_sql
+    event_fields = event_fields_sql
 ))
 def insert_event(statement, cursor, event):
     # Set location_id in the event dict.  Not all events have a location,
