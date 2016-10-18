@@ -48,56 +48,69 @@ OBLITERATE_PATH = getenv('OBLITERATE_PATH', '../obliterate.sql')
 REPLACE_SCHEMA_NAME = getenv('REPLACE_SCHEMA_NAME', 'ssucalendar')
 
 
-def ask_secrets():
-    SecretField = namedtuple('SecretField', ['name', 'value'])
-    Step = namedtuple('Step', ['name', 'default'])
-    steps = (
-        Step('host', None),
-        Step('user', 'wolfpack'),
-        Step('password', None),
-        Step('dbname', 'ssunews'),
-        Step('schema', None)
+def ask_secret(secret):
+    """
+    Prompts the user for a secret with an optional default value, and
+    returns their answer or the default if it exists and the received value
+    is empty.
+
+    """
+    sys.stdout.write(secret.name)
+
+    if secret.default is None:
+        value = raw_input(": ")
+    else:
+        value = raw_input(" [{:s}]: ".format(secret.default))
+        if value == '':
+            value = secret.default
+
+    return value
+
+
+def secrets_wizard(path=SECRETS_PATH):
+    """
+    Prompt the user for values to initialize a secrets file.  The path to
+    the file may optionally be specified in args.path, otherwise a default
+    value is used.
+    """
+    # Secrets have a name and an optional default value or None if there is
+    # no default.
+    Secret = namedtuple('Secret', ['name', 'default'])
+    credentials = (
+        Secret('host', None),
+        Secret('user', 'wolfpack'),
+        Secret('password', None),
+        Secret('dbname', 'ssunews'),
     )
+    schema = Secret('schema', None)
 
-    for step in steps:
-        sys.stdout.write(step.name)
-        if step.default is None:
-            value = raw_input(": ")
-            value = value.strip()
-        else:
-            value = raw_input(" [{:s}]: ".format(step.default))
-            value = value.strip()
-            if value == '':
-                value = step.default
-        yield SecretField(step.name, value)
-
-
-def secrets_wizard(args=None):
-    """
-    Prompt the user for values to initialize a secrets file.
-    """
-    filename = args.path.rsplit('/', 1)[-1] if args else SECRETS_FILENAME
-    path = args.path if args else SECRETS_PATH
-
-    print("Creating {:s}...".format(filename))
+    print("Creating {:s}...".format(path))
 
     with open(path, 'w') as f:
         def write_secret(secret):
-            secret_dict = secret._asdict()
-            f.write('{name:s} = "{value:s}"'.format(**secret_dict))
+            """
+            Prompt the user for a secret and write it to f.
+
+            For example, writes 'foo = "bar"' when the secret name is "foo"
+            and the value entered by the user when prompted is "bar".
+            """
+            f.write(
+                '{name:s} = "{value:s}"'.format(
+                    name = secret.name,
+                    value = ask_secret(secret)
+                )
+            )
 
         # Start a dictionary for credentials
         f.write("credentials = dict(\n")
 
-        for secret in ask_secrets():
-            if secret.name == 'schema':
-                # Stop when we hit schema, it's not a credentials field
-                break
+        # Write each secret as a named parameter
+        for secret in credentials:
             f.write('\t'); write_secret(secret); f.write(',\n')
 
         # Close the dictionary and write the schema as a separate variable
         f.write(')\n')
-        write_secret(secret); f.write('\n')
+        write_secret(schema); f.write('\n')
 
 
 def require_secrets():
@@ -112,12 +125,12 @@ def require_secrets():
     return import_module(SECRETS_FILENAME.rsplit('.', 1)[0])
 
 
-def get_database_connection(secrets):
+def get_database_connection(credentials):
     database_connect_args = dict(
         sslmode = 'verify-full',
         sslrootcert = SSL_ROOT_CERT_PATH,
         sslcrl = SSL_CRL_PATH,
-        **secrets.credentials
+        **credentials
     )
     return psycopg2.connect(**database_connect_args)
 
@@ -128,11 +141,27 @@ def get_schema_list(cursor):
 
 
 def create_sql_template(filename):
+    """
+    Returns the contents of the specified file, but with all occurrences of
+    the schema name specified by REPLACE_SCHEMA_NAME replaced with a
+    template string for the key "schema".
+
+    The result can be used as a statement for executing a parameterized
+    database query, where the schema is specified by the "schema" key.
+    """
     with open(filename) as f:
         return f.read().replace(REPLACE_SCHEMA_NAME, '%(schema)s')
 
 
 def execute_schema_action(cursor, sql_file_path, schema):
+    """
+    Using the given database cursor, this function executes the contents of
+    the file specified by sql_file_path but with all occurrences of the
+    schema name specified by REPLACE_SCHEMA_NAME replaced with the schema
+    name specified by the schema parameter.
+
+    If no exceptions occur, the message "ok" is printed.
+    """
     sql = create_sql_template(sql_file_path)
     cursor.execute(sql, dict(schema=AsIs(schema)))
     print("ok")
@@ -146,7 +175,7 @@ def with_cursor(func):
     """
     @wraps(func)
     def inner(secrets, args):
-        with get_database_connection(secrets) as connection:
+        with get_database_connection(secrets.credentials) as connection:
             with connection.cursor() as cursor:
                 return func(cursor, args)
     return inner
@@ -173,11 +202,11 @@ def create_schema(cursor, args):
 @with_cursor
 def drop_schema(cursor, args):
     protected = ('pg_catalog', 'information_schema', 'ssucalendar')
+    schema = args.schema
     if schema in protected:
         print("dropping that schema is not allowed")
         return
 
-    schema = args.schema
     if schema not in get_schema_list(cursor):
         print("schema does not exist")
         return
@@ -191,6 +220,9 @@ if __name__ == "__main__":
     def register_handler(parser, handler):
         parser.set_defaults(func=partial(handler, secrets))
 
+    def wizard(args):
+        return secrets_wizard(**args)
+
     parser = argparse.ArgumentParser(
         formatter_class = argparse.RawDescriptionHelpFormatter,
         description = DESCRIPTION,
@@ -202,7 +234,7 @@ if __name__ == "__main__":
                                            help="configure secrets")
     secrets_parser.add_argument("path", metavar="PATH",
                                 help="path to output file")
-    secrets_parser.set_defaults(func=secrets_wizard)
+    secrets_parser.set_defaults(func=wizard)
 
     list_parser = subparsers.add_parser("list",
                                         help="list schema")
