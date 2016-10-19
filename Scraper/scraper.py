@@ -1,12 +1,13 @@
 #!/usr/bin/env python2.7
 
-from itertools import *
 from functools import *
+from itertools import *
+import sys
 
-import requests
-import vobject
 import psycopg2
 from psycopg2.extensions import AsIs
+import requests
+import vobject
 
 
 # This import comes from secrets.py in the same directory as this script.
@@ -512,6 +513,7 @@ INSERT INTO event_categories(event_id, category_id)
 
 def populate_database(cursor):
     for record in get_records(CALENDAR_URLS):
+        sys.stdout.write('.')
         if has_contact_info(record):
             insert_contact(cursor, record)
         if has_location(record):
