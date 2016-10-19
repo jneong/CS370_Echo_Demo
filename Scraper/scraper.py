@@ -139,15 +139,6 @@ def check_bool(value):
 # Getters for fields that need additional processing
 #
 
-def get_event_id(event):
-    """
-    Returns the numeric portion of the event UID, stripping the URL part.
-    """
-    value = get_value("uid", event)
-    event_id = value.rsplit('/')[-1]
-    return event_id
-
-
 def get_categories(event):
     """
     Returns as a list the set of unique categories specified for an event.
@@ -203,7 +194,6 @@ def get_record(event):
         return get_custom_value(field_id, event)
 
     return {
-        "event_id": get_event_id(event),
         "categories": get_categories(event),
         "all_day_event": get_all_day_event(event),
         "open_to_public": get_open_to_public(event),
@@ -428,7 +418,7 @@ INSERT INTO categories(name)
 # to keep track of the fields and then generate the various bits of SQL from
 # the tuple.
 event_fields = (
-    'event_id', 'all_day_event', 'open_to_public',
+    'all_day_event', 'open_to_public',
     'summary', 'description', 'location_id',
     'start', '"end"', 'event_type_id',
     'general_admission_fee', 'student_admission_fee',
@@ -490,19 +480,26 @@ def insert_event(statement, cursor, event):
 def insert_event_categories(cursor, event):
     statement = \
 """
-WITH cat(id) AS (
+WITH category(id) AS (
     SELECT category_id FROM categories
         WHERE name = %(name)s
+), event(id) AS (
+    SELECT event_id FROM events
+        WHERE summary = %(summary)s AND start = %(start)s
 )
 INSERT INTO event_categories(event_id, category_id)
-    SELECT %(event_id)s, id FROM cat
+    SELECT event.id, category.id FROM event, category
     ON CONFLICT DO NOTHING;
 """
-    # This is a generator that yields a dict(event_id, name) for every
+    # This is a dict comprehension that filters the event dict to keep only
+    # the 'summary' and 'start' keys.
+    shared = {k:v for k,v in event.items() if k in ('summary', 'start')}
+
+    # This is a generator that yields a dict(summary, start, name) for every
     # category in the event.  There are many categories per event, and many
     # events, so this table is building a many-to-many relationship.
     values = (
-        { 'event_id': event['event_id'], 'name': cat }
+        { 'summary': event['summary'], 'start': event['start'], 'name': cat }
         for cat in event['categories']
     )
     # Execute for each category in the generator.

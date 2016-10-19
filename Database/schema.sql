@@ -16,7 +16,7 @@ SET search_path TO ssucalendar;
 -- categories.  There are many categories, and each event can have more than one
 -- category, so this table keeps track of which events have which categories.
 CREATE TABLE event_categories(
-  event_id integer NOT NULL,
+  event_id smallint NOT NULL,
   category_id smallint NOT NULL,
   CONSTRAINT event_categories_id PRIMARY KEY (event_id,category_id)
 );
@@ -42,7 +42,7 @@ ALTER TABLE event_categories OWNER TO ssuadmin;
 -- unspeakable items (eg. HTML, URLs), and translate a few important words into
 -- the proper SSML (eg. how to pronounce "Beaujolais").
 CREATE TABLE events(
-  event_id integer NOT NULL,
+  event_id smallserial NOT NULL,
   summary text NOT NULL, -- The summary is the "title" or "name" of the event
   description text NOT NULL, -- The description is long, may contain HTML
   all_day_event boolean NOT NULL DEFAULT FALSE,
@@ -160,11 +160,13 @@ GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER
   TO scraper;
 
 GRANT SELECT
-  ON SEQUENCE contacts_contact_id_seq, categories_category_id_seq,
-              locations_location_id_seq, event_types_event_type_id_seq
+  ON SEQUENCE events_event_id_seq, contacts_contact_id_seq,
+              categories_category_id_seq, locations_location_id_seq,
+              event_types_event_type_id_seq
   TO alexaskill;
 
 GRANT USAGE,SELECT,UPDATE
-  ON SEQUENCE contacts_contact_id_seq, categories_category_id_seq,
-              locations_location_id_seq, event_types_event_type_id_seq
+  ON SEQUENCE events_event_id_seq, contacts_contact_id_seq,
+              categories_category_id_seq, locations_location_id_seq,
+              event_types_event_type_id_seq
   TO scraper;
