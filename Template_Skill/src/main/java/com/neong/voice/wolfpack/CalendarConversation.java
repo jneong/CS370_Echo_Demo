@@ -6,13 +6,12 @@ import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.neong.voice.model.base.Conversation;
 import com.wolfpack.database.DbConnection;
+import com.neong.voice.wolfpack.CalendarHelper;
 
 import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import org.joda.time.DateTime;
 
 import java.time.ZonedDateTime;
 
@@ -22,13 +21,20 @@ public class CalendarConversation extends Conversation {
 	private final static String INTENT_GETEVENTSONDATE = "GetEventsOnDateIntent";
 	private final static String INTENT_GETFEEDETAILS = "GetFeeDetailsIntent";
 	private final static String INTENT_GETLOCATIONDETAILS = "GetLocationDetailsIntent";
+
+	
+	// Slots (String value in quotes should be the slot name in the intent schema)
 	private final static String EVENT_NAME = "eventName";
 	private final static String AMAZON_DATE = "date";
 
+	// Timestamp formatting
 	private final static ZoneId PST = ZoneId.of("America/Los_Angeles");
 	private final static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("h:mm a");
 	private final static DateTimeFormatter DAYFORMATTER = DateTimeFormatter.ofPattern("EEEE");
 	private final static DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("????MMdd");
+	
+	// Database query pieces
+	private final static String zoneString = " ::timestamp at time zone 'America/Los_Angeles' ";
 
 	private DbConnection db;
 
@@ -96,22 +102,63 @@ public class CalendarConversation extends Conversation {
 	private SpeechletResponse handleGetEventsOnDateIntent(IntentRequest intentReq, Session session) {
 		Intent theIntent = intentReq.getIntent();
 		String givenDate = theIntent.getSlot(AMAZON_DATE).getValue();
+		int numEvents;
+		int state;
+		String response;
+		String[] savedEventNames;
+		
+		String query = "SELECT * FROM event_info WHERE (\'" + givenDate + "\'" + zoneString + " <= start) AND (date \'" + givenDate + "\' + integer '1')" + zoneString + " > start;";
+		
+		//Select all events on the same day as the givenDate.
+		Map<String, Vector<Object>> results = db.runQuery(query);
 
-		Map<String, Vector<Object>> results = db
-			.runQuery("SELECT * FROM ssucalendar.event_info WHERE start = '" + givenDate + " 00:00:00.000000';");
-
+		//If Alexa couldn't connect to the database or run the query:
 		if (results == null)
 			return newTellResponse("Sorry, I'm on break", false);
-
-		String summary = (String) results.get("summary").get(0);
-		Timestamp start = (Timestamp) results.get("start").get(0);
-		ZonedDateTime zonedDateTime = start.toLocalDateTime().atZone(PST);
-		String time = zonedDateTime.format(TIMEFORMATTER);
-
-		return newTellResponse(
-				"<speak> Okay, " + summary + "</say-as> is at <say-as interpret-as=\"time\">" + time + ". </speak>",
-				true);
 		
+		numEvents = results.get("summary").size();
+		
+		//If there were not any events on the given day:
+		if (numEvents == 0){
+			return newTellResponse("<speak>I couldn't find any events on <say-as interpret-as=\"date\">" + givenDate + "</say-as> </speak>", true);
+		}
+		
+		if(numEvents <= 13){
+		
+			//Format eventDay as the day of the week
+			Timestamp firstEventStart = (Timestamp) results.get("start").get(0);
+			ZonedDateTime zonedDateTime = firstEventStart.toInstant().atZone(PST);
+			String eventDate = zonedDateTime.format(DATEFORMATTER);
+			
+			response = "<speak> Okay, here is what I found. On <say-as interpret-as=\"date\">" + eventDate + "</say-as> there is ";
+			response += listEvents(results, givenDate);
+			response += "</speak>";
+			savedEventNames = new String[numEvents];
+			for(int i = 0; i < numEvents; i++){
+				savedEventNames[i] = results.get("summary").get(i).toString();
+				
+			}
+			
+			state = 1000;
+			session.setAttribute("stateID", state);
+			session.setAttribute("recentlySaidEvents", savedEventNames);
+
+			return newAskResponse(response, true, "<speak>was there anything you would like to know about those events?</speak>", true);
+		}
+		//13 or more events
+		else{
+			savedEventNames = new String[numEvents];
+			for(int i = 0; i < numEvents; i++){
+				savedEventNames[i] = results.get("summary").get(i).toString();
+				
+			}
+			state = 1001;
+			session.setAttribute("stateID", state);
+			session.setAttribute("recentlySaidEvents", savedEventNames);
+			return newAskResponse("I was able to find " + numEvents + " different events. Would you like to hear about all of them, or just something like sports or performances?", true,
+					"<speak>what kind of events did you want to hear about?</speak>", true);
+		}
+
 	}
 	
 	private SpeechletResponse handleGetFeeDetailsIntent(IntentRequest intentReq, Session session) {
