@@ -111,6 +111,7 @@ CREATE OR REPLACE VIEW event_info AS
   SELECT e.summary, e.start, l.name AS location FROM events e
   JOIN locations l ON l.location_id = e.location_id
   ORDER BY e.start ASC;
+ALTER VIEW event_info OWNER TO ssuadmin;
 
 
 --
@@ -158,15 +159,13 @@ GRANT USAGE
   TO alexaskill,scraper;
 
 GRANT SELECT
-  ON TABLE events, event_categories,
-           locations, event_types,
-           contacts, categories
+  ON TABLE events, event_categories, event_info, event_types,
+           contacts, categories, locations
   TO alexaskill;
 
 GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER
-  ON TABLE events, event_categories,
-           locations, event_types,
-           contacts, categories
+  ON TABLE events, event_categories, event_info, event_types,
+           contacts, categories, locations
   TO scraper;
 
 GRANT SELECT
