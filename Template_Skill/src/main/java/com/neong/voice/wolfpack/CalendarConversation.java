@@ -57,7 +57,7 @@ public class CalendarConversation extends Conversation {
 
 		String summary = (String) results.get("summary").get(0);
 		Timestamp start = (Timestamp) results.get("start").get(0);
-		String location = (String) results.get("name").get(0);
+		String location = (String) results.get("location").get(0);
 
 		if (location == null)
 			location = "Sonoma State University";
