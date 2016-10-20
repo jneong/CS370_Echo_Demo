@@ -12,15 +12,18 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import org.joda.time.DateTime;
+// import org.joda.time.DateTime;
 
 import java.time.ZonedDateTime;
+import com.neong.voice.wolfpack.CalendarHelper;
 
 public class CalendarConversation extends Conversation {
 	// Intent names
 	private final static String INTENT_NEXTEVENT = "NextEventIntent";
 	private final static String INTENT_GETEVENTSONDATE = "GetEventsOnDateIntent";
+	private final static String INTENT_NARROWDOWN = "NarrowDownIntent";
 	private final static String AMAZON_DATE = "date";
+	private final static String CATEGORY_TITLE = "CategoryTitle";
 
 	private final static ZoneId PST = ZoneId.of("America/Los_Angeles");
 	private final static DateTimeFormatter TIMEFORMATTER = DateTimeFormatter.ofPattern("h:mm a");
@@ -38,6 +41,7 @@ public class CalendarConversation extends Conversation {
 		// Add custom intent names for dispatcher use.
 		supportedIntentNames.add(INTENT_NEXTEVENT);
 		supportedIntentNames.add(INTENT_GETEVENTSONDATE);
+		supportedIntentNames.add(INTENT_NARROWDOWN);
 	}
 
 	@Override
@@ -51,6 +55,9 @@ public class CalendarConversation extends Conversation {
 
 		if (INTENT_GETEVENTSONDATE.equals(intentName))
 			response = handleGetEventsOnDateIntent(intentReq, session);
+		
+		if (INTENT_NARROWDOWN.equals(intentName))
+			response = handleNarrowDownIntent(intentReq, session);
 
 		return response;
 
@@ -100,4 +107,41 @@ public class CalendarConversation extends Conversation {
 				true);
 
 	}
+	
+	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session) {
+		Intent theIntent = intentReq.getIntent();
+		String slotCategory = theIntent.getSlot(CATEGORY_TITLE).getValue();
+		String givenDate = session.getAttribute("savedDate").toString();
+		
+		// If the category the user asks about is not in the list of categories/calendars we support, Alexa
+		// will warn the user.
+		if (!CalendarHelper.isCategorySupported(slotCategory)){
+			int number = 1001;
+			session.setAttribute("stateID", number);
+			return newTellResponse(
+					"<speak> Sorry, I do not know anything about that category. Would you like to know about"
+					+ "sports, arts and entertainment or club events? . </speak>", true);
+			
+		}
+		
+		// Otherwise if the category the user asks for IS one of the categories we support. Return the name and the 
+		// time of all events within that category, or if the query finds that there are no events on the day, 
+		// Alexa tells the user she has nothing to return.
+		Map<String, Vector<Object>> results = db 
+		.runQuery("SELECT summary, start FROM events;");
+		
+		if (results.get("summary").size() == 0){
+			return newTellResponse(
+					"<speak> There are no events happening in"+ slotCategory +"on that day </speak>", true);
+		}
+		
+		String responseString = CalendarHelper.listEvents(results, givenDate);
+		int number2 = 1000;
+		
+		session.setAttribute("stateID", number2);
+		return newAskResponse(responseString, true, "Are you still there?", false);
+	}
+	
 }
+
+	
