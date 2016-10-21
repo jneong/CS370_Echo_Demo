@@ -60,6 +60,7 @@ public class CalendarConversation extends Conversation {
 		Intent intent = intentReq.getIntent();
 		String intentName = (intent != null) ? intent.getName() : null;
 		SpeechletResponse response = null;
+		int state = (Integer) session.getAttribute("stateID");
 
 		if (INTENT_NEXTEVENT.equals(intentName))
 			response = handleNextEventIntent(intentReq, session);
@@ -67,13 +68,13 @@ public class CalendarConversation extends Conversation {
 		if (INTENT_GETEVENTSONDATE.equals(intentName))
 			response = handleGetEventsOnDateIntent(intentReq, session);
 		
-		if (INTENT_NARROWDOWN.equals(intentName))
+		if (INTENT_NARROWDOWN.equals(intentName) && state == 1001)
 			response = handleNarrowDownIntent(intentReq, session);
 		
-		if (INTENT_GETFEEDETAILS.equals(intentName))
+		if (INTENT_GETFEEDETAILS.equals(intentName) && state == 1000)
 			response = handleGetFeeDetailsIntent(intentReq, session);
 		
-		if (INTENT_GETLOCATIONDETAILS.equals(intentName))
+		if (INTENT_GETLOCATIONDETAILS.equals(intentName) && state == 1000)
 			response = handleGetLocationDetailsIntent(intentReq, session);
 
 		return response;
