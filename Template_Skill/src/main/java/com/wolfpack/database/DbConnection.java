@@ -224,6 +224,7 @@ public class DbConnection {
 		// Error checking
 		catch (SQLException e) {
 			System.out.println("Problem with received query. (Perhaps it is an invalid query?)");
+			System.out.println("Received query: " + query);
 			System.out.println(e);
 			return null;
 		}
