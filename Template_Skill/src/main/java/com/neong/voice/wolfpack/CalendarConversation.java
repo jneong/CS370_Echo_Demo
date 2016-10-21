@@ -14,7 +14,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import java.time.ZonedDateTime;
-import com.neong.voice.wolfpack.CalendarHelper;
 
 public class CalendarConversation extends Conversation {
 	// Intent names
@@ -65,18 +64,21 @@ public class CalendarConversation extends Conversation {
 		if (INTENT_NEXTEVENT.equals(intentName))
 			response = handleNextEventIntent(intentReq, session);
 
-		if (INTENT_GETEVENTSONDATE.equals(intentName))
+		else if (INTENT_GETEVENTSONDATE.equals(intentName))
 			response = handleGetEventsOnDateIntent(intentReq, session);
 		
-		if (INTENT_NARROWDOWN.equals(intentName) && state == 1001)
+		else if (INTENT_NARROWDOWN.equals(intentName) && state == 1001)
 			response = handleNarrowDownIntent(intentReq, session);
 		
-		if (INTENT_GETFEEDETAILS.equals(intentName) && state == 1000)
+		else if (INTENT_GETFEEDETAILS.equals(intentName) && state == 1000)
 			response = handleGetFeeDetailsIntent(intentReq, session);
 		
-		if (INTENT_GETLOCATIONDETAILS.equals(intentName) && state == 1000)
+		else if (INTENT_GETLOCATIONDETAILS.equals(intentName) && state == 1000)
 			response = handleGetLocationDetailsIntent(intentReq, session);
 
+		else
+			response = newTellResponse("<speak>Sorry, I'm not quite sure what you meant.</speak>", true);
+		
 		return response;
 
 	}
