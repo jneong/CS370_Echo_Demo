@@ -26,6 +26,12 @@
     },
     {
       "intent": "NextEventIntent"
-    }
+    },
+    {
+     "intent": "GetFeeDetailsIntent"
+    },
+    {
+     "intent": "GetLocationDetailsIntent
+    },
   ]
 }
