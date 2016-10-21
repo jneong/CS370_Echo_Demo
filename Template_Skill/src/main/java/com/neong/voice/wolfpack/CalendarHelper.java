@@ -9,8 +9,8 @@ import java.util.Vector;
 
 public  class CalendarHelper {
 	public static boolean isCategorySupported(String category){
-		String [] supportedCategories = {"Sports", "Arts and Entertainment", "Lectures"};
-		for (int i = 0; i < 3; i++){
+		String [] supportedCategories = {"SportsCategoryIntent", "ArtsAndEntertainmentCategoryIntent", "LecturesCategoryIntent",  "ClubsCategoryIntent"};
+		for (int i = 0; i < 4; i++){
 			if (category == supportedCategories[i])
 				return true;
 		}

@@ -22,6 +22,10 @@ public class CalendarConversation extends Conversation {
 	private final static String INTENT_NARROWDOWN = "NarrowDownIntent";
 	private final static String INTENT_GETFEEDETAILS = "GetFeeDetailsIntent";
 	private final static String INTENT_GETLOCATIONDETAILS = "GetLocationDetailsIntent";
+	private final static String INTENT_SPORTSCATEGORY = "SportsCategoryIntent";
+	private final static String INTENT_ARTSANDENTERTAINMENTCATEGORY = "ArtsAndEntertainmentCategoryIntent";
+	private final static String INTENT_LECTURESCATEGORY = "LecturesCategoryIntent";
+	private final static String INTENT_CLUBSCATEGORY= "ClubsCategoryIntent";
 
 	
 	// Slots (String value in quotes should be the slot name in the intent schema)
@@ -52,6 +56,11 @@ public class CalendarConversation extends Conversation {
 		supportedIntentNames.add(INTENT_NARROWDOWN);
 		supportedIntentNames.add(INTENT_GETFEEDETAILS);
 		supportedIntentNames.add(INTENT_GETLOCATIONDETAILS);
+		
+		supportedIntentNames.add(INTENT_SPORTSCATEGORY);
+		supportedIntentNames.add(INTENT_ARTSANDENTERTAINMENTCATEGORY);
+		supportedIntentNames.add(INTENT_LECTURESCATEGORY);
+		supportedIntentNames.add(INTENT_CLUBSCATEGORY);
 	}
 
 	@Override
@@ -59,7 +68,11 @@ public class CalendarConversation extends Conversation {
 		Intent intent = intentReq.getIntent();
 		String intentName = (intent != null) ? intent.getName() : null;
 		SpeechletResponse response = null;
-		int state = (Integer) session.getAttribute("stateID");
+		int state;
+		if(session.getAttribute("stateID") == null)
+			state = 0;
+		else
+			state = (Integer) session.getAttribute("stateID");
 
 		if (INTENT_NEXTEVENT.equals(intentName))
 			response = handleNextEventIntent(intentReq, session);
@@ -67,14 +80,20 @@ public class CalendarConversation extends Conversation {
 		else if (INTENT_GETEVENTSONDATE.equals(intentName))
 			response = handleGetEventsOnDateIntent(intentReq, session);
 		
-		else if (INTENT_NARROWDOWN.equals(intentName) && state == 1001)
-			response = handleNarrowDownIntent(intentReq, session);
-		
 		else if (INTENT_GETFEEDETAILS.equals(intentName) && state == 1000)
 			response = handleGetFeeDetailsIntent(intentReq, session);
 		
 		else if (INTENT_GETLOCATIONDETAILS.equals(intentName) && state == 1000)
 			response = handleGetLocationDetailsIntent(intentReq, session);
+		
+		else if (INTENT_SPORTSCATEGORY.equals(intentName) && state == 1001)
+			response = handleNarrowDownIntent(intentReq, session, "Athletics");
+		else if (INTENT_ARTSANDENTERTAINMENTCATEGORY.equals(intentName) && state == 1001)
+			response = handleNarrowDownIntent(intentReq, session, "Arts and Entertainment");
+		else if (INTENT_LECTURESCATEGORY.equals(intentName) && state == 1001)
+			response = handleNarrowDownIntent(intentReq, session, "Films and Lectures");
+		else if (INTENT_CLUBSCATEGORY.equals(intentName) && state == 1001)
+			response = handleNarrowDownIntent(intentReq, session, "Club and Organization");
 
 		else
 			response = newTellResponse("<speak>Sorry, I'm not quite sure what you meant.</speak>", true);
@@ -85,7 +104,7 @@ public class CalendarConversation extends Conversation {
 
 	private SpeechletResponse handleNextEventIntent(IntentRequest intentReq, Session session) {
 		Map<String, Vector<Object>> results = db
-				.runQuery("SELECT * FROM ssucalendar.event_info WHERE start > now() LIMIT 1;");
+				.runQuery("SELECT * FROM erichtest.event_info WHERE start > now() LIMIT 1;");
 
 		if (results == null)
 			return newTellResponse("Sorry, I'm on break", false);
@@ -116,7 +135,8 @@ public class CalendarConversation extends Conversation {
 		String response;
 		String[] savedEventNames;
 		
-		String query = "SELECT * FROM event_info WHERE (\'" + givenDate + "\'" + zoneString + " <= start) AND (date \'" + givenDate + "\' + integer '1')" + zoneString + " > start;";
+		//String query = "SELECT * FROM event_info WHERE (\'" + givenDate + "\'" + zoneString + " <= start) AND (date \'" + givenDate + "\' + integer '1')" + zoneString + " > start;";
+		String query = "SELECT * FROM erichtest.event_info WHERE now() < start LIMIT 15;";
 		
 		//Select all events on the same day as the givenDate.
 		Map<String, Vector<Object>> results = db.runQuery(query);
@@ -131,6 +151,8 @@ public class CalendarConversation extends Conversation {
 		if (numEvents == 0){
 			return newTellResponse("<speak>I couldn't find any events on <say-as interpret-as=\"date\">" + givenDate + "</say-as> </speak>", true);
 		}
+		
+		session.setAttribute("savedDate", givenDate);
 		
 		if(numEvents <= 13){
 		
@@ -170,14 +192,16 @@ public class CalendarConversation extends Conversation {
 
 	}
 	
-	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session) {
-		Intent theIntent = intentReq.getIntent();
-		String slotCategory = theIntent.getSlot(CATEGORY_TITLE).getValue();
+	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session, String category) {
+
+		if(session.getAttribute("savedDate") == null)
+			return newTellResponse("Well, something went wrong.", false);
 		String givenDate = session.getAttribute("savedDate").toString();
 		
 		// If the category the user asks about is not in the list of categories/calendars we support, Alexa
 		// will warn the user.
-		if (!CalendarHelper.isCategorySupported(slotCategory)){
+		
+		/*if (!CalendarHelper.isCategorySupported(category)){
 			int number = 1001;
 			session.setAttribute("stateID", number);
 			return newTellResponse(
@@ -185,16 +209,17 @@ public class CalendarConversation extends Conversation {
 					+ "sports, arts and entertainment or club events? . </speak>", true);
 			
 		}
+		*/
 		
 		// Otherwise if the category the user asks for IS one of the categories we support. Return the name and the 
 		// time of all events within that category, or if the query finds that there are no events on the day, 
 		// Alexa tells the user she has nothing to return.
 		Map<String, Vector<Object>> results = db 
-		.runQuery("SELECT summary, start FROM events;");
+		.runQuery("SELECT summary, start FROM events LIMIT 4;");
 		
 		if (results.get("summary").size() == 0){
 			return newTellResponse(
-					"<speak> There are no events happening in"+ slotCategory +"on that day </speak>", true);
+					"<speak> There are no events happening in"+ category +"on that day </speak>", true);
 		}
 		
 		String responseString = CalendarHelper.listEvents(results, givenDate);
