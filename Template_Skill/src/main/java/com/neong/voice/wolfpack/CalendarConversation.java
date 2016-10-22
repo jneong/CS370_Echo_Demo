@@ -31,7 +31,6 @@ public class CalendarConversation extends Conversation {
 	// Slots (String value in quotes should be the slot name in the intent schema)
 	private final static String EVENT_NAME = "eventName";
 	private final static String AMAZON_DATE = "date";
-	private final static String CATEGORY_TITLE = "CategoryTitle";
 
 	// Timestamp formatting
 	private final static ZoneId PST = ZoneId.of("America/Los_Angeles");
@@ -234,13 +233,12 @@ public class CalendarConversation extends Conversation {
 		String eventname = theIntent.getSlot(EVENT_NAME).getValue();
 			
 		Map<String, Vector<Object>> results = db
-			.runQuery("SELECT * FROM events WHERE summary = '" + eventname);
-		
-		String fee = results.get("general_admission_fee").get(0).toString();
+			.runQuery("SELECT * FROM events WHERE summary = '" + eventname + "';");
 		
 		if (results.get("general_admission_fee").size() == 0)
 			return newAskResponse("<speak>I wasn't able to find that information</speak>", true, "<speak> I'm sorry, I didn't quite catch that </speak>", false);
 		
+		String fee = results.get("general_admission_fee").get(0).toString();
 		return newAskResponse("<speak> The general admission fee is, " + fee + ". </speak>", true, "<speak> I'm sorry, I didn't quite catch that </speak>", false);
 		
 	}
@@ -250,13 +248,13 @@ public class CalendarConversation extends Conversation {
 		String eventname = theIntent.getSlot(EVENT_NAME).getValue();
 		
 		Map<String, Vector<Object>> results = db
-			.runQuery("SELECT summary, location FROM events WHERE summary = '" + eventname);
+			.runQuery("SELECT summary, location FROM events WHERE summary = '" + eventname + "';");
+		
+		if (results.get("location").size() == 0)
+			return newAskResponse("<speak>I wasn't able to find that information</speak>", true, "<speak> Did you want any other information? </speak>", false);
 		
 		String event = results.get("summary").get(0).toString();
 		String location = results.get("location").get(0).toString();
-		
-		if (results.get("location").size() == 0)
-			return newAskResponse("<speak>I wasn't able to find that information</speak>", true, "<speak> I'm sorry, I didn't quite catch that </speak>", false);
 		
 		return newAskResponse("<speak> The, " + event + "is located at, " + location +". </speak>", true, "<speak>I'm sorry, I didn't quite catch that</speak>", false);
 				
