@@ -158,14 +158,6 @@ public class CalendarConversation extends Conversation {
 					+ "</say-as> </speak>", true);
 		}
 
-		// Save session attributes
-		session.setAttribute("savedDate", givenDate);
-		savedEventNames = new ArrayList<String>(numEvents);
-		for (int i = 0; i < numEvents; i++) {
-			savedEventNames.add(results.get("summary").get(i).toString());
-		}
-		session.setAttribute("recentlySaidEvents", savedEventNames);
-
 		if (numEvents <= 13) {
 
 			// Format eventDay as the day of the week
@@ -180,14 +172,21 @@ public class CalendarConversation extends Conversation {
 
 			state = 1000;
 			session.setAttribute("stateID", state);
+			session.setAttribute("savedDate", givenDate);
 
 			return newAskResponse(response, true,
 					"<speak>was there anything you would like to know about those events?</speak>", true);
 		}
 		// 13 or more events
 		else {
+			savedEventNames = new ArrayList<String>(numEvents);
+			for (int i = 0; i < numEvents; i++) {
+				savedEventNames.add(results.get("summary").get(i).toString());
+			}
+			session.setAttribute("recentlySaidEvents", savedEventNames);
 			state = 1001;
 			session.setAttribute("stateID", state);
+			session.setAttribute("savedDate", givenDate);
 			return newAskResponse(
 				"I was able to find " + numEvents
 					+ " different events. Would you like to hear about all of them, or just something like sports or performances?",
