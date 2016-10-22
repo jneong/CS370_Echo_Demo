@@ -23,6 +23,7 @@ public class CalendarConversation extends Conversation {
 	private final static String INTENT_NARROWDOWN = "NarrowDownIntent";
 	private final static String INTENT_GETFEEDETAILS = "GetFeeDetailsIntent";
 	private final static String INTENT_GETLOCATIONDETAILS = "GetLocationDetailsIntent";
+	private final static String INTENT_ALLCATEGORY = "AllCategoryIntent";
 	private final static String INTENT_SPORTSCATEGORY = "SportsCategoryIntent";
 	private final static String INTENT_ARTSANDENTERTAINMENTCATEGORY = "ArtsAndEntertainmentCategoryIntent";
 	private final static String INTENT_LECTURESCATEGORY = "LecturesCategoryIntent";
@@ -58,6 +59,7 @@ public class CalendarConversation extends Conversation {
 		supportedIntentNames.add(INTENT_GETFEEDETAILS);
 		supportedIntentNames.add(INTENT_GETLOCATIONDETAILS);
 
+		supportedIntentNames.add(INTENT_ALLCATEGORY);
 		supportedIntentNames.add(INTENT_SPORTSCATEGORY);
 		supportedIntentNames.add(INTENT_ARTSANDENTERTAINMENTCATEGORY);
 		supportedIntentNames.add(INTENT_LECTURESCATEGORY);
@@ -88,6 +90,8 @@ public class CalendarConversation extends Conversation {
 		else if (INTENT_GETLOCATIONDETAILS.equals(intentName) && state == 1000)
 			response = handleGetLocationDetailsIntent(intentReq, session);
 
+		else if (INTENT_ALLCATEGORY.equals(intentName) && state == 1001)
+			response = handleNarrowDownIntent(intentReq, session, "all");
 		else if (INTENT_SPORTSCATEGORY.equals(intentName) && state == 1001)
 			response = handleNarrowDownIntent(intentReq, session, "Athletics");
 		else if (INTENT_ARTSANDENTERTAINMENTCATEGORY.equals(intentName) && state == 1001)
@@ -201,15 +205,21 @@ public class CalendarConversation extends Conversation {
 		ArrayList<String> savedEventNames;
 		int numEvents;
 		
-		
 		if (session.getAttribute("savedDate") == null)
 			return newTellResponse("I can't even remember which day we were talking about.", false);
 		String givenDate = session.getAttribute("savedDate").toString();
-
+		
 		// Return the name and the time of all events within that category, or
-		// if the query finds that there are no events on the day, Alexa tells the user
-		// she has nothing to return.
-		Map<String, Vector<Object>> results = db.runQuery("SELECT summary, start FROM events LIMIT 4;");
+				// if the query finds that there are no events on the day, Alexa tells the user
+				// she has nothing to return.
+		Map<String, Vector<Object>> results;
+		if(category == "all"){
+			 results = db.runQuery("SELECT summary, start FROM events LIMIT 4;");
+		}
+		else{ //THIS QUERY WOULD BE CHANGED TO BE BASED ON THE CATEGORY.
+			results = db.runQuery("SELECT summary, start FROM events LIMIT 4;");
+		}
+		
 		numEvents = results.get("summary").size();
 		
 		if (numEvents == 0) {
