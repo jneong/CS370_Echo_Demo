@@ -3,11 +3,12 @@ package com.neong.voice.wolfpack;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.lang.Math;
 
-public class cs {
+public class CosineSim {
 
 	/**
 	 * @param string1
@@ -162,5 +163,14 @@ public class cs {
 			}
 		}
 		return bestMatch;
+	}
+	
+	/**
+	 * Overloads getBestMatch(String, String[]). Allows the outerStrings to be stored in
+	 * an ArrayList object instead of an array.
+	 */
+	public static String getBestMatch(String innerString, ArrayList<String> outerStrings) {
+		String[] array = outerStrings.toArray(new String[0]);
+		return getBestMatch(innerString, array);
 	}
 }
