@@ -23,6 +23,7 @@ import javax.xml.parsers.DocumentBuilder;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+
 public class DbConnection {
 
 	private static String dbName;
@@ -34,6 +35,7 @@ public class DbConnection {
 	private static String schema;
 	private static Connection dbConnection;
 
+
 	/**
 	 * When the main constructor is used, the object will attempt to get the
 	 * user's credentials and then use that to secure a connection to the
@@ -41,6 +43,7 @@ public class DbConnection {
 	 */
 	public DbConnection() {
 	}
+
 
 	/**
 	 * The second constructor allows you to pass the path to the credentials for
@@ -51,6 +54,7 @@ public class DbConnection {
 		this();
 		getCredentials(pathToCredentials);
 	}
+
 
 	/**
 	 * This method will attempt to get the user's credentials (username,
@@ -117,8 +121,8 @@ public class DbConnection {
 		}
 
 		return true;
-
 	}
+
 
 	/**
 	 * This method is what establishes a connection to the PostgreSQL database,
@@ -134,7 +138,6 @@ public class DbConnection {
 	 * 
 	 * @return true if the database was successfully connected to. Otherwise,
 	 *         false if there were any errors.
-	 * 
 	 */
 	public boolean getRemoteConnection() {
 
@@ -145,7 +148,7 @@ public class DbConnection {
 		try {
 			Class.forName("org.postgresql.Driver");
 			dbConnection = DriverManager.getConnection(jdbcUrl);
-			if(schema != null)
+			if (schema != null)
 				dbConnection.setSchema(schema);
 
 		// Error handling
@@ -158,8 +161,8 @@ public class DbConnection {
 		}
 
 		return true;
-
 	}
+
 
 	/**
 	 * The isValid() method in the Connection class is used to determine if the
@@ -173,14 +176,15 @@ public class DbConnection {
 	 *         the method will return false.
 	 */
 	public boolean isConnected() {
-		final int TIMEOUT = 10; 			//In seconds
-		try{
+		final int TIMEOUT = 10; // In seconds
+		try {
 			return dbConnection.isValid(TIMEOUT);
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return false;
 		}
 	}
+
 
 	/**
 	 * The runQuery() method will attempt to run the SQL query passed to it and
@@ -232,6 +236,7 @@ public class DbConnection {
 		return resultMap;
 	}
 
+
 	/**
 	 * This is for debugging purposes to be able to see what a Map<String,
 	 * Vector<Object>> object looks like. It will be printed in the format of:
@@ -259,12 +264,9 @@ public class DbConnection {
 					System.out.printf("|[%d]  %s  ", i, values.get(i));
 				}
 				System.out.print("\n");
-
 			}
 		} else {
 			System.out.println("Cannot print a null map.");
 		}
-
 	}
-
 }
