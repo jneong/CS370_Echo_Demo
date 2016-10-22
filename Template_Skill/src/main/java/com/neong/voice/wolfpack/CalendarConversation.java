@@ -39,8 +39,9 @@ public class CalendarConversation extends Conversation {
 	private final static DateTimeFormatter DAYFORMATTER = DateTimeFormatter.ofPattern("EEEE");
 	private final static DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("????MMdd");
 
-	// Database query pieces
+	// Other constants
 	private final static String zoneString = " ::timestamp at time zone 'America/Los_Angeles' ";
+	private final static int MAX_EVENTS = 13;
 
 	private DbConnection db;
 
@@ -158,7 +159,7 @@ public class CalendarConversation extends Conversation {
 					+ "</say-as> </speak>", true);
 		}
 
-		if (numEvents <= 13) {
+		if (numEvents <= MAX_EVENTS) {
 
 			// Format eventDay as the day of the week
 			Timestamp firstEventStart = (Timestamp) results.get("start").get(0);
@@ -170,6 +171,11 @@ public class CalendarConversation extends Conversation {
 			response += CalendarHelper.listEvents(results, givenDate);
 			response += "</speak>";
 
+			savedEventNames = new ArrayList<String>(numEvents);
+			for (int i = 0; i < numEvents; i++) {
+				savedEventNames.add(results.get("summary").get(i).toString());
+			}
+			session.setAttribute("recentlySaidEvents", savedEventNames);
 			state = 1000;
 			session.setAttribute("stateID", state);
 			session.setAttribute("savedDate", givenDate);
@@ -177,13 +183,8 @@ public class CalendarConversation extends Conversation {
 			return newAskResponse(response, true,
 					"<speak>was there anything you would like to know about those events?</speak>", true);
 		}
-		// 13 or more events
+		// MAX_EVENTS or more events
 		else {
-			savedEventNames = new ArrayList<String>(numEvents);
-			for (int i = 0; i < numEvents; i++) {
-				savedEventNames.add(results.get("summary").get(i).toString());
-			}
-			session.setAttribute("recentlySaidEvents", savedEventNames);
 			state = 1001;
 			session.setAttribute("stateID", state);
 			session.setAttribute("savedDate", givenDate);
@@ -197,25 +198,35 @@ public class CalendarConversation extends Conversation {
 
 	
 	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session, String category) {
-
+		ArrayList<String> savedEventNames;
+		int numEvents;
+		
+		
 		if (session.getAttribute("savedDate") == null)
-			return newTellResponse("Well, something went wrong.", false);
+			return newTellResponse("I can't even remember which day we were talking about.", false);
 		String givenDate = session.getAttribute("savedDate").toString();
 
 		// Return the name and the time of all events within that category, or
 		// if the query finds that there are no events on the day, Alexa tells the user
 		// she has nothing to return.
 		Map<String, Vector<Object>> results = db.runQuery("SELECT summary, start FROM events LIMIT 4;");
-
-		if (results.get("summary").size() == 0) {
+		numEvents = results.get("summary").size();
+		
+		if (numEvents == 0) {
 			return newTellResponse("<speak> There are no events happening in" + category + "on that day </speak>",
 					true);
 		}
-
 		String responseString = CalendarHelper.listEvents(results, givenDate);
+		
 		int number2 = 1000;
-
 		session.setAttribute("stateID", number2);
+		
+		savedEventNames = new ArrayList<String>(numEvents);
+		for (int i = 0; i < numEvents; i++) {
+			savedEventNames.add(results.get("summary").get(i).toString());
+		}
+		session.setAttribute("recentlySaidEvents", savedEventNames);
+		
 		return newAskResponse(responseString, true, "Are you still there?", false);
 	}
 
@@ -226,6 +237,7 @@ public class CalendarConversation extends Conversation {
 
 		if (session.getAttribute("recentlySaidEvents") == null)
 			return newTellResponse("wait for me to mention some events first.", false);
+		
 		ArrayList<String> savedEvents = (ArrayList<String>) session.getAttribute("recentlySaidEvents");
 		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventName);
 		eventName = CosineSim.getBestMatch(eventName, savedEvents);
