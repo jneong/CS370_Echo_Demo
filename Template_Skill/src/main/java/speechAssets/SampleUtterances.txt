@@ -1,3 +1,34 @@
+GetEventsOnDateIntent what's happening on {date}
+GetEventsOnDateIntent what is happening on {date}
+
+GetFeeDetailsIntent How much does it cost to go to {eventName}
+GetFeeDetailsIntent How much are tickets for {eventName}
+
+GetLocationDetailsIntent Where is {eventName}
+GetLocationDetailsIntent What is {eventName} going to be at
+
+AllCategoryIntent all
+AllCategoryIntent all of them
+AllCategoryIntent give me all of them
+
+SportsCategoryIntent sports
+SportsCategoryIntent athletics
+SportsCategoryIntent games
+
+ArtsAndEntertainmentCategoryIntent shows
+ArtsAndEntertainmentCategoryIntent performances
+ArtsAndEntertainmentCategoryIntent arts and entertainment
+
+LecturesCategoryIntent lectures
+LecturesCategoryIntent talks
+
+ClubsCategoryIntent clubs
+ClubsCategoryIntent student organizations
+
+NextEventIntent what is happening next
+NextEventIntent what is coming up
+NextEventIntent what is the next event on campus
+
 StartKnockIntent tell me a knock knock joke
 StartKnockIntent tell me a bad knock knock joke
 StartKnockIntent tell me a joke
@@ -23,72 +54,3 @@ AMAZON.YesIntent yes let's
 AMAZON.YesIntent sure
 AMAZON.YesIntent of course
 AMAZON.YesIntent go ahead
-
-NextEventIntent what is the next event
-NextEventIntent what is coming up
-NextEventIntent what is the next event on the calendar
-NextEventIntent whats the next event
-NextEventIntent whats coming up
-NextEventIntent whats the next event on the calendar
-
-NextEventIntent something to do that's soon
-NextEventIntent something to do that's coming up
-NextEventIntent something to do that's I will like
-NextEventIntent something to do that is soon
-NextEventIntent something to do that is coming up
-NextEventIntent something to do that is I will like
-NextEventIntent something fun that's soon
-NextEventIntent something fun that's coming up
-NextEventIntent something fun that's I will like
-NextEventIntent something fun that is soon
-NextEventIntent something fun that is coming up
-NextEventIntent something fun that is I will like
-
-NextEventIntent the next big thing
-NextEventIntent the next big event
-NextEventIntent the next big party till you drop
-NextEventIntent the next big fun time
-NextEventIntent the next big good time
-NextEventIntent the next big fun thing
-NextEventIntent the next big good thing
-NextEventIntent the next big show
-NextEventIntent the next big gathering
-NextEventIntent the next big occasion
-NextEventIntent the next big affair
-NextEventIntent the next big shindig
-NextEventIntent the next thing
-NextEventIntent the next event
-NextEventIntent the next party till you drop
-NextEventIntent the next fun time
-NextEventIntent the next good time
-NextEventIntent the next fun thing
-NextEventIntent the next good thing
-NextEventIntent the next show
-NextEventIntent the next gathering
-NextEventIntent the next occasion
-NextEventIntent the next affair
-NextEventIntent the next shindig
-NextEventIntent the next upcoming big thing
-NextEventIntent the next upcoming big event
-NextEventIntent the next upcoming big party till you drop
-NextEventIntent the next upcoming big fun time
-NextEventIntent the next upcoming big good time
-NextEventIntent the next upcoming big fun thing
-NextEventIntent the next upcoming big good thing
-NextEventIntent the next upcoming big show
-NextEventIntent the next upcoming big gathering
-NextEventIntent the next upcoming big occasion
-NextEventIntent the next upcoming big affair
-NextEventIntent the next upcoming big shindig
-NextEventIntent the next upcoming thing
-NextEventIntent the next upcoming event
-NextEventIntent the next upcoming party till you drop
-NextEventIntent the next upcoming fun time
-NextEventIntent the next upcoming good time
-NextEventIntent the next upcoming fun thing
-NextEventIntent the next upcoming good thing
-NextEventIntent the next upcoming show
-NextEventIntent the next upcoming gathering
-NextEventIntent the next upcoming occasion
-NextEventIntent the next upcoming affair
-NextEventIntent the next upcoming shindig
