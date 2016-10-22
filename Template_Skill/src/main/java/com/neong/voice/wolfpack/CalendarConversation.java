@@ -7,6 +7,7 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.neong.voice.model.base.Conversation;
 import com.wolfpack.database.DbConnection;
 import com.neong.voice.wolfpack.CalendarHelper;
+import com.neong.voice.wolfpack.CosineSim;
 
 import java.sql.Timestamp;
 import java.time.ZoneId;
