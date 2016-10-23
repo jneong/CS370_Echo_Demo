@@ -1,4 +1,4 @@
---
+﻿--
 -- Schema
 --
 
@@ -121,18 +121,20 @@ CREATE OR REPLACE VIEW event_info AS
 ALTER VIEW event_info OWNER TO ssuadmin;
 
 --
--- Function to return all events from one category on a given day
+-- Function to return all events from one category in a given time frame.
 --
 
-DROP FUNCTION IF EXISTS given_category(cname text, datestart timestamp with time zone, datefin timestamp with time zone);
-CREATE OR REPLACE FUNCTION given_category(cname text, datestart timestamp with time zone, datefin timestamp with time zone)
+DROP FUNCTION IF EXISTS given_category(cname text, datestart date);
+CREATE OR REPLACE FUNCTION given_category(cname text, datestart date, numDays integer)
   RETURNS TABLE (summary text, start timestamp with time zone, name text) AS
   $$
   BEGIN
-    RETURN QUERY SELECT e.summary, e.start, c.name FROM events e
+    RETURN QUERY SELECT e.summary, e.start, c.name FROM erichtest.events e
     JOIN event_categories ec ON e.event_id = ec.event_id
     JOIN categories c ON ec.category_id = c.category_id
-    WHERE c.name = cname AND e.start > datestart AND e.start < datefin;
+    WHERE c.name = cname
+    AND e.start > datestart::timestamp at time zone 'America/Los_Angeles'
+    AND e.start < (datestart + numDays)::timestamp at time zone 'America/Los_Angeles';
   END;
   $$
   LANGUAGE plpgsql;
