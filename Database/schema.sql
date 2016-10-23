@@ -114,7 +114,7 @@ ALTER TABLE categories OWNER TO ssuadmin;
 -- Views
 --
 
-CREATE OR REPLACE VIEW event_info AS
+CREATE VIEW event_info AS
   SELECT e.summary, e.start, l.name AS location FROM events e
   JOIN locations l ON l.location_id = e.location_id
   ORDER BY e.start ASC;
@@ -122,23 +122,26 @@ ALTER VIEW event_info OWNER TO ssuadmin;
 
 
 --
--- Function to return all events from one category in a given time frame.
+-- Functions
 --
 
-DROP FUNCTION IF EXISTS given_category(cname text, datestart date);
-CREATE OR REPLACE FUNCTION given_category(cname text, datestart date, numDays integer)
-  RETURNS TABLE (summary text, start timestamp with time zone, name text) AS
+-- Return all events from one category in a given time frame.
+-- Note: startDay is a `date` type to intentionally truncate time info.
+CREATE FUNCTION given_category(category text, startDay date, numDays smallint)
+  RETURNS TABLE (summary text, start timestamp with time zone, location text) AS
   $$
   BEGIN
     RETURN QUERY SELECT e.summary, e.start, c.name FROM events e
-    JOIN event_categories ec ON e.event_id = ec.event_id
-    JOIN categories c ON ec.category_id = c.category_id
-    WHERE c.name = cname
-    AND e.start > datestart::timestamp at time zone 'America/Los_Angeles'
-    AND e.start < (datestart + numDays)::timestamp at time zone 'America/Los_Angeles';
+      JOIN event_categories ec ON e.event_id = ec.event_id
+      JOIN categories c ON ec.category_id = c.category_id
+      WHERE c.name = category
+        AND e.start > startDay::timestamp at time zone 'America/Los_Angeles'
+        AND e.start < (startDay + numDays)::timestamp at time zone 'America/Los_Angeles'
+      ORDER BY e.start ASC;
   END;
   $$
   LANGUAGE plpgsql;
+ALTER FUNCTION given_category(text, date, smallint) OWNER TO ssuadmin;
 
 
 --
@@ -206,3 +209,7 @@ GRANT USAGE,SELECT,UPDATE
               categories_category_id_seq, locations_location_id_seq,
               event_types_event_type_id_seq
   TO scraper;
+
+GRANT EXECUTE
+  ON FUNCTION given_category(text, date, smallint)
+  TO alexaskill;
