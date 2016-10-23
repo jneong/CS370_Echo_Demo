@@ -533,16 +533,23 @@ SELECT event_id FROM calendar_event_ids
 
     return len(results) > 0
 
+
 #
 # Database manipulation
 #
 
 def populate_database(cursor):
-    # The parameter cursor is an address to the database memory.
+    # The parameter cursor is an object that allows us to execute commands
+    # in a database session.
+    # See http://initd.org/psycopg/docs/cursor.html
+
     for record in get_records(CALENDAR_URLS):
         sys.stdout.write('.')
+
+        # Skip existing events.
         if check_event_exists(cursor, record):
             continue
+
         if has_contact_info(record):
             insert_contact(cursor, record)
         if has_location(record):
