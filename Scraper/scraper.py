@@ -510,17 +510,28 @@ INSERT INTO event_categories(event_id, category_id)
 
 def insert_event_uid(cursor, event):
     statement = \
-        """
-        WITH event(id) AS (
-            SELECT event_id FROM events
-                WHERE summary = %(summary)s AND start = %(start)s
-        )
-        INSERT INTO calendar_event_ids(event_id, event_uid)
-            SELECT event.id, %(event_uid)s FROM event
-            ON CONFLICT DO NOTHING;
-        """
-
+"""
+WITH event(id) AS (
+    SELECT event_id FROM events
+    WHERE summary = %(summary)s AND start = %(start)s
+)
+INSERT INTO calendar_event_ids(event_id, event_uid)
+    SELECT event.id, %(event_uid)s FROM event
+    ON CONFLICT DO NOTHING;
+"""
     cursor.execute(statement, event)
+
+
+def check_event_exists(cursor, event):
+    statement = \
+"""
+SELECT event_id FROM calendar_event_ids
+    WHERE event_uid = %(event_uid)s
+"""
+    cursor.execute(statement, event)
+    results = cursor.fetchall()
+
+    return len(results) > 0
 
 #
 # Database manipulation
@@ -530,6 +541,8 @@ def populate_database(cursor):
     # The parameter cursor is an address to the database memory.
     for record in get_records(CALENDAR_URLS):
         sys.stdout.write('.')
+        if check_event_exists(cursor, record):
+            continue
         if has_contact_info(record):
             insert_contact(cursor, record)
         if has_location(record):
