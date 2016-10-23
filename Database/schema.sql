@@ -202,4 +202,3 @@ GRANT USAGE,SELECT,UPDATE
               categories_category_id_seq, locations_location_id_seq,
               event_types_event_type_id_seq
   TO scraper;
-
