@@ -1,4 +1,4 @@
-﻿--
+--
 -- Schema
 --
 
@@ -11,13 +11,13 @@ SET search_path TO ssucalendar;
 --
 -- Tables
 --
+
 CREATE TABLE calendar_event_ids (
-  event_id  SMALLINT NOT NULL,
-  event_uid TEXT     NOT NULL,
+  event_id smallint NOT NULL,
+  event_uid text NOT NULL,
   CONSTRAINT calendar_event_ids_id PRIMARY KEY (event_id, event_uid)
 );
 ALTER TABLE calendar_event_ids OWNER TO ssuadmin;
-
 
 -- `event_categories` stores a "many-to-many relationship" between events and
 -- categories.  There are many categories, and each event can have more than one
@@ -25,7 +25,7 @@ ALTER TABLE calendar_event_ids OWNER TO ssuadmin;
 CREATE TABLE event_categories(
   event_id smallint NOT NULL,
   category_id smallint NOT NULL,
-  CONSTRAINT event_categories_id PRIMARY KEY (event_id,category_id)
+  CONSTRAINT event_categories_id PRIMARY KEY (event_id, category_id)
 );
 ALTER TABLE event_categories OWNER TO ssuadmin;
 
@@ -95,7 +95,7 @@ CREATE TABLE contacts(
   phone text NOT NULL DEFAULT '',
   email text NOT NULL DEFAULT '',
   CONSTRAINT contact_id PRIMARY KEY (contact_id),
-  CONSTRAINT name_phone_email UNIQUE (name,phone,email)
+  CONSTRAINT name_phone_email UNIQUE (name, phone, email)
 );
 ALTER TABLE contacts OWNER TO ssuadmin;
 
@@ -120,6 +120,7 @@ CREATE OR REPLACE VIEW event_info AS
   ORDER BY e.start ASC;
 ALTER VIEW event_info OWNER TO ssuadmin;
 
+
 --
 -- Function to return all events from one category in a given time frame.
 --
@@ -129,7 +130,7 @@ CREATE OR REPLACE FUNCTION given_category(cname text, datestart date, numDays in
   RETURNS TABLE (summary text, start timestamp with time zone, name text) AS
   $$
   BEGIN
-    RETURN QUERY SELECT e.summary, e.start, c.name FROM erichtest.events e
+    RETURN QUERY SELECT e.summary, e.start, c.name FROM events e
     JOIN event_categories ec ON e.event_id = ec.event_id
     JOIN categories c ON ec.category_id = c.category_id
     WHERE c.name = cname
@@ -138,6 +139,7 @@ CREATE OR REPLACE FUNCTION given_category(cname text, datestart date, numDays in
   END;
   $$
   LANGUAGE plpgsql;
+
 
 --
 -- Foreign key constraints
@@ -181,7 +183,7 @@ GRANT CREATE,USAGE
 
 GRANT USAGE
   ON SCHEMA ssucalendar
-  TO alexaskill,scraper;
+  TO alexaskill, scraper;
 
 GRANT SELECT
   ON TABLE events, event_categories, event_info, event_types,
