@@ -113,6 +113,22 @@ CREATE OR REPLACE VIEW event_info AS
   ORDER BY e.start ASC;
 ALTER VIEW event_info OWNER TO ssuadmin;
 
+--
+-- Function to return all events from one category on a given day
+--
+
+DROP FUNCTION IF EXISTS given_category(cname text, datestart timestamp with time zone, datefin timestamp with time zone);
+CREATE OR REPLACE FUNCTION given_category(cname text, datestart timestamp with time zone, datefin timestamp with time zone)
+  RETURNS TABLE (summary text, start timestamp with time zone, name text) AS
+  $$
+  BEGIN
+    RETURN QUERY SELECT e.summary, e.start, c.name FROM events e
+    JOIN event_categories ec ON e.event_id = ec.event_id
+    JOIN categories c ON ec.category_id = c.category_id
+    WHERE c.name = cname AND e.start > datestart AND e.start < datefin;
+  END;
+  $$
+  LANGUAGE plpgsql;
 
 --
 -- Foreign key constraints
