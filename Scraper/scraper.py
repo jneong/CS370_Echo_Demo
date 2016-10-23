@@ -204,6 +204,7 @@ def get_record(event):
         "location": getter("location"),
         "start": getter("dtstart"),
         "end": getter("dtend"),
+        "event_uid": getter("uid"),
 
         "event_type": custom_getter(12),
         "website_url": custom_getter(3109),
@@ -507,11 +508,26 @@ INSERT INTO event_categories(event_id, category_id)
     cursor.executemany(statement, values)
 
 
+def insert_event_uid(cursor, event):
+    statement = \
+        """
+        WITH event(id) AS (
+            SELECT event_id FROM events
+                WHERE summary = %(summary)s AND start = %(start)s
+        )
+        INSERT INTO calendar_event_ids(event_id, event_uid)
+            SELECT event.id, %(event_uid)s FROM event
+            ON CONFLICT DO NOTHING;
+        """
+
+    cursor.execute(statement, event)
+
 #
 # Database manipulation
 #
 
 def populate_database(cursor):
+    # The parameter cursor is an address to the database memory.
     for record in get_records(CALENDAR_URLS):
         sys.stdout.write('.')
         if has_contact_info(record):
@@ -522,6 +538,7 @@ def populate_database(cursor):
         insert_categories(cursor, record)
         insert_event(cursor, record)
         insert_event_categories(cursor, record)
+        insert_event_uid(cursor, record)
 
 
 #

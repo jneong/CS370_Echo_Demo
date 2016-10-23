@@ -11,6 +11,13 @@ SET search_path TO ssucalendar;
 --
 -- Tables
 --
+CREATE TABLE calendar_event_ids (
+  event_id  SMALLINT NOT NULL,
+  event_uid TEXT     NOT NULL,
+  CONSTRAINT calendar_event_ids_id PRIMARY KEY (event_id, event_uid)
+);
+ALTER TABLE calendar_event_ids OWNER TO ssuadmin;
+
 
 -- `event_categories` stores a "many-to-many relationship" between events and
 -- categories.  There are many categories, and each event can have more than one
@@ -176,12 +183,12 @@ GRANT USAGE
 
 GRANT SELECT
   ON TABLE events, event_categories, event_info, event_types,
-           contacts, categories, locations
+           contacts, categories, locations, calendar_event_ids
   TO alexaskill;
 
 GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER
   ON TABLE events, event_categories, event_info, event_types,
-           contacts, categories, locations
+           contacts, categories, locations, calendar_event_ids
   TO scraper;
 
 GRANT SELECT
@@ -195,3 +202,4 @@ GRANT USAGE,SELECT,UPDATE
               categories_category_id_seq, locations_location_id_seq,
               event_types_event_type_id_seq
   TO scraper;
+
