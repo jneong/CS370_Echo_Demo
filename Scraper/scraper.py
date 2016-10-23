@@ -544,7 +544,10 @@ def populate_database(cursor):
     # See http://initd.org/psycopg/docs/cursor.html
 
     for record in get_records(CALENDAR_URLS):
-        sys.stdout.write('.')
+        # Show a . to indicate progress to the user when run as a script.
+        if __name__ == "__main__":
+            sys.stdout.write('.')
+            sys.stdout.flush()
 
         # Skip existing events.
         if check_event_exists(cursor, record):
@@ -560,6 +563,7 @@ def populate_database(cursor):
         insert_event_categories(cursor, record)
         insert_event_uid(cursor, record)
 
+    print("\nok")
 
 #
 # AWS Lambda event handler
