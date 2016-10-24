@@ -228,8 +228,11 @@ def drop_schema(cursor, args):
     protected = ('pg_catalog', 'information_schema', 'ssucalendar')
     schema = args.schema
     if schema in protected:
-        print("dropping that schema is not allowed")
-        return
+        if getattr(args, 'force', False) == True:
+            print("user forced dropping protected schema")
+        else:
+            print("dropping that schema is not allowed")
+            return
 
     if schema not in get_schema_list(cursor):
         print("schema does not exist")
@@ -272,6 +275,8 @@ if __name__ == "__main__":
 
     drop_parser = subparsers.add_parser("drop",
                                         help="drop a test schema")
+    drop_parser.add_argument("-f", "--force", action="store_true",
+                             help="force removal of protected schema")
     drop_parser.add_argument("schema", metavar="SCHEMA",
                              help="name of the schema to drop")
     register_handler(drop_parser, drop_schema)
