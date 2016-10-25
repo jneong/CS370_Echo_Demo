@@ -151,7 +151,7 @@ public class CosineSim {
 	 *         innerString. If none of the strings have any similarities,
 	 *         the first string in the array will be returned.
 	 */
-	public static String getBestMatch(String innerString, String[] outerStrings) {
+	public static String getBestMatch(String innerString, Iterable<String> outerStrings) {
 		String bestMatch = "";
 		double bestSimilarity = -1;
 		double similarity;
@@ -163,14 +163,5 @@ public class CosineSim {
 			}
 		}
 		return bestMatch;
-	}
-	
-	/**
-	 * Overloads getBestMatch(String, String[]). Allows the outerStrings to be stored in
-	 * an ArrayList object instead of an array.
-	 */
-	public static String getBestMatch(String innerString, ArrayList<String> outerStrings) {
-		String[] array = outerStrings.toArray(new String[0]);
-		return getBestMatch(innerString, array);
 	}
 }
