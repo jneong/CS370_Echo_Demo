@@ -7,9 +7,9 @@ GetFeeDetailsIntent How much are tickets for {eventName}
 GetLocationDetailsIntent Where is {eventName}
 GetLocationDetailsIntent What is {eventName} going to be at
 
-GetEventsOnDateIntent what time is {eventName} over
-GetEventsOnDateIntent what time does {eventName} end
-GetEventsOnDateIntent when is {eventName} over
+GetEndTimeIntent what time is {eventName} over
+GetEndTimeIntent what time does {eventName} end
+GetEndTimeIntent when is {eventName} over
 
 AllCategoryIntent all
 AllCategoryIntent all of them
