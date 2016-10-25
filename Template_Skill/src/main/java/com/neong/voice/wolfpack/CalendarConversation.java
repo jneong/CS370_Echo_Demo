@@ -269,6 +269,14 @@ public class CalendarConversation extends Conversation {
 					"<speak> Did you want any other information? </speak>", false);
 
 		String fee = results.get("general_admission_fee").get(0).toString();
+		if (fee.contains("-")) {
+			String[] parts = fee.split("-");
+			String part1 = parts[0]; // lower fee limit
+			String part2 = parts[1]; // upper fee limit
+			return newAskResponse("<speak> The general admission fee is " + part1 + " to " + part2 + ". </speak>", true,
+			                      "<speak> I'm sorry, I didn't quite catch that </speak>", false);
+		}
+
 		return newAskResponse("<speak> The general admission fee is " + fee + ". </speak>", true,
 				"<speak> I'm sorry, I didn't quite catch that </speak>", false);
 
