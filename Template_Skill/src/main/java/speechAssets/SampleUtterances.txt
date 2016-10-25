@@ -1,19 +1,26 @@
 GetEventsOnDateIntent what's happening on {date}
 GetEventsOnDateIntent what is happening on {date}
+GetEventsOnDateIntent what is going on on {date}
 
 GetFeeDetailsIntent How much does it cost to go to {eventName}
 GetFeeDetailsIntent How much are tickets for {eventName}
+GetFeeDetailsIntent How much is {eventName}
 
 GetLocationDetailsIntent Where is {eventName}
-GetLocationDetailsIntent What is {eventName} going to be at
+GetLocationDetailsIntent Where is {eventName} going to be at
+GetLocationDetailsIntent Where will {eventName} at
+GetLocationDetailsIntent Where is {eventName} happening
 
 GetEndTimeIntent what time is {eventName} over
 GetEndTimeIntent what time does {eventName} end
 GetEndTimeIntent when is {eventName} over
+GetEndTimeIntent when does {eventName} get out
+GetEndTimeIntent when does {eventName} finish
 
 AllCategoryIntent all
 AllCategoryIntent all of them
 AllCategoryIntent give me all of them
+AllCategoryIntent everything
 
 SportsCategoryIntent sports
 SportsCategoryIntent athletics
@@ -22,6 +29,7 @@ SportsCategoryIntent games
 ArtsAndEntertainmentCategoryIntent shows
 ArtsAndEntertainmentCategoryIntent performances
 ArtsAndEntertainmentCategoryIntent arts and entertainment
+ArtsAndEntertainmentCategoryIntent entertainment
 
 LecturesCategoryIntent lectures
 LecturesCategoryIntent talks

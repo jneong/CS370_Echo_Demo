@@ -195,8 +195,8 @@ public class CalendarConversation extends Conversation {
 			session.setAttribute("stateID", state);
 			session.setAttribute("savedDate", givenDate);
 			return newAskResponse(
-					"I was able to find " + numEvents
-							+ " different events. What kind of events would you like to hear about?",
+					"<speak>I was able to find " + numEvents
+							+ " different events. What kind of events would you like to hear about?</speak>",
 					true, "<speak>Would you like to hear about sports, entertainment, clubs, lectures, or all of the events? </speak>", true);
 		}
 
