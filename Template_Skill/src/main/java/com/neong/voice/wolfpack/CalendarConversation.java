@@ -235,8 +235,8 @@ public class CalendarConversation extends Conversation {
 		numEvents = results.get("summary").size();
 
 		if (numEvents == 0) {
-			return newTellResponse("<speak> There are no events happening in " + category + "on that day </speak>",
-					true);
+			return newAskResponse("<speak> There are no events happening in " + category + "on that day </speak>",
+					true, "<speak>Were there are other types of events you were interested in?</speak>", true);
 		}
 		String responseString = CalendarHelper.listEvents(results, givenDate);
 
