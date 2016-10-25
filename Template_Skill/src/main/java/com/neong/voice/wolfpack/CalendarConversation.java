@@ -175,10 +175,7 @@ public class CalendarConversation extends Conversation {
 			ZonedDateTime zonedDateTime = firstEventStart.toInstant().atZone(PST);
 			String eventDate = zonedDateTime.format(DATEFORMATTER);
 
-			response = "<speak> Okay, here is what I found. On <say-as interpret-as=\"date\">" + eventDate
-					+ "</say-as> there is ";
-			response += CalendarHelper.listEvents(results, givenDate);
-			response += "</speak>";
+			response = CalendarHelper.listEvents(results, givenDate);
 
 			savedEventNames = new HashMap<String, Integer>();
 			for (int i = 0; i < numEvents; i++) {
@@ -199,8 +196,8 @@ public class CalendarConversation extends Conversation {
 			session.setAttribute("savedDate", givenDate);
 			return newAskResponse(
 					"I was able to find " + numEvents
-							+ " different events. Would you like to hear about all of them, or just something like sports or performances?",
-					true, "<speak>what kind of events did you want to hear about?</speak>", true);
+							+ " different events. What kind of events would you like to hear about?",
+					true, "<speak>Would you like to hear about sports, entertainment, clubs, lectures, or all of the events? </speak>", true);
 		}
 
 	}
@@ -224,7 +221,7 @@ public class CalendarConversation extends Conversation {
 
 		if(category == "all"){
 			query = "SELECT event_id, summary, start FROM event_info WHERE ('" + givenDate +
-					"'" + zoneString + " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
+					"'" + zoneString + " <= start) AND (date '" + givenDate + "' + integer '1')" + zoneString + " > start;";
 		}
 		else{ 
 			query = "SELECT event_id, summary, start FROM given_category('" + category + "', '" + givenDate + "', 1::smallint);";
@@ -235,7 +232,7 @@ public class CalendarConversation extends Conversation {
 		numEvents = results.get("summary").size();
 
 		if (numEvents == 0) {
-			return newAskResponse("<speak> There are no events happening in " + category + "on that day </speak>",
+			return newAskResponse("<speak> There are no events happening in " + category + " on that day </speak>",
 					true, "<speak>Were there are other types of events you were interested in?</speak>", true);
 		}
 		String responseString = CalendarHelper.listEvents(results, givenDate);
@@ -256,15 +253,15 @@ public class CalendarConversation extends Conversation {
 
 	private SpeechletResponse handleGetFeeDetailsIntent(IntentRequest intentReq, Session session) {
 		Intent theIntent = intentReq.getIntent();
-		String eventName = theIntent.getSlot(EVENT_NAME).getValue();
+		String eventNameSlot = theIntent.getSlot(EVENT_NAME).getValue();
 		
 		if (session.getAttribute("recentlySaidEvents") == null)
 			return newTellResponse("wait for me to mention some events first.", false);
 		
 		Map<String, Integer> savedEvents = (HashMap<String, Integer>) session.getAttribute("recentlySaidEvents");
 
-		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventName);
-		eventName = CosineSim.getBestMatch(eventName, savedEvents.keySet());
+		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventNameSlot);
+		String eventName = CosineSim.getBestMatch(eventNameSlot, savedEvents.keySet());
 		Integer eventID = savedEvents.get(eventName);
 		System.out.println("I'M THINKING THE CLOSEST NAME IS: " + eventName);
 
@@ -272,10 +269,12 @@ public class CalendarConversation extends Conversation {
 				.runQuery("SELECT summary, general_admission_fee FROM events WHERE event_id = '" + eventID + "';");
 
 		if (results.get("general_admission_fee").get(0) == null)
-			return newAskResponse("<speak>I wasn't able to find that information</speak>", true,
+			return newAskResponse("<speak>There is no price is listed for " + eventName + "</speak>", true,
 					"<speak> Did you want any other information? </speak>", false);
+		
 
 		String fee = results.get("general_admission_fee").get(0).toString();
+		fee = fee.replace("-", " to ");
 		return newAskResponse("<speak> The general admission fee is " + fee + ". </speak>", true,
 				"<speak> I'm sorry, I didn't quite catch that </speak>", false);
 
@@ -327,10 +326,6 @@ public class CalendarConversation extends Conversation {
 
 		Map<String, Vector<Object>> results = db
 				.runQuery("SELECT summary, \"end\" FROM events WHERE event_id = '" + eventID + "';");
-
-		if (results.get("end").get(0) == null)
-			return newAskResponse("<speak>I wasn't able to find that information</speak>", true,
-					"<speak> Did you want any other information? </speak>", false);
 
 		Timestamp end = (Timestamp) results.get("end").get(0);
 		ZonedDateTime zonedDateTime = end.toInstant().atZone(PST);
