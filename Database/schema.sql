@@ -128,10 +128,10 @@ ALTER VIEW event_info OWNER TO ssuadmin;
 -- Return all events from one category in a given time frame.
 -- Note: startDay is a `date` type to intentionally truncate time info.
 CREATE FUNCTION given_category(category text, startDay date, numDays smallint)
-  RETURNS TABLE (summary text, start timestamp with time zone, location text) AS
+  RETURNS TABLE (event_id smallint, summary text, start timestamp with time zone, location text) AS
   $$
   BEGIN
-    RETURN QUERY SELECT e.summary, e.start, c.name FROM events e
+    RETURN QUERY SELECT e.event_id, e.summary, e.start, c.name FROM events e
       JOIN event_categories ec ON e.event_id = ec.event_id
       JOIN categories c ON ec.category_id = c.category_id
       WHERE c.name = category
