@@ -7,6 +7,10 @@ GetFeeDetailsIntent How much are tickets for {eventName}
 GetLocationDetailsIntent Where is {eventName}
 GetLocationDetailsIntent What is {eventName} going to be at
 
+GetEventsOnDateIntent what time is {eventName} over
+GetEventsOnDateIntent what time does {eventName} end
+GetEventsOnDateIntent when is {eventName} over
+
 AllCategoryIntent all
 AllCategoryIntent all of them
 AllCategoryIntent give me all of them
@@ -28,29 +32,3 @@ ClubsCategoryIntent student organizations
 NextEventIntent what is happening next
 NextEventIntent what is coming up
 NextEventIntent what is the next event on campus
-
-StartKnockIntent tell me a knock knock joke
-StartKnockIntent tell me a bad knock knock joke
-StartKnockIntent tell me a joke
-StartKnockIntent tell me a bad joke
-StartKnockIntent make me smile
-
-WhoDerIntent who's there
-WhoDerIntent whose there
-WhoDerIntent who there
-
-DrWhoIntent doctor who
-DrWhoIntent doctor hoo
-
-AMAZON.NoIntent nope
-AMAZON.NoIntent no way
-AMAZON.NoIntent hell no
-AMAZON.NoIntent niet
-
-AMAZON.YesIntent for sure
-AMAZON.YesIntent absolutely
-AMAZON.YesIntent why not
-AMAZON.YesIntent yes let's
-AMAZON.YesIntent sure
-AMAZON.YesIntent of course
-AMAZON.YesIntent go ahead
