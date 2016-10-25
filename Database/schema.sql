@@ -115,7 +115,7 @@ ALTER TABLE categories OWNER TO ssuadmin;
 --
 
 CREATE VIEW event_info AS
-  SELECT e.summary, e.start, l.name AS location FROM events e
+  SELECT e.event_id, e.summary, e.start, l.name AS location FROM events e
   JOIN locations l ON l.location_id = e.location_id
   ORDER BY e.start ASC;
 ALTER VIEW event_info OWNER TO ssuadmin;
