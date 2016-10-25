@@ -28,6 +28,15 @@
         ]
     },
     {
+      "intent": "GetEndTimeIntent",
+        "slots": [
+          {
+            "name": "eventName",
+            "type": "LIST_OF_EVENTS"
+          }
+        ]
+    },
+    {
       "intent": "AllCategoryIntent"
     },
     {

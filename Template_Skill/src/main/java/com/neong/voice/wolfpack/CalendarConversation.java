@@ -23,6 +23,7 @@ public class CalendarConversation extends Conversation {
 	private final static String INTENT_NARROWDOWN = "NarrowDownIntent";
 	private final static String INTENT_GETFEEDETAILS = "GetFeeDetailsIntent";
 	private final static String INTENT_GETLOCATIONDETAILS = "GetLocationDetailsIntent";
+	private final static String INTENT_GETENDTIME = "GetEndTimeIntent";
 	private final static String INTENT_ALLCATEGORY = "AllCategoryIntent";
 	private final static String INTENT_SPORTSCATEGORY = "SportsCategoryIntent";
 	private final static String INTENT_ARTSANDENTERTAINMENTCATEGORY = "ArtsAndEntertainmentCategoryIntent";
@@ -46,6 +47,7 @@ public class CalendarConversation extends Conversation {
 
 	private DbConnection db;
 
+
 	public CalendarConversation() {
 		super();
 
@@ -58,6 +60,7 @@ public class CalendarConversation extends Conversation {
 		supportedIntentNames.add(INTENT_NARROWDOWN);
 		supportedIntentNames.add(INTENT_GETFEEDETAILS);
 		supportedIntentNames.add(INTENT_GETLOCATIONDETAILS);
+		supportedIntentNames.add(INTENT_GETENDTIME);
 
 		supportedIntentNames.add(INTENT_ALLCATEGORY);
 		supportedIntentNames.add(INTENT_SPORTSCATEGORY);
@@ -65,7 +68,7 @@ public class CalendarConversation extends Conversation {
 		supportedIntentNames.add(INTENT_LECTURESCATEGORY);
 		supportedIntentNames.add(INTENT_CLUBSCATEGORY);
 	}
-	
+
 
 	@Override
 	public SpeechletResponse respondToIntentRequest(IntentRequest intentReq, Session session) {
@@ -90,6 +93,9 @@ public class CalendarConversation extends Conversation {
 		else if (INTENT_GETLOCATIONDETAILS.equals(intentName) && state == 1000)
 			response = handleGetLocationDetailsIntent(intentReq, session);
 
+		else if (INTENT_GETENDTIME.equals(intentName) && state == 1000)
+			response = handleGetEndTimeIntent(intentReq, session);
+
 		else if (INTENT_ALLCATEGORY.equals(intentName) && state == 1001)
 			response = handleNarrowDownIntent(intentReq, session, "all");
 		else if (INTENT_SPORTSCATEGORY.equals(intentName) && state == 1001)
@@ -108,10 +114,9 @@ public class CalendarConversation extends Conversation {
 
 	}
 
-	
+
 	private SpeechletResponse handleNextEventIntent(IntentRequest intentReq, Session session) {
-		Map<String, Vector<Object>> results = db
-				.runQuery("SELECT * FROM erichtest.event_info WHERE start > now() LIMIT 1;");
+		Map<String, Vector<Object>> results = db.runQuery("SELECT * FROM event_info WHERE start > now() LIMIT 1;");
 
 		if (results == null)
 			return newTellResponse("Sorry, I'm on break", false);
@@ -129,12 +134,12 @@ public class CalendarConversation extends Conversation {
 		String time = zonedDateTime.format(TIMEFORMATTER);
 
 		return newTellResponse("<speak> Okay, the next event is " + summary + " on " + day
-			+ " <say-as interpret-as=\"date\">" + date + "</say-as> at <say-as interpret-as=\"time\">" + time
-			+ "</say-as> at " + location + ". </speak>", true);
+				+ " <say-as interpret-as=\"date\">" + date + "</say-as> at <say-as interpret-as=\"time\">" + time
+				+ "</say-as> at " + location + ". </speak>", true);
 
 	}
 
-	
+
 	private SpeechletResponse handleGetEventsOnDateIntent(IntentRequest intentReq, Session session) {
 		Intent theIntent = intentReq.getIntent();
 		String givenDate = theIntent.getSlot(AMAZON_DATE).getValue();
@@ -143,9 +148,9 @@ public class CalendarConversation extends Conversation {
 		String response;
 		ArrayList<String> savedEventNames;
 
-		String query = "SELECT summary, start FROM event_info WHERE ('" + givenDate +
-				"'" + zoneString + " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
-		
+		String query = "SELECT summary, start FROM event_info WHERE ('" + givenDate + "'" + zoneString
+				+ " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
+
 		System.out.println(query);
 
 		// Select all events on the same day as the givenDate.
@@ -193,65 +198,65 @@ public class CalendarConversation extends Conversation {
 			session.setAttribute("stateID", state);
 			session.setAttribute("savedDate", givenDate);
 			return newAskResponse(
-				"I was able to find " + numEvents
-					+ " different events. Would you like to hear about all of them, or just something like sports or performances?",
-				true, "<speak>what kind of events did you want to hear about?</speak>", true);
+					"I was able to find " + numEvents
+							+ " different events. Would you like to hear about all of them, or just something like sports or performances?",
+					true, "<speak>what kind of events did you want to hear about?</speak>", true);
 		}
 
 	}
 
-	
+
 	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session, String category) {
 		ArrayList<String> savedEventNames;
 		int numEvents;
 		String query;
-		
+
 		if (session.getAttribute("savedDate") == null)
 			return newTellResponse("I can't even remember which day we were talking about.", false);
 		String givenDate = session.getAttribute("savedDate").toString();
-		
+
 		// Return the name and the time of all events within that category, or
-				// if the query finds that there are no events on the day, Alexa tells the user
-				// she has nothing to return.
+		// if the query finds that there are no events on the day, Alexa tells
+		// the user
+		// she has nothing to return.
 		Map<String, Vector<Object>> results;
-		if(category == "all"){
-			query = "SELECT summary, start FROM event_info WHERE ('" + givenDate +
-					"'" + zoneString + " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
-		}
-		else{ //THIS QUERY WOULD BE CHANGED TO BE BASED ON THE CATEGORY.
+		if (category == "all") {
+			query = "SELECT summary, start FROM event_info WHERE ('" + givenDate + "'" + zoneString
+					+ " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
+		} else { // THIS QUERY WOULD BE CHANGED TO BE BASED ON THE CATEGORY.
 			query = "SELECT summary, start FROM given_category('" + category + "', '" + givenDate + "', 1::smallint);";
 		}
-		
+
 		results = db.runQuery(query);
-		
+
 		numEvents = results.get("summary").size();
-		
+
 		if (numEvents == 0) {
 			return newTellResponse("<speak> There are no events happening in" + category + "on that day </speak>",
 					true);
 		}
 		String responseString = CalendarHelper.listEvents(results, givenDate);
-		
+
 		int number2 = 1000;
 		session.setAttribute("stateID", number2);
-		
+
 		savedEventNames = new ArrayList<String>(numEvents);
 		for (int i = 0; i < numEvents; i++) {
 			savedEventNames.add(results.get("summary").get(i).toString());
 		}
 		session.setAttribute("recentlySaidEvents", savedEventNames);
-		
+
 		return newAskResponse(responseString, true, "Are you still there?", false);
 	}
 
-	
+
 	private SpeechletResponse handleGetFeeDetailsIntent(IntentRequest intentReq, Session session) {
 		Intent theIntent = intentReq.getIntent();
 		String eventName = theIntent.getSlot(EVENT_NAME).getValue();
 
 		if (session.getAttribute("recentlySaidEvents") == null)
 			return newTellResponse("wait for me to mention some events first.", false);
-		
+
 		ArrayList<String> savedEvents = (ArrayList<String>) session.getAttribute("recentlySaidEvents");
 		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventName);
 		eventName = CosineSim.getBestMatch(eventName, savedEvents);
@@ -269,13 +274,14 @@ public class CalendarConversation extends Conversation {
 
 	}
 
-	
+
 	private SpeechletResponse handleGetLocationDetailsIntent(IntentRequest intentReq, Session session) {
 		Intent theIntent = intentReq.getIntent();
 		String eventName = theIntent.getSlot(EVENT_NAME).getValue();
 
 		if (session.getAttribute("recentlySaidEvents") == null)
 			return newTellResponse("wait for me to mention some events first.", false);
+
 		ArrayList<String> savedEvents = (ArrayList<String>) session.getAttribute("recentlySaidEvents");
 		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventName);
 		eventName = CosineSim.getBestMatch(eventName, savedEvents);
@@ -292,7 +298,39 @@ public class CalendarConversation extends Conversation {
 		String location = results.get("location").get(0).toString();
 
 		return newAskResponse("<speak> The " + event + " is located at " + location + ". </speak>", true,
-				"<speak>I'm sorry, I didn't quite catch that</speak>", false);
+				"<speak>I'm sorry, I didn't quite catch that </speak>", false);
+
+	}
+
+
+	private SpeechletResponse handleGetEndTimeIntent(IntentRequest intentReq, Session session) {
+		Intent theIntent = intentReq.getIntent();
+		String eventName = theIntent.getSlot(EVENT_NAME).getValue();
+
+		if (session.getAttribute("recentlySaidEvents") == null)
+			return newTellResponse("wait for me to mention some events first.", false);
+
+		ArrayList<String> savedEvents = (ArrayList<String>) session.getAttribute("recentlySaidEvents");
+		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventName);
+		eventName = CosineSim.getBestMatch(eventName, savedEvents);
+		System.out.println("I'M THINKING THE CLOSEST NAME IS: " + eventName);
+
+		Map<String, Vector<Object>> results = db
+				.runQuery("SELECT summary, \"end\" FROM events WHERE summary = '" + eventName + "';");
+
+		if (results.get("end").get(0) == null)
+			return newAskResponse("<speak>I wasn't able to find that information</speak>", true,
+					"<speak> Did you want any other information? </speak>", false);
+
+		Timestamp end = (Timestamp) results.get("end").get(0);
+		ZonedDateTime zonedDateTime = end.toInstant().atZone(PST);
+		String time = zonedDateTime.format(TIMEFORMATTER);
+
+		String event = results.get("summary").get(0).toString();
+
+		return newAskResponse(
+				"<speak> The " + event + " ends at " + " <say-as interpret-as=\"time\">" + time + "</say-as>. </speak>",
+				true, "<speak>I'm sorry, I didn't quite catch that </speak>", false);
 	}
 
 }
