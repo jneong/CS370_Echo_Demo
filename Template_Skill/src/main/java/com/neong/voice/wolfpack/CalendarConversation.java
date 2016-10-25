@@ -146,11 +146,11 @@ public class CalendarConversation extends Conversation {
 		int numEvents;
 		int state;
 		String response;
-		ArrayList<String> savedEventNames;
+		HashMap<String, Integer> savedEventNames;
 
-		String query = "SELECT summary, start FROM event_info WHERE ('" + givenDate + "'" + zoneString
-				+ " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
-
+		String query = "SELECT event_id, summary, start FROM event_info WHERE ('" + givenDate +
+				"'" + zoneString + " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
+		
 		System.out.println(query);
 
 		// Select all events on the same day as the givenDate.
@@ -180,9 +180,9 @@ public class CalendarConversation extends Conversation {
 			response += CalendarHelper.listEvents(results, givenDate);
 			response += "</speak>";
 
-			savedEventNames = new ArrayList<String>(numEvents);
+			savedEventNames = new HashMap<String, Integer>();
 			for (int i = 0; i < numEvents; i++) {
-				savedEventNames.add(results.get("summary").get(i).toString());
+				savedEventNames.put(results.get("summary").get(i).toString(), new Integer(results.get("event_id").get(i).toString()));
 			}
 			session.setAttribute("recentlySaidEvents", savedEventNames);
 			state = 1000;
@@ -207,10 +207,11 @@ public class CalendarConversation extends Conversation {
 
 
 	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session, String category) {
-		ArrayList<String> savedEventNames;
+		HashMap<String, Integer> savedEventNames;
 		int numEvents;
 		String query;
 
+		//This should never happen.
 		if (session.getAttribute("savedDate") == null)
 			return newTellResponse("I can't even remember which day we were talking about.", false);
 		String givenDate = session.getAttribute("savedDate").toString();
@@ -220,11 +221,13 @@ public class CalendarConversation extends Conversation {
 		// the user
 		// she has nothing to return.
 		Map<String, Vector<Object>> results;
-		if (category == "all") {
-			query = "SELECT summary, start FROM event_info WHERE ('" + givenDate + "'" + zoneString
-					+ " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
-		} else { // THIS QUERY WOULD BE CHANGED TO BE BASED ON THE CATEGORY.
-			query = "SELECT summary, start FROM given_category('" + category + "', '" + givenDate + "', 1::smallint);";
+
+		if(category == "all"){
+			query = "SELECT event_id, summary, start FROM event_info WHERE ('" + givenDate +
+					"'" + zoneString + " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
+		}
+		else{ 
+			query = "SELECT event_id, summary, start FROM given_category('" + category + "', '" + givenDate + "', 1::smallint);";
 		}
 
 		results = db.runQuery(query);
@@ -232,7 +235,7 @@ public class CalendarConversation extends Conversation {
 		numEvents = results.get("summary").size();
 
 		if (numEvents == 0) {
-			return newTellResponse("<speak> There are no events happening in" + category + "on that day </speak>",
+			return newTellResponse("<speak> There are no events happening in " + category + "on that day </speak>",
 					true);
 		}
 		String responseString = CalendarHelper.listEvents(results, givenDate);
@@ -240,9 +243,10 @@ public class CalendarConversation extends Conversation {
 		int number2 = 1000;
 		session.setAttribute("stateID", number2);
 
-		savedEventNames = new ArrayList<String>(numEvents);
+		savedEventNames = new HashMap<String, Integer>();
+
 		for (int i = 0; i < numEvents; i++) {
-			savedEventNames.add(results.get("summary").get(i).toString());
+			savedEventNames.put(results.get("summary").get(i).toString(), new Integer(results.get("event_id").get(i).toString()));
 		}
 		session.setAttribute("recentlySaidEvents", savedEventNames);
 
@@ -253,30 +257,25 @@ public class CalendarConversation extends Conversation {
 	private SpeechletResponse handleGetFeeDetailsIntent(IntentRequest intentReq, Session session) {
 		Intent theIntent = intentReq.getIntent();
 		String eventName = theIntent.getSlot(EVENT_NAME).getValue();
-
+		
 		if (session.getAttribute("recentlySaidEvents") == null)
 			return newTellResponse("wait for me to mention some events first.", false);
+		
+		Map<String, Integer> savedEvents = (HashMap<String, Integer>) session.getAttribute("recentlySaidEvents");
 
-		ArrayList<String> savedEvents = (ArrayList<String>) session.getAttribute("recentlySaidEvents");
 		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventName);
-		eventName = CosineSim.getBestMatch(eventName, savedEvents);
+		eventName = CosineSim.getBestMatch(eventName, savedEvents.keySet());
+		Integer eventID = savedEvents.get(eventName);
 		System.out.println("I'M THINKING THE CLOSEST NAME IS: " + eventName);
 
-		Map<String, Vector<Object>> results = db.runQuery("SELECT * FROM events WHERE summary = '" + eventName + "';");
+		Map<String, Vector<Object>> results = db
+				.runQuery("SELECT summary, general_admission_fee FROM events WHERE event_id = '" + eventID + "';");
 
 		if (results.get("general_admission_fee").get(0) == null)
 			return newAskResponse("<speak>I wasn't able to find that information</speak>", true,
 					"<speak> Did you want any other information? </speak>", false);
 
 		String fee = results.get("general_admission_fee").get(0).toString();
-		if (fee.contains("-")) {
-			String[] parts = fee.split("-");
-			String part1 = parts[0]; // lower fee limit
-			String part2 = parts[1]; // upper fee limit
-			return newAskResponse("<speak> The general admission fee is " + part1 + " to " + part2 + ". </speak>", true,
-			                      "<speak> I'm sorry, I didn't quite catch that </speak>", false);
-		}
-
 		return newAskResponse("<speak> The general admission fee is " + fee + ". </speak>", true,
 				"<speak> I'm sorry, I didn't quite catch that </speak>", false);
 
@@ -285,18 +284,20 @@ public class CalendarConversation extends Conversation {
 
 	private SpeechletResponse handleGetLocationDetailsIntent(IntentRequest intentReq, Session session) {
 		Intent theIntent = intentReq.getIntent();
-		String eventName = theIntent.getSlot(EVENT_NAME).getValue();
-
+		String eventNameSlot = theIntent.getSlot(EVENT_NAME).getValue();
+		
 		if (session.getAttribute("recentlySaidEvents") == null)
 			return newTellResponse("wait for me to mention some events first.", false);
 
-		ArrayList<String> savedEvents = (ArrayList<String>) session.getAttribute("recentlySaidEvents");
-		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventName);
-		eventName = CosineSim.getBestMatch(eventName, savedEvents);
+		Map<String, Integer> savedEvents = (HashMap<String, Integer>) session.getAttribute("recentlySaidEvents");
+
+		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventNameSlot);
+		String eventName = CosineSim.getBestMatch(eventNameSlot, savedEvents.keySet());
+		Integer eventID = savedEvents.get(eventName);
 		System.out.println("I'M THINKING THE CLOSEST NAME IS: " + eventName);
 
 		Map<String, Vector<Object>> results = db
-				.runQuery("SELECT summary, location FROM event_info WHERE summary = '" + eventName + "';");
+				.runQuery("SELECT summary, location FROM event_info WHERE event_id = '" + eventID + "';");
 
 		if (results.get("location").get(0) == null)
 			return newAskResponse("<speak>I wasn't able to find that information</speak>", true,
@@ -318,13 +319,14 @@ public class CalendarConversation extends Conversation {
 		if (session.getAttribute("recentlySaidEvents") == null)
 			return newTellResponse("wait for me to mention some events first.", false);
 
-		ArrayList<String> savedEvents = (ArrayList<String>) session.getAttribute("recentlySaidEvents");
+		Map<String, Integer> savedEvents = (HashMap<String, Integer>) session.getAttribute("recentlySaidEvents");
 		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventName);
-		eventName = CosineSim.getBestMatch(eventName, savedEvents);
+		eventName = CosineSim.getBestMatch(eventName, savedEvents.keySet());
+		Integer eventID = savedEvents.get(eventName);
 		System.out.println("I'M THINKING THE CLOSEST NAME IS: " + eventName);
 
 		Map<String, Vector<Object>> results = db
-				.runQuery("SELECT summary, \"end\" FROM events WHERE summary = '" + eventName + "';");
+				.runQuery("SELECT summary, \"end\" FROM events WHERE event_id = '" + eventID + "';");
 
 		if (results.get("end").get(0) == null)
 			return newAskResponse("<speak>I wasn't able to find that information</speak>", true,
