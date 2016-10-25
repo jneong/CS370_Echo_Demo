@@ -42,7 +42,7 @@ public class CalendarConversation extends Conversation {
 
 	// Other constants
 	private final static String zoneString = " ::timestamp at time zone 'America/Los_Angeles' ";
-	private final static int MAX_EVENTS = 13;
+	private final static int MAX_EVENTS = 5;
 
 	private DbConnection db;
 
@@ -143,10 +143,10 @@ public class CalendarConversation extends Conversation {
 		String response;
 		ArrayList<String> savedEventNames;
 
-		// String query = "SELECT * FROM event_info WHERE (\'" + givenDate +
-		// "\'" + zoneString + " <= start) AND (date \'" + givenDate + "\' +
-		// integer '1')" + zoneString + " > start;";
-		String query = "SELECT * FROM erichtest.event_info WHERE now() < start LIMIT 15;";
+		String query = "SELECT summary, start FROM event_info WHERE ('" + givenDate +
+				"'" + zoneString + " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
+		
+		System.out.println(query);
 
 		// Select all events on the same day as the givenDate.
 		Map<String, Vector<Object>> results = db.runQuery(query);
@@ -204,6 +204,7 @@ public class CalendarConversation extends Conversation {
 	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session, String category) {
 		ArrayList<String> savedEventNames;
 		int numEvents;
+		String query;
 		
 		if (session.getAttribute("savedDate") == null)
 			return newTellResponse("I can't even remember which day we were talking about.", false);
@@ -214,11 +215,14 @@ public class CalendarConversation extends Conversation {
 				// she has nothing to return.
 		Map<String, Vector<Object>> results;
 		if(category == "all"){
-			 results = db.runQuery("SELECT summary, start FROM events LIMIT 4;");
+			query = "SELECT summary, start FROM event_info WHERE ('" + givenDate +
+					"'" + zoneString + " <= start) AND (date \'" + givenDate + "' + integer '1')" + zoneString + " > start;";
 		}
 		else{ //THIS QUERY WOULD BE CHANGED TO BE BASED ON THE CATEGORY.
-			results = db.runQuery("SELECT summary, start FROM events LIMIT 4;");
+			query = "SELECT summary, start FROM given_category('" + category + "', '" + givenDate + "', 1::smallint);";
 		}
+		
+		results = db.runQuery(query);
 		
 		numEvents = results.get("summary").size();
 		
@@ -255,7 +259,7 @@ public class CalendarConversation extends Conversation {
 
 		Map<String, Vector<Object>> results = db.runQuery("SELECT * FROM events WHERE summary = '" + eventName + "';");
 
-		if (results.get("general_admission_fee").size() == 0)
+		if (results.get("general_admission_fee").get(0) == null)
 			return newAskResponse("<speak>I wasn't able to find that information</speak>", true,
 					"<speak> Did you want any other information? </speak>", false);
 
@@ -280,7 +284,7 @@ public class CalendarConversation extends Conversation {
 		Map<String, Vector<Object>> results = db
 				.runQuery("SELECT summary, location FROM event_info WHERE summary = '" + eventName + "';");
 
-		if (results.get("location").size() == 0)
+		if (results.get("location").get(0) == null)
 			return newAskResponse("<speak>I wasn't able to find that information</speak>", true,
 					"<speak> Did you want any other information? </speak>", false);
 
