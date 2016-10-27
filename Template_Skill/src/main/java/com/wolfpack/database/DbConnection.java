@@ -89,6 +89,7 @@ public class DbConnection {
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(new File(credsResourcePath));
+			String pathToCerts;
 
 			// Normalize text representation
 			doc.getDocumentElement().normalize();
@@ -99,7 +100,8 @@ public class DbConnection {
 			password = doc.getElementsByTagName("password").item(0).getTextContent();
 			hostName = doc.getElementsByTagName("hostName").item(0).getTextContent();
 			port = doc.getElementsByTagName("port").item(0).getTextContent();
-			localPathToSSL = doc.getElementsByTagName("localPathToSSL").item(0).getTextContent();
+			pathToCerts = doc.getElementsByTagName("localPathToSSL").item(0).getTextContent();
+			localPathToSSL = classLoader.getResource(pathToCerts).getFile();
 			schema = doc.getElementsByTagName("schema").item(0).getTextContent();
 
 			// Error catching
@@ -140,10 +142,9 @@ public class DbConnection {
 	 *         false if there were any errors.
 	 */
 	public boolean getRemoteConnection() {
-
 		// Create a URL to be able to connect to the database.
 		String jdbcUrl = "jdbc:postgresql://" + hostName + ":" + port + "/" + dbName + "?user=" + username
-				+ "&password=" + password + "&sslmode=verify-full&sslrootcert=" + localPathToSSL;
+			+ "&password=" + password + "&sslmode=verify-full&sslrootcert=" + localPathToSSL;
 
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -157,6 +158,7 @@ public class DbConnection {
 			return false;
 		} catch (SQLException e2) {
 			System.out.println("Unable to establish a connection to the database.");
+			System.out.println(e2);
 			return false;
 		}
 
