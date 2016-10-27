@@ -172,7 +172,7 @@ public class DbConnection {
 	 * there is a connection.
 	 * 
 	 * @return true if the database has been connected to, otherwise false if
-	 *         there is not a current connection. If the test query times out, 
+	 *         there is not a current connection. If the test query times out,
 	 *         the method will return false.
 	 */
 	public boolean isConnected() {
@@ -206,24 +206,11 @@ public class DbConnection {
 	 *         results if everything went successfully. Otherwise, null.
 	 */
 	public Map<String, Vector<Object>> runQuery(String query) {
-		Map<String, Vector<Object>> resultMap = new HashMap<String, Vector<Object>>();
 		try {
 			Statement st = dbConnection.createStatement();
 			ResultSet rawResults = st.executeQuery(query);
-			ResultSetMetaData rsmd = rawResults.getMetaData();
 
-			// Set up all of the keys (column names) with empty vectors as the values.
-			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-				String name = rsmd.getColumnName(i);
-				resultMap.put(name, new Vector<Object>());
-			}
-
-			// Push the values into the vectors.
-			while (rawResults.next()) {
-				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-					resultMap.get(rsmd.getColumnName(i)).addElement(rawResults.getObject(i));
-				}
-			}
+			return mapResults(rawResults);
 		}
 		// Error checking
 		catch (SQLException e) {
@@ -231,6 +218,51 @@ public class DbConnection {
 			System.out.println("Received query: " + query);
 			System.out.println(e);
 			return null;
+		}
+	}
+
+
+	/**
+	 * Wrapper for Connection.prepareStatement()
+	 */
+	public PreparedStatement prepareStatement(String statement)
+		throws SQLException {
+		return dbConnection.prepareStatement(statement);
+	}
+
+
+	/**
+	 * Execute a prepared statement and return as a Map of Object Vectors
+	 */
+	public static Map<String, Vector<Object>> executeStatement(PreparedStatement statement)
+		throws SQLException {
+		ResultSet results = statement.executeQuery();
+
+		return mapResults(results);
+	}
+
+
+	private static Map<String, Vector<Object>> mapResults(ResultSet resultSet)
+		throws SQLException {
+		Map<String, Vector<Object>> resultMap = new HashMap<String, Vector<Object>>();
+		ResultSetMetaData metaData = resultSet.getMetaData();
+		int columnCount = metaData.getColumnCount();
+
+		// Set up all of the keys (column names) with empty vectors as the values.
+		for (int i = 1; i <= columnCount; ++i) {
+			String column = metaData.getColumnName(i);
+
+			resultMap.put(column, new Vector<Object>());
+		}
+
+		// Push the values into the vectors.
+		while (resultSet.next()) {
+			for (int i = 1; i <= columnCount; ++i) {
+				String column = metaData.getColumnName(i);
+				Object value = resultSet.getObject(i);
+
+				resultMap.get(column).addElement(value);
+			}
 		}
 
 		return resultMap;
