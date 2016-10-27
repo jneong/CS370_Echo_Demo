@@ -214,7 +214,7 @@ public class CalendarConversation extends Conversation {
 
 		EventField[] fields = { EventField.SUMMARY, EventField.DATE, EventField.TIME };
 		String eventSsml = CalendarHelper.formatEventSsml(0, results, fields);
-		String responseSsml = "The next event is " + eventSsml + ".";
+		String responseSsml = "The next event is " + eventSsml;
 		String repromptSsml = "Is there anything you would like to know about this event?";
 
 		return newAffirmativeResponse(responseSsml, repromptSsml);
