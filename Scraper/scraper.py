@@ -544,7 +544,8 @@ def get_calendar_urls(cursor):
     SELECT url_text FROM calendar_urls
     """
     cursor.execute(statement)
-    return cursor.fetchall()
+    results = cursor.fetchall()
+    return [url[0] for url in results]
 
 
 def populate_database(cursor):
