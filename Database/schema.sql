@@ -19,6 +19,13 @@ CREATE TABLE calendar_event_ids (
 );
 ALTER TABLE calendar_event_ids OWNER TO ssuadmin;
 
+CREATE TABLE calendar_urls(
+  url_id SMALLSERIAL NOT NULL,
+  url_text text NOT NULL,
+  CONSTRAINT url_id PRIMARY KEY (url_id)
+);
+ALTER TABLE calendar_urls OWNER TO ssuadmin;
+
 -- `event_categories` stores a "many-to-many relationship" between events and
 -- categories.  There are many categories, and each event can have more than one
 -- category, so this table keeps track of which events have which categories.
@@ -196,6 +203,14 @@ GRANT SELECT
 GRANT SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER
   ON TABLE events, event_categories, event_info, event_types,
            contacts, categories, locations, calendar_event_ids
+  TO scraper;
+
+GRANT SELECT
+  ON TABLE calendar_urls
+  TO scraper;
+
+GRANT SELECT
+  ON SEQUENCE calendar_urls_url_id_seq
   TO scraper;
 
 GRANT SELECT

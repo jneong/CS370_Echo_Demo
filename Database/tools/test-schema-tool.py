@@ -53,6 +53,7 @@ SSL_CRL_PATH = getenv('SSL_CRL_PATH', '')
 
 SCHEMA_PATH = getenv('SCHEMA_PATH', '../schema.sql')
 OBLITERATE_PATH = getenv('OBLITERATE_PATH', '../obliterate.sql')
+CALENDAR_URLS_PATH = getenv('CALENDAR_URLS_PATH', '../calendar_urls.sql')
 
 REPLACE_SCHEMA_NAME = getenv('REPLACE_SCHEMA_NAME', 'ssucalendar')
 
@@ -206,6 +207,7 @@ def create_schema(cursor, args):
         return
 
     execute_schema_action(cursor, SCHEMA_PATH, schema)
+    execute_schema_action(cursor, CALENDAR_URLS_PATH, schema)
 
     print("""
 Hint:

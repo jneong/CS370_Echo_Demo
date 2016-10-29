@@ -538,12 +538,22 @@ SELECT event_id FROM calendar_event_ids
 # Database manipulation
 #
 
+def get_calendar_urls(cursor):
+    statement = \
+    """
+    SELECT url_text FROM calendar_urls
+    """
+    cursor.execute(statement)
+    return cursor.fetchall()
+
+
 def populate_database(cursor):
     # The parameter cursor is an object that allows us to execute commands
     # in a database session.
     # See http://initd.org/psycopg/docs/cursor.html
 
-    for record in get_records(CALENDAR_URLS):
+    c_urls = get_calendar_urls(cursor)
+    for record in get_records(c_urls):
         # Show a . to indicate progress to the user when run as a script.
         if __name__ == "__main__":
             sys.stdout.write('.')
