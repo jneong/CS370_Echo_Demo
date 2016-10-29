@@ -191,11 +191,11 @@ public class CalendarConversation extends Conversation {
 			break;
 
 		case INTENT_LECTURESCATEGORY:
-			category = "Films and Lectures";
+			category = "Lectures and Films";
 			break;
 
 		case INTENT_CLUBSCATEGORY:
-			category = "Club and Organization";
+			category = "Club and Student Organizations";
 			break;
 
 		default:
