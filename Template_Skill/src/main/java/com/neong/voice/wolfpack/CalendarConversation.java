@@ -14,7 +14,8 @@ import com.neong.voice.wolfpack.DateManip;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -232,12 +233,12 @@ public class CalendarConversation extends Conversation {
 		Map<String, Vector<Object>> results;
 
 		try {
-			String query = "SELECT * FROM event_info " +
-				"WHERE date_trunc('day', start) = ?::date";
+			//CHANGE 'ARTS AND ENTERTAINMENT' TO 'ALL' ONCE GIVEN_CATEGORY() IS UPDATED
+			String query = "SELECT * FROM given_category(text 'Club and Student Organizations', ? , " +
+				"1::smallint)";
 
 			PreparedStatement ps = db.prepareStatement(query);
-			ps.setString(1, givenDate);
-
+			ps.setDate(1, java.sql.Date.valueOf(givenDate));
 			results = db.executeStatement(ps);
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -253,8 +254,8 @@ public class CalendarConversation extends Conversation {
 		// If there were not any events on the given day:
 		if (numEvents == 0) {
 			Timestamp ts = DateManip.dateToTimestamp(givenDate);
-			String dateSsml = CalendarHelper.formatDateSsml(ts);
-			String responseSsml = "I couldn't find any events on" + dateSsml + ".";
+			String dateSsml = CalendarHelper.formatDateSsmlNoZone(ts);
+			String responseSsml = "I couldn't find any events on " + dateSsml + ".";
 			String repromptSsml = "Can I help you find another event?";
 			return newFailureResponse(responseSsml, repromptSsml);
 		}
@@ -271,10 +272,10 @@ public class CalendarConversation extends Conversation {
 			}
 
 			session.setAttribute(ATTRIB_RECENTLYSAIDEVENTS, savedEventNames);
-			session.setAttribute(ATTRIB_SAVEDDATE, Timestamp.valueOf(givenDate));
+			session.setAttribute(ATTRIB_SAVEDDATE, DateManip.dateToTimestamp(givenDate));
 			session.setAttribute(ATTRIB_STATEID, SessionState.USER_HEARD_EVENTS);
 
-			response = newEventListResponse(results, start);
+			response = newEventListResponse(results, DateManip.dateToTimestamp(givenDate));
 		} else { // more than MAX_EVENTS
 			session.setAttribute(ATTRIB_STATEID, SessionState.LIST_TOO_LONG);
 			session.setAttribute(ATTRIB_SAVEDDATE, DateManip.dateToTimestamp(givenDate));
@@ -436,7 +437,7 @@ public class CalendarConversation extends Conversation {
 	private static SpeechletResponse newEventListResponse(Map<String, Vector<Object>> results,
 	                                                      Timestamp when) {
 		EventField[] fields = { EventField.SUMMARY, EventField.TIME };
-		String dateSsml = CalendarHelper.formatDateSsml(when);
+		String dateSsml = CalendarHelper.formatDateSsmlNoZone(when);
 		String eventsSsml = CalendarHelper.listEvents(results, fields);
 		String responseSsml = "The events on " + dateSsml + " are: " + eventsSsml;
 		String repromptSsml = "Is there anything you would like to know about those events?";
