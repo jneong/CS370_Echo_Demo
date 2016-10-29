@@ -9,6 +9,7 @@ import com.wolfpack.database.DbConnection;
 import com.neong.voice.wolfpack.CalendarHelper;
 import com.neong.voice.wolfpack.CalendarHelper.EventField;
 import com.neong.voice.wolfpack.CosineSim;
+import com.neong.voice.wolfpack.DateManip;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -251,7 +252,7 @@ public class CalendarConversation extends Conversation {
 
 		// If there were not any events on the given day:
 		if (numEvents == 0) {
-			Timestamp ts = Timestamp.valueOf(givenDate);
+			Timestamp ts = DateManip.dateToTimestamp(givenDate);
 			String dateSsml = CalendarHelper.formatDateSsml(ts);
 			String responseSsml = "I couldn't find any events on" + dateSsml + ".";
 			String repromptSsml = "Can I help you find another event?";
@@ -270,13 +271,13 @@ public class CalendarConversation extends Conversation {
 			}
 
 			session.setAttribute(ATTRIB_RECENTLYSAIDEVENTS, savedEventNames);
-			session.setAttribute(ATTRIB_SAVEDDATE, start);
+			session.setAttribute(ATTRIB_SAVEDDATE, Timestamp.valueOf(givenDate));
 			session.setAttribute(ATTRIB_STATEID, SessionState.USER_HEARD_EVENTS);
 
 			response = newEventListResponse(results, start);
 		} else { // more than MAX_EVENTS
 			session.setAttribute(ATTRIB_STATEID, SessionState.LIST_TOO_LONG);
-			session.setAttribute(ATTRIB_SAVEDDATE, start);
+			session.setAttribute(ATTRIB_SAVEDDATE, DateManip.dateToTimestamp(givenDate));
 
 			String responseSsml = "I was able to find " + numEvents + " different events. " +
 				"What kind of events would you like to hear about?";
@@ -291,7 +292,7 @@ public class CalendarConversation extends Conversation {
 
 
 	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session, String category) {
-		Timestamp start = (Timestamp) session.getAttribute(ATTRIB_SAVEDDATE);
+		Timestamp start = new Timestamp((long) session.getAttribute(ATTRIB_SAVEDDATE));
 
 		// This should never happen.
 		if (start == null)
