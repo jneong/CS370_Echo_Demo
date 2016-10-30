@@ -3,23 +3,27 @@ package com.neong.voice.wolfpack;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.ZoneId;
+
 import java.time.ZonedDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import com.wolfpack.database.DbConnection;
-
 
 public class CalendarHelper {
+	public static final String TIME_ZONE = "America/Los_Angeles";
+
 	private static final DateTimeFormatter DAY_FORMATTER = DateTimeFormatter.ofPattern("EEEE");
 	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("????MMdd");
 	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("h:mm a");
-	private static final ZoneId PST_ZONEID = ZoneId.of("America/Los_Angeles");
+	private static final ZoneId LOCAL_ZONEID = ZoneId.of(TIME_ZONE);
 
-	public enum EventField { DATE, TIME, SUMMARY, LOCATION };
+	public enum EventField {
+		START_DATE, START_TIME, END_TIME, SUMMARY, LOCATION, GENERAL_ADMISSION
+	};
 
 
 	public static boolean isCategorySupported(String category) {
@@ -28,8 +32,8 @@ public class CalendarHelper {
 			"LecturesCategoryIntent",  "ClubsCategoryIntent"
 		};
 
-		for (int i = 0; i < 4; i++)
-			if (category == supportedCategories[i])
+		for (String cat : supportedCategories)
+			if (cat == category)
 				return true;
 
 		return false;
@@ -46,21 +50,31 @@ public class CalendarHelper {
 				ssml += summary;
 				break;
 
-			case DATE: {
+			case START_DATE: {
 				final Timestamp start = (Timestamp) events.get("start").get(index);
 				ssml += "on " + formatDateSsml(start);
 				break;
 			}
 
-			case TIME: {
+			case START_TIME: {
 				final Timestamp start = (Timestamp) events.get("start").get(index);
 				ssml += "at " + formatTimeSsml(start);
 				break;
 			}
 
+			case END_TIME:
+				final Timestamp end = (Timestamp) events.get("end").get(index);
+				ssml += "ends at " + formatTimeSsml(end);
+				break;
+
 			case LOCATION:
 				final String location = (String) events.get("location").get(index);
 				ssml += "at " + location;
+				break;
+
+			case GENERAL_ADMISSION:
+				final String fee = (String) events.get("general_admission_fee").get(index);
+				ssml += "the general admission fee is " + formatFeeSsml(fee);
 				break;
 
 			default:
@@ -77,23 +91,16 @@ public class CalendarHelper {
 
 
 	public static String formatDateSsml(Timestamp when) {
-		final ZonedDateTime zonedDateTime = when.toInstant().atZone(PST_ZONEID);
+		final ZonedDateTime zonedDateTime = when.toInstant().atZone(LOCAL_ZONEID);
 		final String day = zonedDateTime.format(DAY_FORMATTER);
 		final String date = zonedDateTime.format(DATE_FORMATTER);
 
 		return day + ", <say-as interpret-as=\"date\">" + date + "</say-as>";
 	}
-	
-	public static String formatDateSsmlNoZone(Timestamp when){
-		final String date = new SimpleDateFormat("????MMdd").format(when);
-		final String day = new SimpleDateFormat("EEEE").format(when);
-		
-		return day + ", <say-as interpret-as=\"date\">" + date + "</say-as>";
-	}
 
 
 	public static String formatTimeSsml(Timestamp when) {
-		final ZonedDateTime zonedDateTime = when.toInstant().atZone(PST_ZONEID);
+		final ZonedDateTime zonedDateTime = when.toInstant().atZone(LOCAL_ZONEID);
 		final String time = zonedDateTime.format(TIME_FORMATTER);
 
 		return "<say-as interpret-as=\"time\">" + time + "</say-as>";
@@ -108,6 +115,14 @@ public class CalendarHelper {
 	}
 
 
+	public static String formatFeeSsml(String fee) {
+		if (fee == null)
+			fee = "not specified";
+
+		return fee.replace("-", " to ");
+	}
+
+
 	public static String listEvents(Map<String, Vector<Object>> events, EventField[] fields) {
 		String response = "";
 
@@ -118,5 +133,17 @@ public class CalendarHelper {
 
 		return response;
 	}
-	
+
+
+	public static Map<String, Integer> extractEventIds(Map<String, Vector<Object>> events, int numEvents) {
+		Map<String, Integer> savedEvents = new HashMap<String, Integer>(numEvents);
+
+		for (int i = 0; i < numEvents; i++) {
+			String key = events.get("summary").get(i).toString();
+			Integer value = (Integer) events.get("event_id").get(i);
+			savedEvents.put(key, value);
+		}
+
+		return savedEvents;
+	}
 }
