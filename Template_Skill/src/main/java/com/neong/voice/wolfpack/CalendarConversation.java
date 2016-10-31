@@ -289,8 +289,10 @@ public class CalendarConversation extends Conversation {
 		} else { // more than MAX_EVENTS
 			session.setAttribute(ATTRIB_STATEID, SessionState.LIST_TOO_LONG);
 
-			String responseSsml = "I was able to find " + numEvents + " different events. " +
+			String dateSsml = dateRange.getDateSsml();
+			String responseSsml = "I was able to find " + numEvents + " different events on " + dateSsml + ". " +
 				"What kind of events would you like to hear about?";
+			// TODO: only prompt for categories found in the list
 			String repromptSsml = "Would you like to hear about sports, entertainment, " +
 				"clubs, lectures, or all of the events?";
 
