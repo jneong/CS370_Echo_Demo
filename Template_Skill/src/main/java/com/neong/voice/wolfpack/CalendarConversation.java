@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.neong.voice.wolfpack.CalendarHelper;
-import com.neong.voice.wolfpack.CalendarHelper.EventField;
 import com.neong.voice.wolfpack.CosineSim;
 
 import com.neong.voice.model.base.Conversation;
@@ -221,12 +220,11 @@ public class CalendarConversation extends Conversation {
 		if (results == null)
 			return newInternalErrorResponse();
 
-		EventField[] fields = { EventField.SUMMARY, EventField.START_DATE, EventField.START_TIME };
-		String eventSsml = CalendarHelper.formatEventSsml(0, results, fields);
-		String responseSsml = "The next event is " + eventSsml;
+		String eventFormat = "The next event is {summary}, on {start:date} at {start:time}.";
+		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 		String repromptSsml = "Is there anything you would like to know about this event?";
 
-		return newAffirmativeResponse(responseSsml, repromptSsml);
+		return newAffirmativeResponse(eventSsml, repromptSsml);
 	}
 
 
@@ -415,8 +413,8 @@ public class CalendarConversation extends Conversation {
 		if (results.get("summary").size() == 0)
 			return newInternalErrorResponse();
 
-		EventField[] fields = { EventField.GENERAL_ADMISSION };
-		String eventSsml = CalendarHelper.formatEventSsml(0, results, fields);
+		String eventFormat = "General admission for {summary} is {general_admission_fee}.";
+		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
 		return newAffirmativeResponse(eventSsml, "I'm sorry, I didn't quite catch that.");
 	}
@@ -458,8 +456,8 @@ public class CalendarConversation extends Conversation {
 		if (results.get("summary").size() == 0)
 			return newInternalErrorResponse();
 
-		EventField[] fields = { EventField.SUMMARY, EventField.LOCATION };
-		String eventSsml = CalendarHelper.formatEventSsml(0, results, fields);
+		String eventFormat = "{summary} is located at {location}.";
+		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
 		return newAffirmativeResponse(eventSsml, "I'm sorry, I didn't quite catch that.");
 	}
@@ -501,8 +499,8 @@ public class CalendarConversation extends Conversation {
 		if (results.get("summary").size() == 0)
 			return newInternalErrorResponse();
 
-		EventField[] fields = { EventField.SUMMARY, EventField.END_TIME };
-		String eventSsml = CalendarHelper.formatEventSsml(0, results, fields);
+		String eventFormat = "{summary} ends at {end:time}.";
+		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
 		return newAffirmativeResponse(eventSsml, "I'm sorry, I didn't quite catch that.");
 	}
@@ -513,9 +511,9 @@ public class CalendarConversation extends Conversation {
 	 */
 	private static SpeechletResponse newEventListResponse(Map<String, Vector<Object>> results,
 	                                                      Timestamp when) {
-		EventField[] fields = { EventField.SUMMARY, EventField.START_TIME };
 		String dateSsml = CalendarHelper.formatDateSsml(when);
-		String eventsSsml = CalendarHelper.listEvents(results, fields);
+		String eventFormat = "<s>{summary} at {start:time}</s>";
+		String eventsSsml = CalendarHelper.listEvents(eventFormat, results);
 		String responseSsml = "The events on " + dateSsml + " are: " + eventsSsml;
 		String repromptSsml = "Is there anything you would like to know about those events?";
 

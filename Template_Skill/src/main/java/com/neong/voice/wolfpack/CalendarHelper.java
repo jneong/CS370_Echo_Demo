@@ -21,10 +21,6 @@ public class CalendarHelper {
 	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("h:mm a");
 	private static final ZoneId LOCAL_ZONEID = ZoneId.of(TIME_ZONE);
 
-	public enum EventField {
-		START_DATE, START_TIME, END_TIME, SUMMARY, LOCATION, GENERAL_ADMISSION
-	};
-
 
 	public static boolean isCategorySupported(String category) {
 		final String[] supportedCategories = {
@@ -40,52 +36,97 @@ public class CalendarHelper {
 	}
 
 
-	public static String formatEventSsml(int index, Map<String, Vector<Object>> events, EventField[] fields) {
-		String ssml = "<s>";
+	/**
+	 * Format a message with fields from given events.
+	 *
+	 * @param format the template for the message.  Special tokens of the form "{field}" are replaced
+	 *               with values from {@code events} at the offset {@code index}.  Timestamp fields
+	 *               require additional specificity to determine whether to format the value as a time
+	 *               or a date, using the extend token forms "{field:time}" and "{field:date}".
+	 * @param events the result object from a {@link com.wolfpack.database.DbConnection DbConnection}
+	 *               query.  The object must contain all columns referenced by the format string and
+	 *               at least {@code index + 1} rows or an exception may be thrown.
+	 * @param index  the row offset into {@code events} for the event to refer to.
+	 *
+	 * @return the message from {@code format} with all "{field}" tokens replaced with the values from
+	 *         {@code events} at the row specified by {@code index}.  For example,
+	 *         <code>"{summary} is at {start:time}."</code> with valid {@code events} and {@code index}
+	 *         might return the string {@code "IMS Basketball is at 4:00 PM"}.
+	 */
+	public static String formatEventSsml(String format, Map<String, Vector<Object>> events, int index) {
+		int len = format.length(), i = 0;
+		StringBuilder resultBuilder = new StringBuilder(len);
 
-		for (EventField field : fields) {
-			switch (field) {
-			case SUMMARY:
-				final String summary = (String) events.get("summary").get(index);
-				ssml += summary;
-				break;
+		while (i < len) {
+			char c = format.charAt(i++);
 
-			case START_DATE: {
-				final Timestamp start = (Timestamp) events.get("start").get(index);
-				ssml += "on " + formatDateSsml(start);
+			switch (c) {
+			case '{': {
+				StringBuilder fieldBuilder = new StringBuilder();
+
+				// This should throw an exception if the format string is malformed.
+				while ((c = format.charAt(i++)) != '}')
+					fieldBuilder.append(c);
+
+				String field = fieldBuilder.toString();
+
+				switch (field) {
+				case "start:date":
+				case "end:date": {
+					final String fieldName = field.split(":")[0];
+					final Timestamp start = (Timestamp) events.get(fieldName).get(index);
+					resultBuilder.append(formatDateSsml(start));
+					break;
+				}
+
+				case "start:time":
+				case "end:time": {
+					final String fieldName = field.split(":")[0];
+					final Timestamp end = (Timestamp) events.get(fieldName).get(index);
+					resultBuilder.append(formatTimeSsml(end));
+					break;
+				}
+
+				case "location": {
+					final String location = (String) events.get(field).get(index);
+					resultBuilder.append(formatLocationSsml(location));
+					break;
+				}
+
+				case "student_admission_fee":
+				case "general_admission_fee": {
+					final String fee = (String) events.get(field).get(index);
+					resultBuilder.append(formatFeeSsml(fee));
+					break;
+				}
+
+				default: {
+					final String value = (String) events.get(field).get(index);
+					resultBuilder.append(value);
+					break;
+				}
+				}
 				break;
 			}
-
-			case START_TIME: {
-				final Timestamp start = (Timestamp) events.get("start").get(index);
-				ssml += "at " + formatTimeSsml(start);
-				break;
-			}
-
-			case END_TIME:
-				final Timestamp end = (Timestamp) events.get("end").get(index);
-				ssml += "ends at " + formatTimeSsml(end);
-				break;
-
-			case LOCATION:
-				final String location = (String) events.get("location").get(index);
-				ssml += "at " + location;
-				break;
-
-			case GENERAL_ADMISSION:
-				final String fee = (String) events.get("general_admission_fee").get(index);
-				ssml += "the general admission fee is " + formatFeeSsml(fee);
-				break;
 
 			default:
+				resultBuilder.append(c);
 				break;
 			}
-
-			ssml += " ";
 		}
 
-		ssml += "</s>";
+		String result = resultBuilder.toString();
 
+		return replaceUnspeakables(result);
+	}
+
+
+	public static String formatEventSsml(String format, Map<String, Vector<Object>> events) {
+		return formatEventSsml(format, events, 0);
+	}
+
+
+	public static String replaceUnspeakables(String ssml) {
 		return ssml.replaceAll("&", " and ");
 	}
 
@@ -123,13 +164,13 @@ public class CalendarHelper {
 	}
 
 
-	public static String listEvents(Map<String, Vector<Object>> events, EventField[] fields) {
+	public static String listEvents(String format, Map<String, Vector<Object>> events) {
 		String response = "";
 
 		final int eventsLength = events.get("summary").size();
 
 		for (int i = 0; i < eventsLength; i++)
-			response += formatEventSsml(i, events, fields);
+			response += formatEventSsml(format, events, i);
 
 		return response;
 	}
