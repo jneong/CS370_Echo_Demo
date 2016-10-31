@@ -42,7 +42,7 @@ task fatJar(type: Jar) {
 }
 
 tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:unchecked" << "-Werror"
+    options.compilerArgs << "-Xlint" << "-Werror"
 }
 
 build.dependsOn fatJar
