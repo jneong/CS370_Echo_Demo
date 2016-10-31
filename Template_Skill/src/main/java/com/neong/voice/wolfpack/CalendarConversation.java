@@ -270,7 +270,7 @@ public class CalendarConversation extends Conversation {
 
 		// If there were not any events on the given day:
 		if (numEvents == 0) {
-			String dateSsml = dateRange.getSsml();
+			String dateSsml = dateRange.getDateSsml();
 			String responseSsml = "I couldn't find any events on " + dateSsml + ".";
 			String repromptSsml = "Can I help you find another event?";
 
@@ -624,7 +624,7 @@ class DateRange {
 		return _range;
 	}
 
-	public String getSsml() {
+	public String getDateSsml() {
 		return CalendarHelper.formatDateSsml(getTimestamp());
 	}
 }
