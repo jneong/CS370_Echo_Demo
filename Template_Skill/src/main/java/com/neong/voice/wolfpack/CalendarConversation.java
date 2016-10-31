@@ -250,7 +250,7 @@ public class CalendarConversation extends Conversation {
 			ps.setString(2, range);
 			ps.setDate(3, date);
 
-			results = db.executeStatement(ps);
+			results = DbConnection.executeStatement(ps);
 		} catch (SQLException e) {
 			System.out.println(e);
 			return newInternalErrorResponse();
@@ -344,7 +344,7 @@ public class CalendarConversation extends Conversation {
 			ps.setString(position++, range);
 			ps.setDate(position, date);
 
-			results = db.executeStatement(ps);
+			results = DbConnection.executeStatement(ps);
 		} catch (SQLException e) {
 			System.out.println(e);
 			return newInternalErrorResponse();
@@ -398,7 +398,7 @@ public class CalendarConversation extends Conversation {
 			PreparedStatement ps = db.prepareStatement(query);
 			ps.setInt(1, eventId);
 
-			results = db.executeStatement(ps);
+			results = DbConnection.executeStatement(ps);
 		} catch (SQLException e) {
 			System.out.println(e);
 			return newInternalErrorResponse();
@@ -441,7 +441,7 @@ public class CalendarConversation extends Conversation {
 			PreparedStatement ps = db.prepareStatement(query);
 			ps.setInt(1, eventId);
 
-			results = db.executeStatement(ps);
+			results = DbConnection.executeStatement(ps);
 		} catch (SQLException e) {
 			System.out.println(e);
 			return newInternalErrorResponse();
@@ -484,7 +484,7 @@ public class CalendarConversation extends Conversation {
 			PreparedStatement ps = db.prepareStatement(query);
 			ps.setInt(1, eventId);
 
-			results = db.executeStatement(ps);
+			results = DbConnection.executeStatement(ps);
 		} catch (SQLException e) {
 			System.out.println(e);
 			return newInternalErrorResponse();
