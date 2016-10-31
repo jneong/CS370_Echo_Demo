@@ -53,7 +53,6 @@ public class CalendarConversation extends Conversation {
 	private DbConnection db;
 
 	private enum SessionState {
-		NEW_SESSION, // The user hasn't asked about any events yet.
 		USER_HEARD_EVENTS, // The user has heard a list of events and can now ask about specific ones.
 		LIST_TOO_LONG, // The list of events is too long, so the user must narrow it down somehow.
 	}
@@ -119,17 +118,9 @@ public class CalendarConversation extends Conversation {
 	 */
 	private SpeechletResponse handleStateSensitiveIntents(IntentRequest intentReq, Session session) {
 		SpeechletResponse response;
-		SessionState state = (SessionState) session.getAttribute(ATTRIB_STATEID);
-
-		if (state == null)
-			state = SessionState.NEW_SESSION;
+		SessionState state = SessionState.valueOf((String) session.getAttribute(ATTRIB_STATEID));
 
 		switch (state) {
-		case NEW_SESSION:
-			// What was this state for?
-			response = newBadStateResponse();
-			break;
-
 		case USER_HEARD_EVENTS:
 			response = handleDetailIntents(intentReq, session);
 			break;
