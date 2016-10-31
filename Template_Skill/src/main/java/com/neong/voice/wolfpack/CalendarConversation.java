@@ -386,7 +386,7 @@ public class CalendarConversation extends Conversation {
 			return newBadSlotResponse("event");
 
 		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
-		Integer eventId = (Integer) savedEvents.get(eventName);
+		Integer eventId = savedEvents.get(eventName);
 
 		Map<String, Vector<Object>> results;
 
@@ -429,7 +429,7 @@ public class CalendarConversation extends Conversation {
 			return newBadSlotResponse("event");
 
 		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
-		Integer eventId = (Integer) savedEvents.get(eventName);
+		Integer eventId = savedEvents.get(eventName);
 
 		Map<String, Vector<Object>> results;
 
@@ -472,7 +472,7 @@ public class CalendarConversation extends Conversation {
 			return newBadSlotResponse("event");
 
 		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
-		Integer eventId = (Integer) savedEvents.get(eventName);
+		Integer eventId = savedEvents.get(eventName);
 
 		Map<String, Vector<Object>> results;
 
