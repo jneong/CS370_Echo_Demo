@@ -238,7 +238,7 @@ public class CalendarConversation extends Conversation {
 			Date date = dateRange.getDate();
 
 			String query = "SELECT event_id, summary, start, location FROM event_info " +
-				"WHERE date_trunc(?, start) = date_trunc(?, ?)";
+				"WHERE date_trunc(?, start) = date_trunc(?, ?::date)";
 
 			PreparedStatement ps = db.prepareStatement(query);
 			ps.setString(1, range);
@@ -313,7 +313,7 @@ public class CalendarConversation extends Conversation {
 			if (category != "all") {
 				String query =
 					"SELECT event_id, summary, start, location FROM event_info " +
-					"    WHERE date_trunc(?, start) = date_trunc(?, ?)";
+					"    WHERE date_trunc(?, start) = date_trunc(?, ?::date)";
 				ps = db.prepareStatement(query);
 			} else {
 				String query =
@@ -326,7 +326,7 @@ public class CalendarConversation extends Conversation {
 					") " +
 					"SELECT event_id, summary, start, location FROM event_info " +
 					"    NATURAL JOIN e " +
-					"    WHERE date_trunc(?, start) = date_trunc(?, ?)";
+					"    WHERE date_trunc(?, start) = date_trunc(?, ?::date)";
 				ps = db.prepareStatement(query);
 				ps.setString(position++, category);
 			}
