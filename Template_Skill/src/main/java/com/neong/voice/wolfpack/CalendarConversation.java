@@ -6,6 +6,11 @@ import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.neong.voice.wolfpack.CalendarHelper;
 import com.neong.voice.wolfpack.CalendarHelper.EventField;
 import com.neong.voice.wolfpack.CosineSim;
@@ -293,11 +298,14 @@ public class CalendarConversation extends Conversation {
 
 
 	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session, String category) {
-		DateRange dateRange = (DateRange) session.getAttribute(ATTRIB_SAVEDDATE);
+		Map<String, Object> dateRangeAttrib =
+			(Map<String, Object>) session.getAttribute(ATTRIB_SAVEDDATE);
 
 		// This should never happen.
-		if (dateRange == null)
+		if (dateRangeAttrib == null)
 			return newBadStateResponse();
+
+		DateRange dateRange = new DateRange(dateRangeAttrib);
 
 		// Return the name and the time of all events within that category, or if
 		// the query finds that there are no events on the day, Alexa tells the user
@@ -582,9 +590,14 @@ public class CalendarConversation extends Conversation {
 }
 
 
+@JsonAutoDetect(fieldVisibility=Visibility.ANY,
+                getterVisibility=Visibility.NONE,
+                isGetterVisibility=Visibility.NONE)
 class DateRange {
-	private Date _date;
-	private String _range;
+	// The values stored in session attributes must be convertable to JSON.
+	// java.sql.Date does not have this ability, so we use a String instead.
+	@JsonProperty("date") private final Date _date;
+	@JsonProperty("range") private final String _range;
 
 	public DateRange(String dateString) {
 		// TODO: actual implementation handling weeks, months, etc.
@@ -592,12 +605,18 @@ class DateRange {
 		_range = "day";
 	}
 
+	@JsonCreator
+	public DateRange(Map<String, Object> props) {
+		_date = Date.valueOf((String) props.get("date"));
+		_range = (String) props.get("range");
+	}
+
 	public Date getDate() {
 		return _date;
 	}
 
 	public Timestamp getTimestamp() {
-		return Timestamp.from(_date.toInstant());
+		return Timestamp.valueOf(_date.toString() + " 00:00:00");
 	}
 
 	public String getRange() {
