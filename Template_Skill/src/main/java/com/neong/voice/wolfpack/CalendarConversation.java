@@ -123,7 +123,13 @@ public class CalendarConversation extends Conversation {
 	 */
 	private SpeechletResponse handleStateSensitiveIntents(IntentRequest intentReq, Session session) {
 		SpeechletResponse response;
-		SessionState state = SessionState.valueOf((String) session.getAttribute(ATTRIB_STATEID));
+		SessionState state;
+		String stateAttrib = (String) session.getAttribute(ATTRIB_STATEID);
+
+		if (stateAttrib == null)
+			state = null;
+		else
+		    state = SessionState.valueOf(stateAttrib);
 
 		switch (state) {
 		case USER_HEARD_EVENTS:
