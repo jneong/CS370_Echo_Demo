@@ -119,7 +119,7 @@ public class CalendarConversation extends Conversation {
 	 */
 	private SpeechletResponse handleStateSensitiveIntents(IntentRequest intentReq, Session session) {
 		SpeechletResponse response;
-		SessionState state = SessionState.valueOf(session.getAttribute(ATTRIB_STATEID).toString());
+		SessionState state = (SessionState) session.getAttribute(ATTRIB_STATEID);
 
 		if (state == null)
 			state = SessionState.NEW_SESSION;
