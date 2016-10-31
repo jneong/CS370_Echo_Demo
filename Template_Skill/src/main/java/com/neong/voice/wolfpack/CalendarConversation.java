@@ -298,6 +298,7 @@ public class CalendarConversation extends Conversation {
 
 
 	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session, String category) {
+		@SuppressWarnings("unchecked")
 		Map<String, Object> dateRangeAttrib =
 			(Map<String, Object>) session.getAttribute(ATTRIB_SAVEDDATE);
 
@@ -371,7 +372,11 @@ public class CalendarConversation extends Conversation {
 
 
 	private SpeechletResponse handleGetFeeDetailsIntent(IntentRequest intentReq, Session session) {
-		if (session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS) == null)
+		@SuppressWarnings("unchecked")
+		Map<String, Integer> savedEvents =
+			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
+
+		if (savedEvents == null)
 			return newBadStateResponse();
 
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
@@ -379,9 +384,6 @@ public class CalendarConversation extends Conversation {
 
 		if (eventSlot == null || (eventNameSlotValue = eventSlot.getValue()) == null)
 			return newBadSlotResponse("event");
-
-		Map<String, Integer> savedEvents =
-			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
 
 		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
 		Integer eventId = (Integer) savedEvents.get(eventName);
@@ -413,7 +415,11 @@ public class CalendarConversation extends Conversation {
 
 
 	private SpeechletResponse handleGetLocationDetailsIntent(IntentRequest intentReq, Session session) {
-		if (session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS) == null)
+		@SuppressWarnings("unchecked")
+		Map<String, Integer> savedEvents =
+			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
+
+		if (savedEvents == null)
 			return newBadStateResponse();
 
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
@@ -421,9 +427,6 @@ public class CalendarConversation extends Conversation {
 
 		if (eventSlot == null || (eventNameSlotValue = eventSlot.getValue()) == null)
 			return newBadSlotResponse("event");
-
-		Map<String, Integer> savedEvents =
-			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
 
 		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
 		Integer eventId = (Integer) savedEvents.get(eventName);
@@ -455,7 +458,11 @@ public class CalendarConversation extends Conversation {
 
 
 	private SpeechletResponse handleGetEndTimeIntent(IntentRequest intentReq, Session session) {
-		if (session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS) == null)
+		@SuppressWarnings("unchecked")
+		Map<String, Integer> savedEvents =
+			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
+
+		if (savedEvents == null)
 			return newBadStateResponse();
 
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
@@ -463,9 +470,6 @@ public class CalendarConversation extends Conversation {
 
 		if (eventSlot == null || (eventNameSlotValue = eventSlot.getValue()) == null)
 			return newBadSlotResponse("event");
-
-		Map<String, Integer> savedEvents =
-			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
 
 		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
 		Integer eventId = (Integer) savedEvents.get(eventName);
