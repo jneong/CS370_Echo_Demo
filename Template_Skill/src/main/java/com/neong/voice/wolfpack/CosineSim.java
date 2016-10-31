@@ -155,6 +155,9 @@ public class CosineSim {
 		String bestMatch = "";
 		double bestSimilarity = -1;
 		double similarity;
+
+		System.out.println("CosineSim: innerString = \"" + innerString + "\"");
+
 		for (String possibility : outerStrings) {
 			similarity = getRating(innerString, possibility);
 			if (similarity > bestSimilarity) {
@@ -162,6 +165,9 @@ public class CosineSim {
 				bestSimilarity = similarity;
 			}
 		}
+
+		System.out.println("CosineSime: bestMatch = \"" + bestMatch + "\"");
+
 		return bestMatch;
 	}
 }

@@ -383,10 +383,7 @@ public class CalendarConversation extends Conversation {
 		Map<String, Integer> savedEvents =
 			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
 
-		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventNameSlotValue);
 		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
-		System.out.println("I'M THINKING THE CLOSEST NAME IS: " + eventName);
-
 		Integer eventId = (Integer) savedEvents.get(eventName);
 
 		Map<String, Vector<Object>> results;
@@ -428,10 +425,7 @@ public class CalendarConversation extends Conversation {
 		Map<String, Integer> savedEvents =
 			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
 
-		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventNameSlotValue);
 		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
-		System.out.println("I'M THINKING THE CLOSEST NAME IS: " + eventName);
-
 		Integer eventId = (Integer) savedEvents.get(eventName);
 
 		Map<String, Vector<Object>> results;
@@ -473,10 +467,7 @@ public class CalendarConversation extends Conversation {
 		Map<String, Integer> savedEvents =
 			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
 
-		System.out.println("I WAS GIVEN THE EVENT NAME: " + eventNameSlotValue);
 		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
-		System.out.println("I'M THINKING THE CLOSEST NAME IS: " + eventName);
-
 		Integer eventId = (Integer) savedEvents.get(eventName);
 
 		Map<String, Vector<Object>> results;
