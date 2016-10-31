@@ -373,7 +373,7 @@ public class CalendarConversation extends Conversation {
 
 	private SpeechletResponse handleGetFeeDetailsIntent(IntentRequest intentReq, Session session) {
 		if (session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS) == null)
-			return newTellResponse("Wait for me to mention some events first.", false);
+			return newBadStateResponse();
 
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
 		String eventNameSlotValue;
@@ -462,8 +462,8 @@ public class CalendarConversation extends Conversation {
 
 
 	private SpeechletResponse handleGetEndTimeIntent(IntentRequest intentReq, Session session) {
-		if (session.getAttribute("recentlySaidEvents") == null)
-			return newTellResponse("wait for me to mention some events first.", false);
+		if (session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS) == null)
+			return newBadStateResponse();
 
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
 		String eventNameSlotValue;
