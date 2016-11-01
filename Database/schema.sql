@@ -57,7 +57,7 @@ ALTER TABLE event_categories OWNER TO ssuadmin;
 -- the proper SSML (eg. how to pronounce "Beaujolais").
 CREATE TABLE events(
   event_id smallserial NOT NULL,
-  summary text NOT NULL, -- The summary is the "title" or "name" of the event
+  title text NOT NULL, -- "title" or "name" of the event
   description text NOT NULL, -- The description is long, may contain HTML
   all_day_event boolean NOT NULL DEFAULT FALSE,
   start timestamp with time zone NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE events(
   ticket_sales_url text,
   contact_id smallint,
   CONSTRAINT event_id PRIMARY KEY (event_id),
-  UNIQUE (summary, start)
+  UNIQUE (title, start)
 );
 ALTER TABLE events OWNER TO ssuadmin;
 
@@ -122,7 +122,7 @@ ALTER TABLE categories OWNER TO ssuadmin;
 --
 
 CREATE VIEW event_info AS
-  SELECT e.event_id, e.summary, e.start, l.name AS location FROM events e
+  SELECT e.event_id, e.title, e.start, l.name AS location FROM events e
   JOIN locations l ON l.location_id = e.location_id
   ORDER BY e.start ASC;
 ALTER VIEW event_info OWNER TO ssuadmin;
@@ -135,10 +135,10 @@ ALTER VIEW event_info OWNER TO ssuadmin;
 -- Return all events from one category in a given time frame.
 -- Note: startDay is a `date` type to intentionally truncate time info.
 CREATE FUNCTION given_category(category text, startDay date, endDay date)
-  RETURNS TABLE (event_id smallint, summary text, start timestamp with time zone, location text) AS
+  RETURNS TABLE (event_id smallint, title text, start timestamp with time zone, location text) AS
   $$
   BEGIN
-    RETURN QUERY SELECT e.event_id, e.summary, e.start, c.name FROM events e
+    RETURN QUERY SELECT e.event_id, e.title, e.start, c.name FROM events e
       JOIN event_categories ec ON e.event_id = ec.event_id
       JOIN categories c ON ec.category_id = c.category_id
       WHERE c.name = category
