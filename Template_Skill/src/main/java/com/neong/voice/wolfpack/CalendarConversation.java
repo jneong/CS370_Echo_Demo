@@ -315,7 +315,7 @@ public class CalendarConversation extends Conversation {
 			PreparedStatement ps;
 			int position = 1;
 
-			if (category != "all") {
+			if (category == "all") {
 				String query =
 					"SELECT event_id, summary, start, location FROM event_info " +
 					"    WHERE start >= ?::date AND start < ?::date";
