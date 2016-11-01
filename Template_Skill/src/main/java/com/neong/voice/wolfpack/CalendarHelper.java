@@ -22,13 +22,13 @@ public class CalendarHelper {
 	private static final ZoneId LOCAL_ZONEID = ZoneId.of(TIME_ZONE);
 
 
-	public static boolean isCategorySupported(String category) {
+	public static boolean isCategorySupported(final String category) {
 		final String[] supportedCategories = {
 			"SportsCategoryIntent", "ArtsAndEntertainmentCategoryIntent",
 			"LecturesCategoryIntent",  "ClubsCategoryIntent"
 		};
 
-		for (String cat : supportedCategories)
+		for (final String cat : supportedCategories)
 			if (cat == category)
 				return true;
 
@@ -53,85 +53,95 @@ public class CalendarHelper {
 	 *         <code>"{summary} is at {start:time}."</code> with valid {@code events} and {@code index}
 	 *         might return the string {@code "IMS Basketball is at 4:00 PM"}.
 	 */
-	public static String formatEventSsml(String format, Map<String, Vector<Object>> events, int index) {
-		int len = format.length(), i = 0;
-		StringBuilder resultBuilder = new StringBuilder(len);
+	public static String formatEventSsml(final String format,
+	                                     final Map<String, Vector<Object>> events,
+	                                     final int index) {
+		final int len = format.length();
+		final StringBuilder resultBuilder = new StringBuilder(len);
+		int i = 0;
 
 		while (i < len) {
-			char c = format.charAt(i++);
+			final char c = format.charAt(i++);
 
-			switch (c) {
-			case '{': {
-				StringBuilder fieldBuilder = new StringBuilder();
+			if (c == '{') {
+				final StringBuilder fieldBuilder = new StringBuilder();
+				char c1;
 
 				// This should throw an exception if the format string is malformed.
-				while ((c = format.charAt(i++)) != '}')
-					fieldBuilder.append(c);
+				while ((c1 = format.charAt(i++)) != '}')
+					fieldBuilder.append(c1);
 
-				String field = fieldBuilder.toString();
+				final String field = fieldBuilder.toString();
+				final String value = formatEventFieldSsml(field, events, index);
 
-				switch (field) {
-				case "start:date":
-				case "end:date": {
-					final String fieldName = field.split(":")[0];
-					final Timestamp start = (Timestamp) events.get(fieldName).get(index);
-					resultBuilder.append(formatDateSsml(start));
-					break;
-				}
-
-				case "start:time":
-				case "end:time": {
-					final String fieldName = field.split(":")[0];
-					final Timestamp end = (Timestamp) events.get(fieldName).get(index);
-					resultBuilder.append(formatTimeSsml(end));
-					break;
-				}
-
-				case "location": {
-					final String location = (String) events.get(field).get(index);
-					resultBuilder.append(formatLocationSsml(location));
-					break;
-				}
-
-				case "student_admission_fee":
-				case "general_admission_fee": {
-					final String fee = (String) events.get(field).get(index);
-					resultBuilder.append(formatFeeSsml(fee));
-					break;
-				}
-
-				default: {
-					final String value = (String) events.get(field).get(index);
-					resultBuilder.append(value);
-					break;
-				}
-				}
-				break;
-			}
-
-			default:
+				resultBuilder.append(value);
+			} else {
 				resultBuilder.append(c);
-				break;
 			}
 		}
 
-		String result = resultBuilder.toString();
+		final String result = resultBuilder.toString();
 
 		return replaceUnspeakables(result);
 	}
 
 
-	public static String formatEventSsml(String format, Map<String, Vector<Object>> events) {
+	public static String formatEventFieldSsml(final String field,
+	                                          final Map<String, Vector<Object>> events,
+	                                          final int index) {
+		final String result;
+
+		switch (field) {
+		case "start:date":
+		case "end:date": {
+			final String fieldName = field.split(":")[0];
+			final Timestamp start = (Timestamp) events.get(fieldName).get(index);
+			result = formatDateSsml(start);
+			break;
+		}
+
+		case "start:time":
+		case "end:time": {
+			final String fieldName = field.split(":")[0];
+			final Timestamp end = (Timestamp) events.get(fieldName).get(index);
+			result = formatTimeSsml(end);
+			break;
+		}
+
+		case "location": {
+			final String location = (String) events.get(field).get(index);
+			result = formatLocationSsml(location);
+			break;
+		}
+
+		case "student_admission_fee":
+		case "general_admission_fee": {
+			final String fee = (String) events.get(field).get(index);
+			result = formatFeeSsml(fee);
+			break;
+		}
+
+		default:
+			result = (String) events.get(field).get(index);
+			break;
+		}
+
+		return result;
+	}
+
+
+	public static String formatEventSsml(final String format,
+	                                     final Map<String, Vector<Object>> events) {
 		return formatEventSsml(format, events, 0);
 	}
 
 
-	public static String replaceUnspeakables(String ssml) {
+	public static String replaceUnspeakables(final String ssml) {
 		return ssml.replaceAll("&", " and ");
 	}
 
 
-	public static String formatDateSsml(Timestamp when) {
+	public static String formatDateSsml(final Timestamp when) {
 		final ZonedDateTime zonedDateTime = when.toInstant().atZone(LOCAL_ZONEID);
 		final String day = zonedDateTime.format(DAY_FORMATTER);
 		final String date = zonedDateTime.format(DATE_FORMATTER);
@@ -140,7 +150,7 @@ public class CalendarHelper {
 	}
 
 
-	public static String formatTimeSsml(Timestamp when) {
+	public static String formatTimeSsml(final Timestamp when) {
 		final ZonedDateTime zonedDateTime = when.toInstant().atZone(LOCAL_ZONEID);
 		final String time = zonedDateTime.format(TIME_FORMATTER);
 
@@ -164,24 +174,23 @@ public class CalendarHelper {
 	}
 
 
-	public static String listEvents(String format, Map<String, Vector<Object>> events) {
-		String response = "";
-
+	public static String listEvents(final String format, final Map<String, Vector<Object>> events) {
 		final int eventsLength = events.get("summary").size();
+		final StringBuilder responseBuilder = new StringBuilder(eventsLength * format.length());
 
 		for (int i = 0; i < eventsLength; i++)
-			response += formatEventSsml(format, events, i);
+			responseBuilder.append(formatEventSsml(format, events, i));
 
-		return response;
+		return responseBuilder.toString();
 	}
 
 
 	public static Map<String, Integer> extractEventIds(Map<String, Vector<Object>> events, int numEvents) {
-		Map<String, Integer> savedEvents = new HashMap<String, Integer>(numEvents);
+		final Map<String, Integer> savedEvents = new HashMap<String, Integer>(numEvents);
 
 		for (int i = 0; i < numEvents; i++) {
-			String key = events.get("summary").get(i).toString();
-			Integer value = (Integer) events.get("event_id").get(i);
+			final String key = (String) events.get("summary").get(i);
+			final Integer value = (Integer) events.get("event_id").get(i);
 			savedEvents.put(key, value);
 		}
 
