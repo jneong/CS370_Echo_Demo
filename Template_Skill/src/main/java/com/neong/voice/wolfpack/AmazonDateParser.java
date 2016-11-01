@@ -65,7 +65,8 @@ public class AmazonDateParser {
 			weekNum++;
 
 		final Calendar calendar = Calendar.getInstance();
-		calendar.setMinimalDaysInFirstWeek(4);
+		calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+		calendar.setMinimalDaysInFirstWeek(3);
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.WEEK_OF_YEAR, weekNum);
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
