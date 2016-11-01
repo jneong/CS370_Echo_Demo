@@ -41,7 +41,7 @@ public class DateRange {
 	}
 
 	public Timestamp getTimestamp() {
-		return Timestamp.valueOf(_begin.toString() + " 00:00:00");
+		return Timestamp.valueOf(_begin.toString() + " 12:00:00");
 	}
 
 	public String getDateSsml() {
