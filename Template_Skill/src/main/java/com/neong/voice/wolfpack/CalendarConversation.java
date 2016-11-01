@@ -239,16 +239,12 @@ public class CalendarConversation extends Conversation {
 		Map<String, Vector<Object>> results;
 
 		try {
-			String range = dateRange.getRange();
-			Date date = dateRange.getDate();
-
 			String query = "SELECT event_id, summary, start, location FROM event_info " +
-				"WHERE date_trunc(?, start) = date_trunc(?, ?::date)";
+				"WHERE start >= ?::date AND start < ?::date";
 
 			PreparedStatement ps = db.prepareStatement(query);
-			ps.setString(1, range);
-			ps.setString(2, range);
-			ps.setDate(3, date);
+			ps.setDate(1, dateRange.getBegin());
+			ps.setDate(2, dateRange.getEnd());
 
 			results = DbConnection.executeStatement(ps);
 		} catch (SQLException e) {
@@ -316,15 +312,13 @@ public class CalendarConversation extends Conversation {
 		Map<String, Vector<Object>> results;
 
 		try {
-			String range = dateRange.getRange();
-			Date date = dateRange.getDate();
 			PreparedStatement ps;
 			int position = 1;
 
 			if (category != "all") {
 				String query =
 					"SELECT event_id, summary, start, location FROM event_info " +
-					"    WHERE date_trunc(?, start) = date_trunc(?, ?::date)";
+					"    WHERE start >= ?::date AND start < ?::date";
 				ps = db.prepareStatement(query);
 			} else {
 				String query =
@@ -337,14 +331,13 @@ public class CalendarConversation extends Conversation {
 					") " +
 					"SELECT event_id, summary, start, location FROM event_info " +
 					"    NATURAL JOIN e " +
-					"    WHERE date_trunc(?, start) = date_trunc(?, ?::date)";
+					"    WHERE start >= ?::date AND start < ?::date";
 				ps = db.prepareStatement(query);
 				ps.setString(position++, category);
 			}
 
-			ps.setString(position++, range);
-			ps.setString(position++, range);
-			ps.setDate(position, date);
+			ps.setDate(position++, dateRange.getBegin());
+			ps.setDate(position, dateRange.getEnd());
 
 			results = DbConnection.executeStatement(ps);
 		} catch (SQLException e) {

@@ -17,31 +17,31 @@ import com.neong.voice.wolfpack.CalendarHelper;
                 getterVisibility=Visibility.NONE,
                 isGetterVisibility=Visibility.NONE)
 public class DateRange {
-	@JsonProperty("date") private final Date _date;
-	@JsonProperty("range") private final String _range;
+	@JsonProperty("begin") private final Date _begin;
+	@JsonProperty("end") private final Date _end;
 
 	public DateRange(String dateString) {
 		// TODO: actual implementation handling weeks, months, etc.
-		_date = Date.valueOf(dateString);
-		_range = "day";
+		_begin = Date.valueOf(dateString);
+		_end = _begin;
 	}
 
 	@JsonCreator
 	public DateRange(Map<String, Object> props) {
-		_date = Date.valueOf((String) props.get("date"));
-		_range = (String) props.get("range");
+		_begin = Date.valueOf((String) props.get("begin"));
+		_end = Date.valueOf((String) props.get("end"));
 	}
 
-	public Date getDate() {
-		return _date;
+	public Date getBegin() {
+		return _begin;
+	}
+
+	public Date getEnd() {
+		return _end;
 	}
 
 	public Timestamp getTimestamp() {
-		return Timestamp.valueOf(_date.toString() + " 00:00:00");
-	}
-
-	public String getRange() {
-		return _range;
+		return Timestamp.valueOf(_begin.toString() + " 00:00:00");
 	}
 
 	public String getDateSsml() {
