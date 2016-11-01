@@ -134,7 +134,7 @@ ALTER VIEW event_info OWNER TO ssuadmin;
 
 -- Return all events from one category in a given time frame.
 -- Note: startDay is a `date` type to intentionally truncate time info.
-CREATE FUNCTION given_category(category text, startDay date, numDays smallint)
+CREATE FUNCTION given_category(category text, startDay date, endDay date)
   RETURNS TABLE (event_id smallint, summary text, start timestamp with time zone, location text) AS
   $$
   BEGIN
@@ -142,13 +142,12 @@ CREATE FUNCTION given_category(category text, startDay date, numDays smallint)
       JOIN event_categories ec ON e.event_id = ec.event_id
       JOIN categories c ON ec.category_id = c.category_id
       WHERE c.name = category
-        AND e.start > startDay::timestamp at time zone 'America/Los_Angeles'
-        AND e.start < (startDay + numDays)::timestamp at time zone 'America/Los_Angeles'
+        AND e.start >= startDay AND e.start < endDay
       ORDER BY e.start ASC;
   END;
   $$
   LANGUAGE plpgsql;
-ALTER FUNCTION given_category(text, date, smallint) OWNER TO ssuadmin;
+ALTER FUNCTION given_category(text, date, date) OWNER TO ssuadmin;
 
 
 --
@@ -226,5 +225,5 @@ GRANT USAGE,SELECT,UPDATE
   TO scraper;
 
 GRANT EXECUTE
-  ON FUNCTION given_category(text, date, smallint)
+  ON FUNCTION given_category(text, date, date)
   TO alexaskill;
