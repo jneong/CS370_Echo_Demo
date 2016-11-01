@@ -1,11 +1,16 @@
 package com.neong.voice.wolfpack;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Vector;
+
+import com.wolfpack.database.DbConnection;
 
 
 public class CalendarHelper {
@@ -78,6 +83,13 @@ public class CalendarHelper {
 
 		return day + ", <say-as interpret-as=\"date\">" + date + "</say-as>";
 	}
+	
+	public static String formatDateSsmlNoZone(Timestamp when){
+		final String date = new SimpleDateFormat("????MMdd").format(when);
+		final String day = new SimpleDateFormat("EEEE").format(when);
+		
+		return day + ", <say-as interpret-as=\"date\">" + date + "</say-as>";
+	}
 
 
 	public static String formatTimeSsml(Timestamp when) {
@@ -106,4 +118,5 @@ public class CalendarHelper {
 
 		return response;
 	}
+	
 }

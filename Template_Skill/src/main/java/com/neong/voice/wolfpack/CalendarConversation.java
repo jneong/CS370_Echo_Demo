@@ -9,11 +9,13 @@ import com.wolfpack.database.DbConnection;
 import com.neong.voice.wolfpack.CalendarHelper;
 import com.neong.voice.wolfpack.CalendarHelper.EventField;
 import com.neong.voice.wolfpack.CosineSim;
+import com.neong.voice.wolfpack.DateManip;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -112,7 +114,7 @@ public class CalendarConversation extends Conversation {
 	 */
 	private SpeechletResponse handleStateSensitiveIntents(IntentRequest intentReq, Session session) {
 		SpeechletResponse response;
-		SessionState state = (SessionState) session.getAttribute(ATTRIB_STATEID);
+		SessionState state = SessionState.valueOf(session.getAttribute(ATTRIB_STATEID).toString());
 
 		if (state == null)
 			state = SessionState.NEW_SESSION;
@@ -189,11 +191,11 @@ public class CalendarConversation extends Conversation {
 			break;
 
 		case INTENT_LECTURESCATEGORY:
-			category = "Films and Lectures";
+			category = "Lectures and Films";
 			break;
 
 		case INTENT_CLUBSCATEGORY:
-			category = "Club and Organization";
+			category = "Club and Student Organizations";
 			break;
 
 		default:
@@ -214,7 +216,7 @@ public class CalendarConversation extends Conversation {
 
 		EventField[] fields = { EventField.SUMMARY, EventField.DATE, EventField.TIME };
 		String eventSsml = CalendarHelper.formatEventSsml(0, results, fields);
-		String responseSsml = "The next event is " + eventSsml + ".";
+		String responseSsml = "The next event is " + eventSsml;
 		String repromptSsml = "Is there anything you would like to know about this event?";
 
 		return newAffirmativeResponse(responseSsml, repromptSsml);
@@ -231,12 +233,12 @@ public class CalendarConversation extends Conversation {
 		Map<String, Vector<Object>> results;
 
 		try {
-			String query = "SELECT * FROM event_info " +
-				"WHERE date_trunc('day', start) = ?::date";
+			//CHANGE 'ARTS AND ENTERTAINMENT' TO 'ALL' ONCE GIVEN_CATEGORY() IS UPDATED
+			String query = "SELECT * FROM given_category(text 'Club and Student Organizations', ? , " +
+				"1::smallint)";
 
 			PreparedStatement ps = db.prepareStatement(query);
-			ps.setString(1, givenDate);
-
+			ps.setDate(1, java.sql.Date.valueOf(givenDate));
 			results = db.executeStatement(ps);
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -251,9 +253,9 @@ public class CalendarConversation extends Conversation {
 
 		// If there were not any events on the given day:
 		if (numEvents == 0) {
-			Timestamp ts = Timestamp.valueOf(givenDate);
-			String dateSsml = CalendarHelper.formatDateSsml(ts);
-			String responseSsml = "I couldn't find any events on" + dateSsml + ".";
+			Timestamp ts = DateManip.dateToTimestamp(givenDate);
+			String dateSsml = CalendarHelper.formatDateSsmlNoZone(ts);
+			String responseSsml = "I couldn't find any events on " + dateSsml + ".";
 			String repromptSsml = "Can I help you find another event?";
 			return newFailureResponse(responseSsml, repromptSsml);
 		}
@@ -270,13 +272,13 @@ public class CalendarConversation extends Conversation {
 			}
 
 			session.setAttribute(ATTRIB_RECENTLYSAIDEVENTS, savedEventNames);
-			session.setAttribute(ATTRIB_SAVEDDATE, start);
+			session.setAttribute(ATTRIB_SAVEDDATE, DateManip.dateToTimestamp(givenDate));
 			session.setAttribute(ATTRIB_STATEID, SessionState.USER_HEARD_EVENTS);
 
-			response = newEventListResponse(results, start);
+			response = newEventListResponse(results, DateManip.dateToTimestamp(givenDate));
 		} else { // more than MAX_EVENTS
 			session.setAttribute(ATTRIB_STATEID, SessionState.LIST_TOO_LONG);
-			session.setAttribute(ATTRIB_SAVEDDATE, start);
+			session.setAttribute(ATTRIB_SAVEDDATE, DateManip.dateToTimestamp(givenDate));
 
 			String responseSsml = "I was able to find " + numEvents + " different events. " +
 				"What kind of events would you like to hear about?";
@@ -291,7 +293,7 @@ public class CalendarConversation extends Conversation {
 
 
 	private SpeechletResponse handleNarrowDownIntent(IntentRequest intentReq, Session session, String category) {
-		Timestamp start = (Timestamp) session.getAttribute(ATTRIB_SAVEDDATE);
+		Timestamp start = new Timestamp((long) session.getAttribute(ATTRIB_SAVEDDATE));
 
 		// This should never happen.
 		if (start == null)
@@ -435,7 +437,7 @@ public class CalendarConversation extends Conversation {
 	private static SpeechletResponse newEventListResponse(Map<String, Vector<Object>> results,
 	                                                      Timestamp when) {
 		EventField[] fields = { EventField.SUMMARY, EventField.TIME };
-		String dateSsml = CalendarHelper.formatDateSsml(when);
+		String dateSsml = CalendarHelper.formatDateSsmlNoZone(when);
 		String eventsSsml = CalendarHelper.listEvents(results, fields);
 		String responseSsml = "The events on " + dateSsml + " are: " + eventsSsml;
 		String repromptSsml = "Is there anything you would like to know about those events?";
