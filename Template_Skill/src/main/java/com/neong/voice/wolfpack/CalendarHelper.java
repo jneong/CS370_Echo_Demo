@@ -16,10 +16,10 @@ import java.util.Vector;
 public class CalendarHelper {
 	public static final String TIME_ZONE = "America/Los_Angeles";
 
+	private static final ZoneId LOCAL_ZONEID = ZoneId.of(TIME_ZONE);
 	private static final DateTimeFormatter DAY_FORMATTER = DateTimeFormatter.ofPattern("EEEE");
 	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("????MMdd");
 	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("h:mm a");
-	private static final ZoneId LOCAL_ZONEID = ZoneId.of(TIME_ZONE);
 
 
 	public static boolean isCategorySupported(final String category) {
