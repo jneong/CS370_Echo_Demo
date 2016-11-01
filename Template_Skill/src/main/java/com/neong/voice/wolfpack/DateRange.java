@@ -10,7 +10,10 @@ import java.sql.Timestamp;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import com.neong.voice.wolfpack.CalendarHelper;
+import com.neong.voice.wolfpack.AmazonDateParser;
 
 
 @JsonAutoDetect(fieldVisibility=Visibility.ANY,
@@ -20,14 +23,16 @@ public class DateRange {
 	@JsonProperty("begin") private final Date _begin;
 	@JsonProperty("end") private final Date _end;
 
-	public DateRange(String dateString) {
-		// TODO: actual implementation handling weeks, months, etc.
-		_begin = Date.valueOf(dateString);
-		_end = _begin;
+	public DateRange(final String dateString) {
+		final ImmutablePair<Date, Date> range =
+			AmazonDateParser.parseAmazonDate(dateString);
+
+		_begin = range.left;
+		_end = range.right;
 	}
 
 	@JsonCreator
-	public DateRange(Map<String, Object> props) {
+	public DateRange(final Map<String, Object> props) {
 		_begin = Date.valueOf((String) props.get("begin"));
 		_end = Date.valueOf((String) props.get("end"));
 	}
