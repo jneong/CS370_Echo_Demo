@@ -323,16 +323,7 @@ public class CalendarConversation extends Conversation {
 				ps = db.prepareStatement(query);
 			} else {
 				String query =
-					"WITH c(category_id) AS (" +
-					"    SELECT category_id FROM categories " +
-					"        WHERE name = ?" +
-					"), e(event_id) AS (" +
-					"    SELECT event_id FROM event_categories " +
-					"        NATURAL JOIN c" +
-					") " +
-					"SELECT event_id, summary, start, location FROM event_info " +
-					"    NATURAL JOIN e " +
-					"    WHERE start >= ?::date AND start < ?::date";
+					"SELECT event_id, summary, start, location FROM given_category(?, ?::date, ?::date)";
 				ps = db.prepareStatement(query);
 				ps.setString(position++, category);
 			}
