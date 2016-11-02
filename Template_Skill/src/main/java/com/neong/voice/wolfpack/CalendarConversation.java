@@ -28,7 +28,6 @@ public class CalendarConversation extends Conversation {
 	// Intent names
 	private final static String INTENT_NEXTEVENT = "NextEventIntent";
 	private final static String INTENT_GETEVENTSONDATE = "GetEventsOnDateIntent";
-	private final static String INTENT_NARROWDOWN = "NarrowDownIntent";
 	private final static String INTENT_GETFEEDETAILS = "GetFeeDetailsIntent";
 	private final static String INTENT_GETLOCATIONDETAILS = "GetLocationDetailsIntent";
 	private final static String INTENT_GETENDTIME = "GetEndTimeIntent";
@@ -67,7 +66,6 @@ public class CalendarConversation extends Conversation {
 		// Add custom intent names for dispatcher use.
 		supportedIntentNames.add(INTENT_NEXTEVENT);
 		supportedIntentNames.add(INTENT_GETEVENTSONDATE);
-		supportedIntentNames.add(INTENT_NARROWDOWN);
 		supportedIntentNames.add(INTENT_GETFEEDETAILS);
 		supportedIntentNames.add(INTENT_GETLOCATIONDETAILS);
 		supportedIntentNames.add(INTENT_GETENDTIME);
