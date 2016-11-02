@@ -143,14 +143,13 @@ public class DbConnection {
 	 */
 	public boolean getRemoteConnection() {
 		// Create a URL to be able to connect to the database.
-		String jdbcUrl = "jdbc:postgresql://" + hostName + ":" + port + "/" + dbName + "?user=" + username
-			+ "&password=" + password + "&sslmode=verify-full&sslrootcert=" + localPathToSSL;
+		String jdbcUrl =
+			String.format("jdbc:postgresql://%s:%s/%s?user=%s&password=%s&sslmode=verify-full&sslrootcert=%s&currentSchema=%s",
+			              hostName, port, dbName, username, password, localPathToSSL, schema);
 
 		try {
 			Class.forName("org.postgresql.Driver");
 			dbConnection = DriverManager.getConnection(jdbcUrl);
-			if (schema != null)
-				dbConnection.setSchema(schema);
 
 		// Error handling
 		} catch (ClassNotFoundException e1) {
