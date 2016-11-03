@@ -217,6 +217,12 @@ public class CalendarConversation extends Conversation {
 		String eventFormat = "The next event is {summary}, on {start:date} at {start:time}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 		String repromptSsml = "Is there anything you would like to know about this event?";
+		
+		Map<String, Integer> savedEvent = CalendarHelper.extractEventIds(results, 1);
+		
+		session.setAttribute(ATTRIB_RECENTLYSAIDEVENTS, savedEvent);
+		session.setAttribute(ATTRIB_STATEID, SessionState.USER_HEARD_EVENTS);
+		session.removeAttribute(ATTRIB_SAVEDDATE);
 
 		return newAffirmativeResponse(eventSsml, repromptSsml);
 	}
