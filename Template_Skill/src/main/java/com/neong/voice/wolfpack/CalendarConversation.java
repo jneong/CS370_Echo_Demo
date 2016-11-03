@@ -279,7 +279,12 @@ public class CalendarConversation extends Conversation {
 			session.setAttribute(ATTRIB_RECENTLYSAIDEVENTS, savedEvents);
 			session.setAttribute(ATTRIB_STATEID, SessionState.USER_HEARD_EVENTS);
 
-			response = newEventListResponse(results, dateRange.getTimestamp());
+			/**
+			 * this part formats the first part of the response
+			 */
+			String responsePrefix = "The events on ";
+
+			response = newEventListResponse(results, dateRange.getTimestamp(), responsePrefix);
 		} else { // more than MAX_EVENTS
 			session.setAttribute(ATTRIB_STATEID, SessionState.LIST_TOO_LONG);
 
@@ -357,7 +362,12 @@ public class CalendarConversation extends Conversation {
 
 		Timestamp start = (Timestamp) results.get("start").get(0);
 
-		return newEventListResponse(results, start);
+		/**
+		 * this formats the first part of the response to indicate the category
+         */
+		String categoryPrefix = "the " + category + " events on ";
+
+		return newEventListResponse(results, start, categoryPrefix);
 	}
 
 
@@ -494,11 +504,11 @@ public class CalendarConversation extends Conversation {
 	 * Generic response for a list of events on a given date
 	 */
 	private static SpeechletResponse newEventListResponse(Map<String, Vector<Object>> results,
-	                                                      Timestamp when) {
+	                                                      Timestamp when, String prefix) {
 		String dateSsml = CalendarHelper.formatDateSsml(when);
 		String eventFormat = "<s>{summary} at {start:time}</s>";
 		String eventsSsml = CalendarHelper.listEvents(eventFormat, results);
-		String responseSsml = "The events on " + dateSsml + " are: " + eventsSsml;
+		String responseSsml = prefix + dateSsml + " are: " + eventsSsml;
 		String repromptSsml = "Is there anything you would like to know about those events?";
 
 		return newAffirmativeResponse(responseSsml, repromptSsml);
