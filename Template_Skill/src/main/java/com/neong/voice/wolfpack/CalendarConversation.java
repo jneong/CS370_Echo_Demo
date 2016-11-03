@@ -362,9 +362,9 @@ public class CalendarConversation extends Conversation {
 
 		Timestamp start = (Timestamp) results.get("start").get(0);
 
-		/**
-		 * this formats the first part of the response to indicate the category
-         */
+		/*
+		 * Format the first part of the response to indicate the category.
+		 */
 		String categoryPrefix = "the " + category + " events on ";
 
 		return newEventListResponse(results, start, categoryPrefix);
