@@ -82,7 +82,9 @@ public class TemplateBaseSkillSpeechlet implements Speechlet {
         log.info("onLaunch requestId={}, sessionId={}", request.getRequestId(),
                 session.getSessionId());
 
-        String welcomeStr = "Welcome to Template test skill. Try asking me things.";
+        String welcomeStr =
+	        "Welcome to the SSU Events skill. You can start by asking me what's " +
+	        " happening tomorrow.";
         PlainTextOutputSpeech outputSpeech = new PlainTextOutputSpeech();
         outputSpeech.setText(welcomeStr);
         
