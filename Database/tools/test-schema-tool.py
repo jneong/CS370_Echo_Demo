@@ -135,12 +135,13 @@ def require_secrets():
     return import_module(SECRETS_FILENAME.rsplit('.', 1)[0])
 
 
-def get_database_connection(credentials):
+def get_database_connection(secrets):
     database_connect_args = dict(
         sslmode = 'verify-full',
         sslrootcert = SSL_ROOT_CERT_PATH,
         sslcrl = SSL_CRL_PATH,
-        **credentials
+        options = '-c search_path={}'.format(secrets.schema),
+        **secrets.credentials
     )
     return psycopg2.connect(**database_connect_args)
 
@@ -185,7 +186,7 @@ def with_cursor(func):
     """
     @wraps(func)
     def inner(secrets, args):
-        with get_database_connection(secrets.credentials) as connection:
+        with get_database_connection(secrets) as connection:
             with connection.cursor() as cursor:
                 return func(cursor, args)
     return inner

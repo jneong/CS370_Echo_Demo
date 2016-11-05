@@ -19,9 +19,9 @@ DATABASE_CONNECT_ARGS = dict(
     sslmode = 'verify-full',
     sslrootcert = 'root.crt',
     sslcrl = '',
+    options = '-c search_path={}'.format(schema),
     **credentials
 )
-DATABASE_SCHEMA = schema
 
 
 # Normally, values passed to the database cursor get quoted and escaped
@@ -574,7 +574,6 @@ def handler(event, context):
     """
     with psycopg2.connect(**DATABASE_CONNECT_ARGS) as connection:
         with connection.cursor() as cursor:
-            cursor.execute("SET search_path TO %s", (DATABASE_SCHEMA,))
             populate_database(cursor)
 
 
