@@ -175,7 +175,6 @@ def execute_schema_action(cursor, sql_file_path, schema):
     """
     sql = create_sql_template(sql_file_path)
     cursor.execute(sql, dict(schema=AsIs(schema)))
-    print("ok")
 
 
 def with_cursor(func):
@@ -210,6 +209,8 @@ def create_schema(cursor, args):
     execute_schema_action(cursor, SCHEMA_PATH, schema)
     execute_schema_action(cursor, CALENDAR_URLS_PATH, schema)
 
+    print("ok")
+
     print("""
 Hint:
 
@@ -242,6 +243,8 @@ def drop_schema(cursor, args):
         return
 
     execute_schema_action(cursor, OBLITERATE_PATH, schema)
+
+    print("ok")
 
 
 if __name__ == "__main__":
