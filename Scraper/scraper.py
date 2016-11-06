@@ -236,21 +236,13 @@ def get_record(event):
     }
 
 
-def get_records(urls):
+def get_records(calendar):
     """
     Generates a dict mapping column names to values for every event in the
-    given sequence of calendar URLs.
-
-    Each calendar is fetched, parsed, and scraped for events.  The result
-    is a flat sequence of events, not separated into different calendars.
+    given calendar.
     """
-    for url, last_updated in urls.viewitems():
-        calendar = fetch_icalendar(url, last_updated)
-        if calendar is None:
-            continue
-        for event in calendar.vevent_list:
-            record = get_record(event)
-            yield record
+    for event in calendar.vevent_list:
+        yield get_record(event)
 
 
 #
@@ -552,19 +544,38 @@ SELECT event_id FROM calendar_event_ids
     return len(results) > 0
 
 
+def update_calendar_last_updated(cursor, url):
+    statement = \
+"""
+UPDATE calendar_urls
+    SET last_updated = CURRENT_TIMESTAMP
+    WHERE url_id = %(url_id)s
+"""
+    cursor.execute(statement, dict(url_id=url.url_id))
+
+
 #
 # Database manipulation
 #
 
+
+class CalendarUrl(object):
+    def __init__(self, url):
+        self.url_id = url[0]
+        self.url_text = url[1]
+        self.last_updated = url[2]
+
+    def __repr__(self):
+        return "<CalendarUrl object (%s, %s, %s)>" % (
+            self.url_id,
+            self.url_text,
+            self.last_updated
+        )
+
+
 def get_calendar_urls(cursor):
-    statement = \
-    """
-    SELECT url_text, last_updated FROM calendar_urls
-    """
-    cursor.execute(statement)
-    results = cursor.fetchall()
-    # The return value is a dict of the form {url_text: last_updated, ...}.
-    return {url[0]: url[1] for url in results}
+    cursor.execute("SELECT * FROM calendar_urls")
+    return [CalendarUrl(url) for url in cursor.fetchall()]
 
 
 def populate_database(cursor):
@@ -572,26 +583,37 @@ def populate_database(cursor):
     # in a database session.
     # See http://initd.org/psycopg/docs/cursor.html
 
-    c_urls = get_calendar_urls(cursor)
-    for record in get_records(c_urls):
-        # Show a . to indicate progress to the user when run as a script.
+    for url in get_calendar_urls(cursor):
+        # Show a + to indicate progress when run as a script.
         if __name__ == "__main__":
-            sys.stdout.write('.')
+            sys.stdout.write('+')
             sys.stdout.flush()
 
-        # Skip existing events.
-        if check_event_exists(cursor, record):
+        calendar = fetch_icalendar(url.url_text, url.last_updated)
+        if calendar is None:
             continue
 
-        if has_contact_info(record):
-            insert_contact(cursor, record)
-        if has_location(record):
-            insert_location(cursor, record)
-        insert_event_type(cursor, record)
-        insert_categories(cursor, record)
-        insert_event(cursor, record)
-        insert_event_categories(cursor, record)
-        insert_event_uid(cursor, record)
+        for record in get_records(calendar):
+            # Show a . to indicate progress when run as a script.
+            if __name__ == "__main__":
+                sys.stdout.write('.')
+                sys.stdout.flush()
+
+            # Skip existing events.
+            if check_event_exists(cursor, record):
+                continue
+
+            if has_contact_info(record):
+                insert_contact(cursor, record)
+            if has_location(record):
+                insert_location(cursor, record)
+            insert_event_type(cursor, record)
+            insert_categories(cursor, record)
+            insert_event(cursor, record)
+            insert_event_categories(cursor, record)
+            insert_event_uid(cursor, record)
+
+        update_calendar_last_updated(cursor, url)
 
     print("\nok")
 
