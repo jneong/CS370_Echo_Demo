@@ -1,5 +1,6 @@
 #!/usr/bin/env python2.7
 
+from contextlib import closing
 from functools import *
 from itertools import *
 import sys
@@ -33,20 +34,37 @@ DATABASE_CONNECT_ARGS = dict(
 DEFAULT = AsIs('DEFAULT')
 
 
-def fetch_icalendar(url):
+def fetch_icalendar(url, last_updated=None):
     """
     Returns a parsed iCalendar file as a vobject if the URL was able to be
     fetched and parsed, otherwise None.
+
+    The last_updated parameter is an optional timestamp that will be used
+    to skip calendars that have not been modified since the last update, if
+    given.  If last_updated is None (the default) or if the URL does not
+    respond with a "Last-Modified" header, the calendar will be fetched.
+    When the calendar is not fetched, None is returned.
     """
     calendar = None
-    response = requests.get(url)
-    if response.ok:
-        try:
-            calendar = vobject.readOne(response.text)
-        except vobject.base.ParseError as e:
-            print ("Failed to parse calendar at URL: " + url)
-    else:
-        print("Failed to fetch URL: " + url)
+
+    # We use a streaming connection with a closing() block, so that only
+    # the headers are initially fetched.  If we check the "Last-Modified"
+    # header and decide we don't need the rest of the data, closing() takes
+    # care of closing the connection cleanly when we return early.
+    with closing(requests.get(url, stream=True)) as response:
+        if response.ok:
+            # Skip this calendar if it has not been modified since the last
+            # time we updated it.
+            last_modified = response.headers.get('last-modified')
+            if last_updated and last_modified and last_modified < last_updated:
+                return None
+
+            try:
+                calendar = vobject.readOne(response.text)
+            except vobject.base.ParseError as e:
+                print ("Failed to parse calendar at URL: " + url)
+        else:
+            print("Failed to fetch URL: " + url)
 
     return calendar
 
@@ -214,8 +232,8 @@ def get_records(urls):
     Each calendar is fetched, parsed, and scraped for events.  The result
     is a flat sequence of events, not separated into different calendars.
     """
-    for url in urls:
-        calendar = fetch_icalendar(url)
+    for url, last_updated in urls.viewitems():
+        calendar = fetch_icalendar(url, last_updated)
         if calendar is None:
             continue
         for event in calendar.vevent_list:
@@ -529,11 +547,12 @@ SELECT event_id FROM calendar_event_ids
 def get_calendar_urls(cursor):
     statement = \
     """
-    SELECT url_text FROM calendar_urls
+    SELECT url_text, last_updated FROM calendar_urls
     """
     cursor.execute(statement)
     results = cursor.fetchall()
-    return [url[0] for url in results]
+    # The return value is a dict of the form {url_text: last_updated, ...}.
+    return {url[0]: url[1] for url in results}
 
 
 def populate_database(cursor):
