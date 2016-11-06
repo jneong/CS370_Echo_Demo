@@ -1,6 +1,7 @@
 #!/usr/bin/env python2.7
 
 from contextlib import closing
+from datetime import datetime
 from functools import *
 from itertools import *
 import sys
@@ -34,6 +35,31 @@ DATABASE_CONNECT_ARGS = dict(
 DEFAULT = AsIs('DEFAULT')
 
 
+def parse_last_modified_header(response):
+    # TODO: add support for more timestamp formats
+
+    header = response.headers.get('last-modified')
+    if header is None:
+        return None
+
+    # This is pretty fragile.  We only handle the format returned by the
+    # CollegeNet servers at this time.  If the format changes, or if we
+    # talk to other servers that use a different format, this won't work.
+    #
+    # The currently supported format for the "Last-Modified" header is:
+    # Sat, 05 Nov 2016 07:16:12 GMT
+    #
+    # https://docs.python.org/2.7/library/datetime.html#strftime-strptime-behavior
+
+    last_modified = None
+    try:
+         last_modified = datetime.strptime(header, "%a, %d %b %Y %X %Z")
+    except ValueError as e:
+         print("Failed to parse Last-Modified header: {}".format(e))
+
+    return last_modified
+
+
 def fetch_icalendar(url, last_updated=None):
     """
     Returns a parsed iCalendar file as a vobject if the URL was able to be
@@ -51,13 +77,17 @@ def fetch_icalendar(url, last_updated=None):
     # the headers are initially fetched.  If we check the "Last-Modified"
     # header and decide we don't need the rest of the data, closing() takes
     # care of closing the connection cleanly when we return early.
+    #
+    # http://docs.python-requests.org/en/master/user/advanced/#body-content-workflow
     with closing(requests.get(url, stream=True)) as response:
         if response.ok:
             # Skip this calendar if it has not been modified since the last
-            # time we updated it.
-            last_modified = response.headers.get('last-modified')
-            if last_updated and last_modified and last_modified < last_updated:
-                return None
+            # time we updated it.  Proceed normally if either last_updated
+            # or last_modified are not given.
+            if last_updated:
+                last_modified = parse_last_modified_header(response)
+                if last_modified and last_modified < last_updated:
+                    return None
 
             try:
                 calendar = vobject.readOne(response.text)
