@@ -6,6 +6,7 @@ from functools import *
 from itertools import *
 import sys
 
+from dateutil.parser import parse as parse_timestamp
 import psycopg2
 from psycopg2.extensions import AsIs
 import requests
@@ -36,28 +37,9 @@ DEFAULT = AsIs('DEFAULT')
 
 
 def parse_last_modified_header(response):
-    # TODO: add support for more timestamp formats
-
     header = response.headers.get('last-modified')
-    if header is None:
-        return None
 
-    # This is pretty fragile.  We only handle the format returned by the
-    # CollegeNet servers at this time.  If the format changes, or if we
-    # talk to other servers that use a different format, this won't work.
-    #
-    # The currently supported format for the "Last-Modified" header is:
-    # Sat, 05 Nov 2016 07:16:12 GMT
-    #
-    # https://docs.python.org/2.7/library/datetime.html#strftime-strptime-behavior
-
-    last_modified = None
-    try:
-         last_modified = datetime.strptime(header, "%a, %d %b %Y %X %Z")
-    except ValueError as e:
-         print("Failed to parse Last-Modified header: {}".format(e))
-
-    return last_modified
+    return None if header is None else parse_timestamp(header)
 
 
 def fetch_icalendar(url, last_updated=None):
