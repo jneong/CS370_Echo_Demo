@@ -22,7 +22,7 @@ ALTER TABLE calendar_event_ids OWNER TO ssuadmin;
 CREATE TABLE calendar_urls(
   url_id SMALLSERIAL NOT NULL,
   url_text text NOT NULL,
-  last_updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_updated timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT url_id PRIMARY KEY (url_id)
 );
 ALTER TABLE calendar_urls OWNER TO ssuadmin;
