@@ -19,10 +19,12 @@ CREATE TABLE calendar_event_ids (
 );
 ALTER TABLE calendar_event_ids OWNER TO ssuadmin;
 
+-- last_updated is initialized to 'epoch' by default so that the URL is not
+-- skipped the first time the scraper runs.
 CREATE TABLE calendar_urls(
   url_id SMALLSERIAL NOT NULL,
   url_text text NOT NULL,
-  last_updated timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_updated timestamp with time zone NOT NULL DEFAULT 'epoch',
   CONSTRAINT url_id PRIMARY KEY (url_id)
 );
 ALTER TABLE calendar_urls OWNER TO ssuadmin;
@@ -211,6 +213,10 @@ GRANT SELECT
 
 GRANT SELECT
   ON SEQUENCE calendar_urls_url_id_seq
+  TO scraper;
+
+GRANT UPDATE (last_updated)
+  ON TABLE calendar_urls
   TO scraper;
 
 GRANT SELECT
