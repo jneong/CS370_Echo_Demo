@@ -199,7 +199,7 @@ def get_record(event):
         "all_day_event": get_all_day_event(event),
         "open_to_public": get_open_to_public(event),
 
-        "summary": getter("summary"),
+        "title": getter("summary"),
         "description": getter("description"),
         "location": getter("location"),
         "start": getter("dtstart"),
@@ -421,7 +421,7 @@ INSERT INTO categories(name)
 # the tuple.
 event_fields = (
     'all_day_event', 'open_to_public',
-    'summary', 'description', 'location_id',
+    'title', 'description', 'location_id',
     'start', '"end"', 'event_type_id',
     'general_admission_fee', 'student_admission_fee',
     'website_url', 'ticket_sales_url', 'contact_id'
@@ -487,21 +487,21 @@ WITH category(id) AS (
         WHERE name = %(name)s
 ), event(id) AS (
     SELECT event_id FROM events
-        WHERE summary = %(summary)s AND start = %(start)s
+        WHERE title = %(title)s AND start = %(start)s
 )
 INSERT INTO event_categories(event_id, category_id)
     SELECT event.id, category.id FROM event, category
     ON CONFLICT DO NOTHING;
 """
     # This is a dict comprehension that filters the event dict to keep only
-    # the 'summary' and 'start' keys.
-    shared = {k:v for k,v in event.items() if k in ('summary', 'start')}
+    # the 'title' and 'start' keys.
+    shared = {k:v for k,v in event.items() if k in ('title', 'start')}
 
-    # This is a generator that yields a dict(summary, start, name) for every
+    # This is a generator that yields a dict(title, start, name) for every
     # category in the event.  There are many categories per event, and many
     # events, so this table is building a many-to-many relationship.
     values = (
-        { 'summary': event['summary'], 'start': event['start'], 'name': cat }
+        { 'title': event['title'], 'start': event['start'], 'name': cat }
         for cat in event['categories']
     )
     # Execute for each category in the generator.
@@ -513,7 +513,7 @@ def insert_event_uid(cursor, event):
 """
 WITH event(id) AS (
     SELECT event_id FROM events
-    WHERE summary = %(summary)s AND start = %(start)s
+    WHERE title = %(title)s AND start = %(start)s
 )
 INSERT INTO calendar_event_ids(event_id, event_uid)
     SELECT event.id, %(event_uid)s FROM event
