@@ -217,9 +217,9 @@ public class CalendarConversation extends Conversation {
 		String eventFormat = "The next event is {summary}, on {start:date} at {start:time}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 		String repromptSsml = "Is there anything you would like to know about this event?";
-		
+
 		Map<String, Integer> savedEvent = CalendarHelper.extractEventIds(results, 1);
-		
+
 		session.setAttribute(ATTRIB_RECENTLYSAIDEVENTS, savedEvent);
 		session.setAttribute(ATTRIB_STATEID, SessionState.USER_HEARD_EVENTS);
 		session.removeAttribute(ATTRIB_SAVEDDATE);
@@ -279,9 +279,6 @@ public class CalendarConversation extends Conversation {
 			session.setAttribute(ATTRIB_RECENTLYSAIDEVENTS, savedEvents);
 			session.setAttribute(ATTRIB_STATEID, SessionState.USER_HEARD_EVENTS);
 
-			/**
-			 * this part formats the first part of the response
-			 */
 			String responsePrefix = "The events on ";
 
 			response = newEventListResponse(results, dateRange.getTimestamp(), responsePrefix);
@@ -362,9 +359,7 @@ public class CalendarConversation extends Conversation {
 
 		Timestamp start = (Timestamp) results.get("start").get(0);
 
-		/*
-		 * Format the first part of the response to indicate the category.
-		 */
+		// Format the first part of the response to indicate the category.
 		String categoryPrefix = "the " + category + " events on ";
 
 		return newEventListResponse(results, start, categoryPrefix);
