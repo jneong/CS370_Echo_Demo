@@ -281,7 +281,7 @@ public class CalendarConversation extends Conversation {
 
 			String responsePrefix = "Okay. The events on ";
 
-			response = newEventListResponse(results, dateRange.getTimestamp(), responsePrefix);
+			response = newEventListResponse(results, dateRange, responsePrefix);
 		} else { // more than MAX_EVENTS
 			session.setAttribute(ATTRIB_STATEID, SessionState.LIST_TOO_LONG);
 
@@ -363,7 +363,8 @@ public class CalendarConversation extends Conversation {
 		// Format the first part of the response to indicate the category.
 		String categoryPrefix = "Cool. The " + category + " events on ";
 
-		return newEventListResponse(results, start, categoryPrefix);
+
+		return newEventListResponse(results, dateRange, categoryPrefix);
 	}
 
 
@@ -501,8 +502,8 @@ public class CalendarConversation extends Conversation {
 	 * Generic response for a list of events on a given date
 	 */
 	private static SpeechletResponse newEventListResponse(Map<String, Vector<Object>> results,
-	                                                      Timestamp when, String prefix) {
-		String dateSsml = CalendarHelper.formatDateSsml(when);
+	                                                      DateRange when, String prefix) {
+		String dateSsml = when.getRelativeDate(true);
 		String eventFormat = "<s>{summary} at {start:time}</s>";
 		String eventsSsml = CalendarHelper.listEvents(eventFormat, results);
 		String responseSsml = prefix + dateSsml + " are: " + eventsSsml;
