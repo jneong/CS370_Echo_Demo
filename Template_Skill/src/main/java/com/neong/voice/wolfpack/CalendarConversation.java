@@ -214,7 +214,7 @@ public class CalendarConversation extends Conversation {
 		if (results == null)
 			return newInternalErrorResponse();
 
-		String eventFormat = "The next event is {title}, on {start:date} at {start:time}.";
+		String eventFormat = "Okay, The next event is {title}, on {start:date} at {start:time}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 		String repromptSsml = "Is there anything you would like to know about this event?";
 
@@ -279,7 +279,7 @@ public class CalendarConversation extends Conversation {
 			session.setAttribute(ATTRIB_RECENTLYSAIDEVENTS, savedEvents);
 			session.setAttribute(ATTRIB_STATEID, SessionState.USER_HEARD_EVENTS);
 
-			String responsePrefix = "The events on ";
+			String responsePrefix = "Okay. The events on ";
 
 			response = newEventListResponse(results, dateRange.getTimestamp(), responsePrefix);
 		} else { // more than MAX_EVENTS
@@ -360,7 +360,7 @@ public class CalendarConversation extends Conversation {
 		Timestamp start = (Timestamp) results.get("start").get(0);
 
 		// Format the first part of the response to indicate the category.
-		String categoryPrefix = "the " + category + " events on ";
+		String categoryPrefix = "Cool. The " + category + " events on ";
 
 		return newEventListResponse(results, start, categoryPrefix);
 	}
@@ -402,10 +402,10 @@ public class CalendarConversation extends Conversation {
 		if (results.get("title").size() == 0)
 			return newInternalErrorResponse();
 
-		String eventFormat = "General admission for {title} is {general_admission_fee}.";
+		String eventFormat = "Sure, General admission for {title} is {general_admission_fee}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
-		return newAffirmativeResponse(eventSsml, "I'm sorry, I didn't quite catch that.");
+		return newAffirmativeResponse(eventSsml, "Would you like anymore info?");
 	}
 
 
@@ -445,10 +445,10 @@ public class CalendarConversation extends Conversation {
 		if (results.get("title").size() == 0)
 			return newInternalErrorResponse();
 
-		String eventFormat = "{title} is located at {location}.";
+		String eventFormat = "Alrighty, {title} is located at {location}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
-		return newAffirmativeResponse(eventSsml, "I'm sorry, I didn't quite catch that.");
+		return newAffirmativeResponse(eventSsml, "Would you like to hear anything else?");
 	}
 
 
@@ -488,10 +488,10 @@ public class CalendarConversation extends Conversation {
 		if (results.get("title").size() == 0)
 			return newInternalErrorResponse();
 
-		String eventFormat = "{title} ends at {end:time}.";
+		String eventFormat = "Okay, {title} ends at {end:time}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
-		return newAffirmativeResponse(eventSsml, "I'm sorry, I didn't quite catch that.");
+		return newAffirmativeResponse(eventSsml, "Would you like to hear more?");
 	}
 
 
@@ -542,7 +542,7 @@ public class CalendarConversation extends Conversation {
 	 *         get wrapped in {@code <speak>...</speak>} tags.
 	 */
 	private static SpeechletResponse newAffirmativeResponse(String responseSsml, String repromptSsml) {
-		return newAskResponse("<speak>Okay. " + responseSsml + "</speak>", true,
+		return newAskResponse("<speak>" + responseSsml + "</speak>", true,
 		                      "<speak>" + repromptSsml + "</speak>", true);
 	}
 
