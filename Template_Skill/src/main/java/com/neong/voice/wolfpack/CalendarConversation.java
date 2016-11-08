@@ -405,7 +405,7 @@ public class CalendarConversation extends Conversation {
 		String eventFormat = "General admission for {title} is {general_admission_fee}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
-		return newAffirmativeResponse(eventSsml, "I'm sorry, I didn't quite catch that.");
+		return newAffirmativeResponse(eventSsml, "Would you like anymore info?");
 	}
 
 
@@ -448,7 +448,7 @@ public class CalendarConversation extends Conversation {
 		String eventFormat = "{title} is located at {location}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
-		return newAffirmativeResponse(eventSsml, "I'm sorry, I didn't quite catch that.");
+		return newAffirmativeResponse(eventSsml, "Would you like to hear anything else?");
 	}
 
 
@@ -491,7 +491,7 @@ public class CalendarConversation extends Conversation {
 		String eventFormat = "{title} ends at {end:time}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
-		return newAffirmativeResponse(eventSsml, "I'm sorry, I didn't quite catch that.");
+		return newAffirmativeResponse(eventSsml, "Would you like to hear more?");
 	}
 
 
