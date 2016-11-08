@@ -2,7 +2,7 @@ package com.neong.voice.wolfpack;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
@@ -12,6 +12,63 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 
 public class AmazonDateParser {
 	private static final int SUNDAY = 1;
+	
+	private enum rangeType {
+		DAY,
+		WEEK,
+		WEEKEND,
+		MONTH
+	}
+	
+	
+	private static rangeType findRangeType(String givenDate){
+		if (givenDate.length() == 7) {
+			return rangeType.MONTH;
+		} else if (givenDate.contains("WE")) {
+			return rangeType.WEEKEND;
+		} else if (givenDate.contains("W")) {
+			return rangeType.WEEK;
+		} else { //A single day
+			return rangeType.DAY;
+		}
+	}
+	
+	
+	/**
+	 * Looks at the givenDate and determines what it is referring to, such as
+	 * a day, this week, next week, a certain month, etc.
+	 * 
+	 * @param givenDate The string provided from the AMAZON.DATE slot.
+	 * 
+	 * @param usePreposition	Set to true if the string returned should include
+	 * 							prepositions before the time range, such as "in"
+	 * 							or "on". Set to false if only the time range
+	 * 							should be returned.
+	 * 
+	 * @return 	A short string with a time frame like "December", "next week",
+	 * 			"this weekend", etc.
+	 */
+	public static String timeRange(final String givenDate, boolean usePreposition){
+		rangeType range = findRangeType(givenDate);
+		String time = "";
+		
+		switch(range){
+			case MONTH:
+				if(usePreposition)
+					time += "in ";
+				return time + getMonth(givenDate);
+			case WEEK:
+				return time + getRelativeWeek(givenDate);
+			case WEEKEND:
+				return time + getRelativeWeekend(givenDate);
+			case DAY:
+				if(usePreposition)
+					time += "on ";
+				return time + getSingleDay(givenDate);
+		}
+		return "unknown range";
+	}
+	
 
 	/**
 	 * Parses the givenDate and comes up with two different dates related to the
@@ -155,6 +212,74 @@ public class AmazonDateParser {
 		
 		return ImmutablePair.of(begin,  end);
 	}
+	
+	
+	private static String getSingleDay(String givenDate){
+		//Since it's going to format a date without a time, adding 12 hours
+		//does not matter.
+		final Timestamp oneDay = Timestamp.valueOf(givenDate + " 12:00:00");
+		return CalendarHelper.formatDateSsml(oneDay);
+	}
+	
+	
+	/**
+	 * 
+	 * @param givenDate A string representing a month from Alexa such
+	 * 					as 2016-02
+	 * 
+	 * @return			The name of the month that corresponds with the
+	 * 					month in the string. January is 01 and December
+	 * 					is 12.
+	 */
+	private static String getMonth(final String givenDate){
+		final String[] pieces = givenDate.split("-");
+		final int year = Integer.parseInt(pieces[0]);
+		final int monthNum = Integer.parseInt(pieces[1]);
+		return new DateFormatSymbols().getMonths()[monthNum-1];
+	}
+	
+	
+	/**
+	 * 
+	 * @param givenDate A string from Amazon representing a weekend.
+	 * 					Example: 2016-W44-WE
+	 * @return	A response depending on if the weekend is the next
+	 * 			weekend coming up in the calendar (this weekend)
+	 * 			or the weekend after that (next weekend).
+	 */
+	private static String getRelativeWeekend(final String givenDate){
+		final String[] pieces = givenDate.split("-W");
+		final int year = Integer.parseInt(pieces[0]);
+		pieces[1].replaceAll("-WE", "");
+		final int weekendNum = Integer.parseInt(pieces[1]);
+		
+		if(weekendNum == thisWeekNumber()){
+			return "this weekend";
+		}
+		return "next weekend";
+	}
+	
+	
+	/**
+	 * 
+	 * @param givenDate A string from Amazon representing a week.
+	 * 					Example: 2016-W44
+	 * @return	A response depending on if the week is the same
+	 * 			as this week, or next week.
+	 */
+	private static String getRelativeWeek(final String givenDate){
+		final String[] pieces = givenDate.split("-W");
+		final int year = Integer.parseInt(pieces[0]);
+		int weekNum = Integer.parseInt(pieces[1]);
+		
+		if (todayNumber() == SUNDAY)
+			weekNum++;
+		
+		if(weekNum == thisWeekNumber()){
+			return "this week";
+		}
+		return "next week";
+	}
 
 	
 	/**
@@ -165,6 +290,23 @@ public class AmazonDateParser {
 		final int dayOfWeek = today.get(Calendar.DAY_OF_WEEK);
 
 		return dayOfWeek;
+	}
+	
+	
+	/**
+	 * @return	This week's week number. The first week of the year is the first
+	 * 			week that contains a Thursday. A week is considered to be Sunday
+	 * 			through Saturday.
+	 */
+	private static int thisWeekNumber(){
+		final Calendar calendar = Calendar.getInstance();
+		calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+		calendar.setMinimalDaysInFirstWeek(3);
+		
+		int weekNum = calendar.get(Calendar.WEEK_OF_YEAR);
+		if(todayNumber() == SUNDAY)
+			weekNum++;
+		return weekNum;
 	}
 
 	
