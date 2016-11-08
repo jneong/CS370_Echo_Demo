@@ -1,93 +1,241 @@
 // GetEventsOnDateIntent Utterances
 
-GetEventsOnDateIntent give me a community event that is on {date}
-GetEventsOnDateIntent give me a community event that is for {date}
-GetEventsOnDateIntent give me a community event that's on {date}
-GetEventsOnDateIntent give me a community event that's for {date}
-GetEventsOnDateIntent give me a community meeting that is on {date}
-GetEventsOnDateIntent give me a community meeting that is for {date}
-GetEventsOnDateIntent give me a community meeting that's on {date}
-GetEventsOnDateIntent give me a community meeting that's for {date}
-GetEventsOnDateIntent give me a sports event that is on {date}
-GetEventsOnDateIntent give me a sports event that is for {date}
-GetEventsOnDateIntent give me a sports event that's on {date}
-GetEventsOnDateIntent give me a sports event that's for {date}
-GetEventsOnDateIntent give me a diversity related event that is on {date}
-GetEventsOnDateIntent give me a diversity related event that is for {date}
-GetEventsOnDateIntent give me a diversity related event that's on {date}
-GetEventsOnDateIntent give me a diversity related event that's for {date}
-GetEventsOnDateIntent give me a diversity related meeting that is on {date}
-GetEventsOnDateIntent give me a diversity related meeting that is for {date}
-GetEventsOnDateIntent give me a diversity related meeting that's on {date}
-GetEventsOnDateIntent give me a diversity related meeting that's for {date}
-GetEventsOnDateIntent give me a clubs event that is on {date}
-GetEventsOnDateIntent give me a clubs event that is for {date}
-GetEventsOnDateIntent give me a clubs event that's on {date}
-GetEventsOnDateIntent give me a clubs event that's for {date}
-GetEventsOnDateIntent give me a clubs meeting that is on {date}
-GetEventsOnDateIntent give me a clubs meeting that is for {date}
-GetEventsOnDateIntent give me a clubs meeting that's on {date}
-GetEventsOnDateIntent give me a clubs meeting that's for {date}
-GetEventsOnDateIntent give me a lecture event that is on {date}
-GetEventsOnDateIntent give me a lecture event that is for {date}
-GetEventsOnDateIntent give me a lecture event that's on {date}
-GetEventsOnDateIntent give me a lecture event that's for {date}
-GetEventsOnDateIntent give me a lecture meeting that is on {date}
-GetEventsOnDateIntent give me a lecture meeting that is for {date}
-GetEventsOnDateIntent give me a lecture meeting that's on {date}
-GetEventsOnDateIntent give me a lecture meeting that's for {date}
-GetEventsOnDateIntent give me a film event that is on {date}
-GetEventsOnDateIntent give me a film event that is for {date}
-GetEventsOnDateIntent give me a film event that's on {date}
-GetEventsOnDateIntent give me a film event that's for {date}
-GetEventsOnDateIntent give me a film meeting that is on {date}
-GetEventsOnDateIntent give me a film meeting that is for {date}
-GetEventsOnDateIntent give me a film meeting that's on {date}
-GetEventsOnDateIntent give me a film meeting that's for {date}
-GetEventsOnDateIntent tell me a community event that is on {date}
-GetEventsOnDateIntent tell me a community event that is for {date}
-GetEventsOnDateIntent tell me a community event that's on {date}
-GetEventsOnDateIntent tell me a community event that's for {date}
-GetEventsOnDateIntent tell me a community meeting that is on {date}
-GetEventsOnDateIntent tell me a community meeting that is for {date}
-GetEventsOnDateIntent tell me a community meeting that's on {date}
-GetEventsOnDateIntent tell me a community meeting that's for {date}
-GetEventsOnDateIntent tell me a sports event that is on {date}
-GetEventsOnDateIntent tell me a sports event that is for {date}
-GetEventsOnDateIntent tell me a sports event that's on {date}
-GetEventsOnDateIntent tell me a sports event that's for {date}
-GetEventsOnDateIntent tell me a diversity related event that is on {date}
-GetEventsOnDateIntent tell me a diversity related event that is for {date}
-GetEventsOnDateIntent tell me a diversity related event that's on {date}
-GetEventsOnDateIntent tell me a diversity related event that's for {date}
-GetEventsOnDateIntent tell me a diversity related meeting that is on {date}
-GetEventsOnDateIntent tell me a diversity related meeting that is for {date}
-GetEventsOnDateIntent tell me a diversity related meeting that's on {date}
-GetEventsOnDateIntent tell me a diversity related meeting that's for {date}
-GetEventsOnDateIntent tell me a clubs event that is on {date}
-GetEventsOnDateIntent tell me a clubs event that is for {date}
-GetEventsOnDateIntent tell me a clubs event that's on {date}
-GetEventsOnDateIntent tell me a clubs event that's for {date}
-GetEventsOnDateIntent tell me a clubs meeting that is on {date}
-GetEventsOnDateIntent tell me a clubs meeting that is for {date}
-GetEventsOnDateIntent tell me a clubs meeting that's on {date}
-GetEventsOnDateIntent tell me a clubs meeting that's for {date}
-GetEventsOnDateIntent tell me a lecture event that is on {date}
-GetEventsOnDateIntent tell me a lecture that is for {date}
-GetEventsOnDateIntent tell me a lecture that's on {date}
-GetEventsOnDateIntent tell me a lecture that's for {date}
-GetEventsOnDateIntent tell me a lecture that is on {date}
-GetEventsOnDateIntent tell me a lecture that is for {date}
-GetEventsOnDateIntent tell me a lecture that's on {date}
-GetEventsOnDateIntent tell me a lecture that's for {date}
-GetEventsOnDateIntent tell me a film that is on {date}
-GetEventsOnDateIntent tell me a film that is for {date}
-GetEventsOnDateIntent tell me a film that's on {date}
-GetEventsOnDateIntent tell me a film that's for {date}
-GetEventsOnDateIntent tell me a film that is on {date}
-GetEventsOnDateIntent tell me a film that is for {date}
-GetEventsOnDateIntent tell me a film that's on {date}
-GetEventsOnDateIntent tell me a film that's for {date}
+GetEventsOnDateIntent give me what is scheduled for the events calendar for {date}
+GetEventsOnDateIntent give me what is scheduled for the events calendar on {date}
+GetEventsOnDateIntent give me what is scheduled for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what is scheduled for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what is scheduled for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what is scheduled for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what is scheduled for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what is scheduled for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what is scheduled on the events calendar for {date}
+GetEventsOnDateIntent give me what is scheduled on the events calendar on {date}
+GetEventsOnDateIntent give me what is scheduled on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what is scheduled on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what is scheduled on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what is scheduled on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what is scheduled on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what is scheduled on the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what is happening for the events calendar for {date}
+GetEventsOnDateIntent give me what is happening for the events calendar on {date}
+GetEventsOnDateIntent give me what is happening for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what is happening for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what is happening for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what is happening for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what is happening for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what is happening for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what is happening on the events calendar for {date}
+GetEventsOnDateIntent give me what is happening on the events calendar on {date}
+GetEventsOnDateIntent give me what is happening on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what is happening on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what is happening on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what is happening on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what is happening on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what is happening on the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's scheduled for the events calendar for {date}
+GetEventsOnDateIntent give me what's scheduled for the events calendar on {date}
+GetEventsOnDateIntent give me what's scheduled for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's scheduled for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's scheduled for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's scheduled for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's scheduled for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's scheduled for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's scheduled on the events calendar for {date}
+GetEventsOnDateIntent give me what's scheduled on the events calendar on {date}
+GetEventsOnDateIntent give me what's scheduled on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's scheduled on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's scheduled on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's scheduled on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's scheduled on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's scheduled on the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's happening for the events calendar for {date}
+GetEventsOnDateIntent give me what's happening for the events calendar on {date}
+GetEventsOnDateIntent give me what's happening for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's happening for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's happening for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's happening for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's happening for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's happening for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's happening on the events calendar for {date}
+GetEventsOnDateIntent give me what's happening on the events calendar on {date}
+GetEventsOnDateIntent give me what's happening on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's happening on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's happening on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's happening on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's happening on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's happening on the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's up scheduled for the events calendar for {date}
+GetEventsOnDateIntent give me what's up scheduled for the events calendar on {date}
+GetEventsOnDateIntent give me what's up scheduled for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's up scheduled for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's up scheduled for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's up scheduled for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's up scheduled for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's up scheduled for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's up scheduled on the events calendar for {date}
+GetEventsOnDateIntent give me what's up scheduled on the events calendar on {date}
+GetEventsOnDateIntent give me what's up scheduled on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's up scheduled on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's up scheduled on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's up scheduled on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's up scheduled on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's up scheduled on the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's up happening for the events calendar for {date}
+GetEventsOnDateIntent give me what's up happening for the events calendar on {date}
+GetEventsOnDateIntent give me what's up happening for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's up happening for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's up happening for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's up happening for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's up happening for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's up happening for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's up happening on the events calendar for {date}
+GetEventsOnDateIntent give me what's up happening on the events calendar on {date}
+GetEventsOnDateIntent give me what's up happening on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's up happening on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's up happening on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's up happening on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's up happening on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's up happening on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled for the events calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled for the events calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled on the events calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled on the events calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what is happening for the events calendar for {date}
+GetEventsOnDateIntent tell me what is happening for the events calendar on {date}
+GetEventsOnDateIntent tell me what is happening for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what is happening for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what is happening for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what is happening for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what is happening for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what is happening for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what is happening on the events calendar for {date}
+GetEventsOnDateIntent tell me what is happening on the events calendar on {date}
+GetEventsOnDateIntent tell me what is happening on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what is happening on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what is happening on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what is happening on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what is happening on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what is happening on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled for the events calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled for the events calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled on the events calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled on the events calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's happening for the events calendar for {date}
+GetEventsOnDateIntent tell me what's happening for the events calendar on {date}
+GetEventsOnDateIntent tell me what's happening for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's happening for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's happening for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's happening for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's happening for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's happening for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's happening on the events calendar for {date}
+GetEventsOnDateIntent tell me what's happening on the events calendar on {date}
+GetEventsOnDateIntent tell me what's happening on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's happening on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's happening on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's happening on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's happening on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's happening on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's up scheduled for the events calendar for {date}
+GetEventsOnDateIntent tell me what's up scheduled for the events calendar on {date}
+GetEventsOnDateIntent tell me what's up scheduled for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's up scheduled for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's up scheduled for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's up scheduled for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's up scheduled for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's up scheduled for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's up scheduled on the events calendar for {date}
+GetEventsOnDateIntent tell me what's up scheduled on the events calendar on {date}
+GetEventsOnDateIntent tell me what's up scheduled on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's up scheduled on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's up scheduled on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's up scheduled on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's up scheduled on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's up scheduled on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's up happening for the events calendar for {date}
+GetEventsOnDateIntent tell me what's up happening for the events calendar on {date}
+GetEventsOnDateIntent tell me what's up happening for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's up happening for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's up happening for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's up happening for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's up happening for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's up happening for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's up happening on the events calendar for {date}
+GetEventsOnDateIntent tell me what's up happening on the events calendar on {date}
+GetEventsOnDateIntent tell me what's up happening on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's up happening on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's up happening on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's up happening on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's up happening on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's up happening on the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me a event that is on {date}
+GetEventsOnDateIntent give me a event that's on {date}
+GetEventsOnDateIntent give me an event that is on {date}
+GetEventsOnDateIntent give me an event that's on {date}
+GetEventsOnDateIntent give me the event that is on {date}
+GetEventsOnDateIntent give me the event that's on {date}
+GetEventsOnDateIntent tell me a event that is on {date}
+GetEventsOnDateIntent tell me a event that's on {date}
+GetEventsOnDateIntent tell me an event that is on {date}
+GetEventsOnDateIntent tell me an event that's on {date}
+GetEventsOnDateIntent tell me the event that is on {date}
+GetEventsOnDateIntent tell me the event that's on {date}
+GetEventsOnDateIntent give me what is on {date}
+GetEventsOnDateIntent give me what's on {date}
+GetEventsOnDateIntent give me what's up on {date}
+GetEventsOnDateIntent tell me what is on {date}
+GetEventsOnDateIntent tell me what's on {date}
+GetEventsOnDateIntent tell me what's up on {date}
+GetEventsOnDateIntent I want an event on {date}
+GetEventsOnDateIntent I want an occasion on {date}
+GetEventsOnDateIntent I need an event on {date}
+GetEventsOnDateIntent I need an occasion on {date}
+GetEventsOnDateIntent I want a gathering on {date}
+GetEventsOnDateIntent I want a fun time on {date}
+GetEventsOnDateIntent I need a gathering on {date}
+GetEventsOnDateIntent I need a fun time on {date}
+GetEventsOnDateIntent what is on {date} that is fun
+GetEventsOnDateIntent what is on {date} that is interesting
+GetEventsOnDateIntent what is on {date} that is cool
+GetEventsOnDateIntent what is on {date} that's fun
+GetEventsOnDateIntent what is on {date} that's interesting
+GetEventsOnDateIntent what is on {date} that's cool
+GetEventsOnDateIntent what's on {date} that is fun
+GetEventsOnDateIntent what's on {date} that is interesting
+GetEventsOnDateIntent what's on {date} that is cool
+GetEventsOnDateIntent what's on {date} that's fun
+GetEventsOnDateIntent what's on {date} that's interesting
+GetEventsOnDateIntent what's on {date} that's cool
+GetEventsOnDateIntent what is on {date} for fun
+GetEventsOnDateIntent what is on {date} for me to do
+GetEventsOnDateIntent what is on {date} for an activity
+GetEventsOnDateIntent what's on {date} for fun
+GetEventsOnDateIntent what's on {date} for me to do
+GetEventsOnDateIntent what's on {date} for an activity
 
 // NextEventIntent Utterances
 

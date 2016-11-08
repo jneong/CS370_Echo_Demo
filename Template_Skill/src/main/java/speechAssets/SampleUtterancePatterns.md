@@ -7,18 +7,15 @@ https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/suppor
 
 GetEventsOnDateIntent Utterances:
 ```
-// THIS IS THE ONLY RULE THAT HAS BEEN USED SO FAR, THE OTHER RULES GENERATE TOO MANY UTTERANCES IN THE EXPANDER
-
-    GetEventsOnDateIntent (give|tell) me a (|community|sports|diversity related|clubs|lecture|film) (|event|meeting) (|that is|that's) (|on|for) {date}
-    
-// THESE RULES ARE FOR THE OTHER FORMS PROVIDED IN THE AMAZON ALEXA SKILLS KIT - THE LINK TO THE DOCUMENTATION IS AT THE TOP OF THE FILE
-
-    GetEventsOnDateIntent (give|tell) me me an (|alumni|athletics|intramural|organizations) (|event|meeting|) (|that is|that's) (|on|for) {date}
-    GetEventsOnDateIntent (give|tell) me a (concert|show) (|that is|that's) (|on|for) {date}
-    GetEventsOnDateIntent (give|tell) me (|what is|what's) (|on) {date} (that's|that is) (|for) (|community|alumni|sporting|athletics|intramural|diversity related|clubs|organizations|lectures|films) (|event) (|that is|that's) (|on|for) {date}
-    GetEventsOnDateIntent (to|for) (locate|find) (|a|an) (|community|alumni|sporting|athletics|intramural|diversity related|club|organizations|lectures|films) (|event) (|that is|that's) (|happening|scheduled) (|on|for) {date} (|that is|that's) fun
-    GetEventsOnDateIntent I (want|need) (a|an) (|community|alumni|sporting|athletics|intramural|diversity related|club|organizations|lectures|films) (|event) (|that is|that's) (|on|for) {date}
-    GetEventsOnDateIntent (|what is|what's) (|on) {date} (|for) (|community|alumni|sporting|athletics|intramural|diversity related|club|organizations|lectures|films) 
+GetEventsOnDateIntent (give|tell) me (what is|what's|what's up) (scheduled|happening) (for|on) the (events|s.s.u.|(sonoma state|sonoma state university))) calendar (for|on) {date} 
+GetEventsOnDateIntent (give|tell) me (a|an|the) event (that is|that's) on {date}
+GetEventsOnDateIntent (give|tell) me (what is|what's|what's up) on {date}
+GetEventsOnDateIntent I (want|need) an (event|occasion) on {date} 
+GetEventsOnDateIntent I (want|need) a (gathering|fun time) on {date}
+GetEventsOnDateIntent (what is|what's) on {date} (that is|that's) (fun|interesting|cool)
+GetEventsOnDateIntent (what is|what's) on {date} for (fun|me to do|an activity)
+   
+// THESE RULES ARE FOR THE OTHER FORMS PROVIDED IN THE AMAZON ALEXA SKILLS KIT USE AT YOUR DISCRETION - THE LINK TO THE DOCUMENTATION IS AT THE TOP OF THE FILE
 
 ```
 
