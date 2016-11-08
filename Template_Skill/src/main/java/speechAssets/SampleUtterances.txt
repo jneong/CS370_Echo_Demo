@@ -91,61 +91,251 @@ GetEventsOnDateIntent tell me a film that's for {date}
 
 // NextEventIntent Utterances
 
-NextEventIntent give me the next community event
-NextEventIntent give me the next alumni event
-NextEventIntent give me the next sporting event
-NextEventIntent give me the next athletics event
-NextEventIntent give me the next intramural event
-NextEventIntent give me the next diversity related event
-NextEventIntent give me the next club event
-NextEventIntent give me the next clubs event
-NextEventIntent give me the next organization event
-NextEventIntent give me the next organizations event
-NextEventIntent give me the next lecture event
-NextEventIntent give me the next lectures event
-NextEventIntent give me the next film event
-NextEventIntent give me the next films event
-NextEventIntent give me the most recent community event
-NextEventIntent give me the most recent alumni event
-NextEventIntent give me the most recent sporting event
-NextEventIntent give me the most recent athletics event
-NextEventIntent give me the most recent intramural event
-NextEventIntent give me the most recent diversity related event
-NextEventIntent give me the most recent club event
-NextEventIntent give me the most recent clubs event
-NextEventIntent give me the most recent organization event
-NextEventIntent give me the most recent organizations event
-NextEventIntent give me the most recent lecture event
-NextEventIntent give me the most recent lectures event
-NextEventIntent give me the most recent film event
-NextEventIntent give me the most recent films event
-NextEventIntent tell me the next community event
-NextEventIntent tell me the next alumni event
-NextEventIntent tell me the next sporting event
-NextEventIntent tell me the next athletics event
-NextEventIntent tell me the next intramural event
-NextEventIntent tell me the next diversity related event
-NextEventIntent tell me the next club event
-NextEventIntent tell me the next clubs event
-NextEventIntent tell me the next organization event
-NextEventIntent tell me the next organizations event
-NextEventIntent tell me the next lecture event
-NextEventIntent tell me the next lectures event
-NextEventIntent tell me the next film event
-NextEventIntent tell me the next films event
-NextEventIntent tell me the most recent community event
-NextEventIntent tell me the most recent alumni event
-NextEventIntent tell me the most recent sporting event
-NextEventIntent tell me the most recent athletics event
-NextEventIntent tell me the most recent intramural event
-NextEventIntent tell me the most recent diversity related event
-NextEventIntent tell me the most recent club event
-NextEventIntent tell me the most recent clubs event
-NextEventIntent tell me the most recent organization event
-NextEventIntent tell me the most recent organizations event
-NextEventIntent tell me the most recent lecture event
-NextEventIntent tell me the most recent lectures event
-NextEventIntent tell me the most recent film event
-NextEventIntent tell me the most recent films event
+NextEventIntent give me the next event
+NextEventIntent give me the next show
+NextEventIntent give me the next thing
+NextEventIntent give me the next shindig
+NextEventIntent give me the next meeting
+NextEventIntent give me the next occasion
+NextEventIntent give me the next presentation
+NextEventIntent give me the most recent event
+NextEventIntent give me the most recent show
+NextEventIntent give me the most recent thing
+NextEventIntent give me the most recent shindig
+NextEventIntent give me the most recent meeting
+NextEventIntent give me the most recent occasion
+NextEventIntent give me the most recent presentation
+NextEventIntent give me the upcoming event
+NextEventIntent give me the upcoming show
+NextEventIntent give me the upcoming thing
+NextEventIntent give me the upcoming shindig
+NextEventIntent give me the upcoming meeting
+NextEventIntent give me the upcoming occasion
+NextEventIntent give me the upcoming presentation
+NextEventIntent give me the newest event
+NextEventIntent give me the newest show
+NextEventIntent give me the newest thing
+NextEventIntent give me the newest shindig
+NextEventIntent give me the newest meeting
+NextEventIntent give me the newest occasion
+NextEventIntent give me the newest presentation
+NextEventIntent give me the latest event
+NextEventIntent give me the latest show
+NextEventIntent give me the latest thing
+NextEventIntent give me the latest shindig
+NextEventIntent give me the latest meeting
+NextEventIntent give me the latest occasion
+NextEventIntent give me the latest presentation
+NextEventIntent tell me the next event
+NextEventIntent tell me the next show
+NextEventIntent tell me the next thing
+NextEventIntent tell me the next shindig
+NextEventIntent tell me the next meeting
+NextEventIntent tell me the next occasion
+NextEventIntent tell me the next presentation
+NextEventIntent tell me the most recent event
+NextEventIntent tell me the most recent show
+NextEventIntent tell me the most recent thing
+NextEventIntent tell me the most recent shindig
+NextEventIntent tell me the most recent meeting
+NextEventIntent tell me the most recent occasion
+NextEventIntent tell me the most recent presentation
+NextEventIntent tell me the upcoming event
+NextEventIntent tell me the upcoming show
+NextEventIntent tell me the upcoming thing
+NextEventIntent tell me the upcoming shindig
+NextEventIntent tell me the upcoming meeting
+NextEventIntent tell me the upcoming occasion
+NextEventIntent tell me the upcoming presentation
+NextEventIntent tell me the newest event
+NextEventIntent tell me the newest show
+NextEventIntent tell me the newest thing
+NextEventIntent tell me the newest shindig
+NextEventIntent tell me the newest meeting
+NextEventIntent tell me the newest occasion
+NextEventIntent tell me the newest presentation
+NextEventIntent tell me the latest event
+NextEventIntent tell me the latest show
+NextEventIntent tell me the latest thing
+NextEventIntent tell me the latest shindig
+NextEventIntent tell me the latest meeting
+NextEventIntent tell me the latest occasion
+NextEventIntent tell me the latest presentation
+NextEventIntent provide me the next event
+NextEventIntent provide me the next show
+NextEventIntent provide me the next thing
+NextEventIntent provide me the next shindig
+NextEventIntent provide me the next meeting
+NextEventIntent provide me the next occasion
+NextEventIntent provide me the next presentation
+NextEventIntent provide me the most recent event
+NextEventIntent provide me the most recent show
+NextEventIntent provide me the most recent thing
+NextEventIntent provide me the most recent shindig
+NextEventIntent provide me the most recent meeting
+NextEventIntent provide me the most recent occasion
+NextEventIntent provide me the most recent presentation
+NextEventIntent provide me the upcoming event
+NextEventIntent provide me the upcoming show
+NextEventIntent provide me the upcoming thing
+NextEventIntent provide me the upcoming shindig
+NextEventIntent provide me the upcoming meeting
+NextEventIntent provide me the upcoming occasion
+NextEventIntent provide me the upcoming presentation
+NextEventIntent provide me the newest event
+NextEventIntent provide me the newest show
+NextEventIntent provide me the newest thing
+NextEventIntent provide me the newest shindig
+NextEventIntent provide me the newest meeting
+NextEventIntent provide me the newest occasion
+NextEventIntent provide me the newest presentation
+NextEventIntent provide me the latest event
+NextEventIntent provide me the latest show
+NextEventIntent provide me the latest thing
+NextEventIntent provide me the latest shindig
+NextEventIntent provide me the latest meeting
+NextEventIntent provide me the latest occasion
+NextEventIntent provide me the latest presentation
 
 //GetFeeDetailsIntent
+
+GetFeeDetailsIntent give me the price for the event {eventName}
+GetFeeDetailsIntent give me the price for the show {eventName}
+GetFeeDetailsIntent give me the price for the thing {eventName}
+GetFeeDetailsIntent give me the price for the shindig {eventName}
+GetFeeDetailsIntent give me the price for the meeting {eventName}
+GetFeeDetailsIntent give me the price for the occasion {eventName}
+GetFeeDetailsIntent give me the price for the presentation {eventName}
+GetFeeDetailsIntent give me the cost for the event {eventName}
+GetFeeDetailsIntent give me the cost for the show {eventName}
+GetFeeDetailsIntent give me the cost for the thing {eventName}
+GetFeeDetailsIntent give me the cost for the shindig {eventName}
+GetFeeDetailsIntent give me the cost for the meeting {eventName}
+GetFeeDetailsIntent give me the cost for the occasion {eventName}
+GetFeeDetailsIntent give me the cost for the presentation {eventName}
+GetFeeDetailsIntent give me the amount for the event {eventName}
+GetFeeDetailsIntent give me the amount for the show {eventName}
+GetFeeDetailsIntent give me the amount for the thing {eventName}
+GetFeeDetailsIntent give me the amount for the shindig {eventName}
+GetFeeDetailsIntent give me the amount for the meeting {eventName}
+GetFeeDetailsIntent give me the amount for the occasion {eventName}
+GetFeeDetailsIntent give me the amount for the presentation {eventName}
+GetFeeDetailsIntent give me the fee for the event {eventName}
+GetFeeDetailsIntent give me the fee for the show {eventName}
+GetFeeDetailsIntent give me the fee for the thing {eventName}
+GetFeeDetailsIntent give me the fee for the shindig {eventName}
+GetFeeDetailsIntent give me the fee for the meeting {eventName}
+GetFeeDetailsIntent give me the fee for the occasion {eventName}
+GetFeeDetailsIntent give me the fee for the presentation {eventName}
+GetFeeDetailsIntent give me the charge for the event {eventName}
+GetFeeDetailsIntent give me the charge for the show {eventName}
+GetFeeDetailsIntent give me the charge for the thing {eventName}
+GetFeeDetailsIntent give me the charge for the shindig {eventName}
+GetFeeDetailsIntent give me the charge for the meeting {eventName}
+GetFeeDetailsIntent give me the charge for the occasion {eventName}
+GetFeeDetailsIntent give me the charge for the presentation {eventName}
+GetFeeDetailsIntent tell me the price for the event {eventName}
+GetFeeDetailsIntent tell me the price for the show {eventName}
+GetFeeDetailsIntent tell me the price for the thing {eventName}
+GetFeeDetailsIntent tell me the price for the shindig {eventName}
+GetFeeDetailsIntent tell me the price for the meeting {eventName}
+GetFeeDetailsIntent tell me the price for the occasion {eventName}
+GetFeeDetailsIntent tell me the price for the presentation {eventName}
+GetFeeDetailsIntent tell me the cost for the event {eventName}
+GetFeeDetailsIntent tell me the cost for the show {eventName}
+GetFeeDetailsIntent tell me the cost for the thing {eventName}
+GetFeeDetailsIntent tell me the cost for the shindig {eventName}
+GetFeeDetailsIntent tell me the cost for the meeting {eventName}
+GetFeeDetailsIntent tell me the cost for the occasion {eventName}
+GetFeeDetailsIntent tell me the cost for the presentation {eventName}
+GetFeeDetailsIntent tell me the amount for the event {eventName}
+GetFeeDetailsIntent tell me the amount for the show {eventName}
+GetFeeDetailsIntent tell me the amount for the thing {eventName}
+GetFeeDetailsIntent tell me the amount for the shindig {eventName}
+GetFeeDetailsIntent tell me the amount for the meeting {eventName}
+GetFeeDetailsIntent tell me the amount for the occasion {eventName}
+GetFeeDetailsIntent tell me the amount for the presentation {eventName}
+GetFeeDetailsIntent tell me the fee for the event {eventName}
+GetFeeDetailsIntent tell me the fee for the show {eventName}
+GetFeeDetailsIntent tell me the fee for the thing {eventName}
+GetFeeDetailsIntent tell me the fee for the shindig {eventName}
+GetFeeDetailsIntent tell me the fee for the meeting {eventName}
+GetFeeDetailsIntent tell me the fee for the occasion {eventName}
+GetFeeDetailsIntent tell me the fee for the presentation {eventName}
+GetFeeDetailsIntent tell me the charge for the event {eventName}
+GetFeeDetailsIntent tell me the charge for the show {eventName}
+GetFeeDetailsIntent tell me the charge for the thing {eventName}
+GetFeeDetailsIntent tell me the charge for the shindig {eventName}
+GetFeeDetailsIntent tell me the charge for the meeting {eventName}
+GetFeeDetailsIntent tell me the charge for the occasion {eventName}
+GetFeeDetailsIntent tell me the charge for the presentation {eventName}
+GetFeeDetailsIntent provide me the price for the event {eventName}
+GetFeeDetailsIntent provide me the price for the show {eventName}
+GetFeeDetailsIntent provide me the price for the thing {eventName}
+GetFeeDetailsIntent provide me the price for the shindig {eventName}
+GetFeeDetailsIntent provide me the price for the meeting {eventName}
+GetFeeDetailsIntent provide me the price for the occasion {eventName}
+GetFeeDetailsIntent provide me the price for the presentation {eventName}
+GetFeeDetailsIntent provide me the cost for the event {eventName}
+GetFeeDetailsIntent provide me the cost for the show {eventName}
+GetFeeDetailsIntent provide me the cost for the thing {eventName}
+GetFeeDetailsIntent provide me the cost for the shindig {eventName}
+GetFeeDetailsIntent provide me the cost for the meeting {eventName}
+GetFeeDetailsIntent provide me the cost for the occasion {eventName}
+GetFeeDetailsIntent provide me the cost for the presentation {eventName}
+GetFeeDetailsIntent provide me the amount for the event {eventName}
+GetFeeDetailsIntent provide me the amount for the show {eventName}
+GetFeeDetailsIntent provide me the amount for the thing {eventName}
+GetFeeDetailsIntent provide me the amount for the shindig {eventName}
+GetFeeDetailsIntent provide me the amount for the meeting {eventName}
+GetFeeDetailsIntent provide me the amount for the occasion {eventName}
+GetFeeDetailsIntent provide me the amount for the presentation {eventName}
+GetFeeDetailsIntent provide me the fee for the event {eventName}
+GetFeeDetailsIntent provide me the fee for the show {eventName}
+GetFeeDetailsIntent provide me the fee for the thing {eventName}
+GetFeeDetailsIntent provide me the fee for the shindig {eventName}
+GetFeeDetailsIntent provide me the fee for the meeting {eventName}
+GetFeeDetailsIntent provide me the fee for the occasion {eventName}
+GetFeeDetailsIntent provide me the fee for the presentation {eventName}
+GetFeeDetailsIntent provide me the charge for the event {eventName}
+GetFeeDetailsIntent provide me the charge for the show {eventName}
+GetFeeDetailsIntent provide me the charge for the thing {eventName}
+GetFeeDetailsIntent provide me the charge for the shindig {eventName}
+GetFeeDetailsIntent provide me the charge for the meeting {eventName}
+GetFeeDetailsIntent provide me the charge for the occasion {eventName}
+GetFeeDetailsIntent provide me the charge for the presentation {eventName}
+GetFeeDetailsIntent how much does it cost for the event {eventName}
+GetFeeDetailsIntent how much does it cost for the show {eventName}
+GetFeeDetailsIntent how much does it cost for the thing {eventName}
+GetFeeDetailsIntent how much does it cost for the shindig {eventName}
+GetFeeDetailsIntent how much does it cost for the meeting {eventName}
+GetFeeDetailsIntent how much does it cost for the occasion {eventName}
+GetFeeDetailsIntent how much does it cost for the presentation {eventName}
+GetFeeDetailsIntent how much will I be charged for the event {eventName}
+GetFeeDetailsIntent how much will I be charged for the show {eventName}
+GetFeeDetailsIntent how much will I be charged for the thing {eventName}
+GetFeeDetailsIntent how much will I be charged for the shindig {eventName}
+GetFeeDetailsIntent how much will I be charged for the meeting {eventName}
+GetFeeDetailsIntent how much will I be charged for the occasion {eventName}
+GetFeeDetailsIntent how much will I be charged for the presentation {eventName}
+GetFeeDetailsIntent how much will I need to pay for the event {eventName}
+GetFeeDetailsIntent how much will I need to pay for the show {eventName}
+GetFeeDetailsIntent how much will I need to pay for the thing {eventName}
+GetFeeDetailsIntent how much will I need to pay for the shindig {eventName}
+GetFeeDetailsIntent how much will I need to pay for the meeting {eventName}
+GetFeeDetailsIntent how much will I need to pay for the occasion {eventName}
+GetFeeDetailsIntent how much will I need to pay for the presentation {eventName}
+GetFeeDetailsIntent how much will it cost for the event {eventName}
+GetFeeDetailsIntent how much will it cost for the show {eventName}
+GetFeeDetailsIntent how much will it cost for the thing {eventName}
+GetFeeDetailsIntent how much will it cost for the shindig {eventName}
+GetFeeDetailsIntent how much will it cost for the meeting {eventName}
+GetFeeDetailsIntent how much will it cost for the occasion {eventName}
+GetFeeDetailsIntent how much will it cost for the presentation {eventName}
+GetFeeDetailsIntent how much will I need for the event {eventName}
+GetFeeDetailsIntent how much will I need for the show {eventName}
+GetFeeDetailsIntent how much will I need for the thing {eventName}
+GetFeeDetailsIntent how much will I need for the shindig {eventName}
+GetFeeDetailsIntent how much will I need for the meeting {eventName}
+GetFeeDetailsIntent how much will I need for the occasion {eventName}
+GetFeeDetailsIntent how much will I need for the presentation {eventName}
