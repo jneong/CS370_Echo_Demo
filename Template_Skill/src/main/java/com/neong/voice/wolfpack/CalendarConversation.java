@@ -214,7 +214,7 @@ public class CalendarConversation extends Conversation {
 		if (results == null)
 			return newInternalErrorResponse();
 
-		String eventFormat = "Okay, The next event is {title}, on {start:date} at {start:time}.";
+		String eventFormat = "The next event is {summary}, on {start:date} at {start:time}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 		String repromptSsml = "Is there anything you would like to know about this event?";
 
@@ -243,7 +243,7 @@ public class CalendarConversation extends Conversation {
 		Map<String, Vector<Object>> results;
 
 		try {
-			String query = "SELECT event_id, title, start, location FROM event_info " +
+			String query = "SELECT event_id, summary, start, location FROM event_info " +
 				"WHERE start >= ?::date AND start < ?::date";
 
 			PreparedStatement ps = db.prepareStatement(query);
@@ -260,12 +260,12 @@ public class CalendarConversation extends Conversation {
 		if (results == null)
 			return newInternalErrorResponse();
 
-		int numEvents = results.get("title").size();
+		int numEvents = results.get("summary").size();
 
 		// If there were not any events on the given day:
 		if (numEvents == 0) {
 			String dateSsml = dateRange.getDateSsml();
-			String responseSsml = "I couldn't find any events on " + dateSsml + ".";
+			String responseSsml = "I couldn't find any events " + dateRange.getRelativeDate(true) + ".";
 			String repromptSsml = "Can I help you find another event?";
 
 			return newFailureResponse(responseSsml, repromptSsml);
@@ -286,8 +286,9 @@ public class CalendarConversation extends Conversation {
 			session.setAttribute(ATTRIB_STATEID, SessionState.LIST_TOO_LONG);
 
 			String dateSsml = dateRange.getDateSsml();
-			String responseSsml = "I was able to find " + numEvents + " different events on " + dateSsml + ". " +
-				"What kind of events would you like to hear about?";
+			String responseSsml = "I was able to find " + numEvents + " different events " +
+					dateRange.getRelativeDate(true) +  
+					". What kind of events would you like to hear about?";
 			// TODO: only prompt for categories found in the list
 			String repromptSsml = "Would you like to hear about sports, entertainment, " +
 				"clubs, lectures, or all of the events?";
@@ -323,12 +324,12 @@ public class CalendarConversation extends Conversation {
 
 			if (category == "all") {
 				String query =
-					"SELECT event_id, title, start, location FROM event_info " +
+					"SELECT event_id, summary, start, location FROM event_info " +
 					"    WHERE start >= ?::date AND start < ?::date";
 				ps = db.prepareStatement(query);
 			} else {
 				String query =
-					"SELECT event_id, title, start, location FROM given_category(?, ?::date, ?::date)";
+					"SELECT event_id, summary, start, location FROM given_category(?, ?::date, ?::date)";
 				ps = db.prepareStatement(query);
 				ps.setString(position++, category);
 			}
@@ -342,7 +343,7 @@ public class CalendarConversation extends Conversation {
 			return newInternalErrorResponse();
 		}
 
-		int numEvents = results.get("title").size();
+		int numEvents = results.get("summary").size();
 
 		if (numEvents == 0) {
 			// There will always be events for "all", or else we wouldn't be here.
@@ -387,7 +388,7 @@ public class CalendarConversation extends Conversation {
 
 		try {
 			String query =
-				"SELECT title, general_admission_fee FROM events " +
+				"SELECT summary, general_admission_fee FROM events " +
 				"    WHERE event_id = ?";
 
 			PreparedStatement ps = db.prepareStatement(query);
@@ -399,10 +400,11 @@ public class CalendarConversation extends Conversation {
 			return newInternalErrorResponse();
 		}
 
-		if (results.get("title").size() == 0)
+		if (results.get("summary").size() == 0)
 			return newInternalErrorResponse();
 
-		String eventFormat = "Sure, General admission for {title} is {general_admission_fee}.";
+		String eventFormat = "General admission for {summary} is {general_admission_fee}.";
+
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
 		return newAffirmativeResponse(eventSsml, "Would you like anymore info?");
@@ -430,7 +432,7 @@ public class CalendarConversation extends Conversation {
 
 		try {
 			String query =
-				"SELECT title, location FROM event_info " +
+				"SELECT summary, location FROM event_info " +
 				"    WHERE event_id = ?";
 
 			PreparedStatement ps = db.prepareStatement(query);
@@ -442,7 +444,7 @@ public class CalendarConversation extends Conversation {
 			return newInternalErrorResponse();
 		}
 
-		if (results.get("title").size() == 0)
+		if (results.get("summary").size() == 0)
 			return newInternalErrorResponse();
 
 		String eventFormat = "Alrighty, {title} is located at {location}.";
@@ -473,7 +475,7 @@ public class CalendarConversation extends Conversation {
 
 		try {
 			String query =
-				"SELECT title, 'end' FROM events " +
+				"SELECT summary, 'end' FROM events " +
 				"    WHERE event_id = ?";
 
 			PreparedStatement ps = db.prepareStatement(query);
@@ -485,7 +487,7 @@ public class CalendarConversation extends Conversation {
 			return newInternalErrorResponse();
 		}
 
-		if (results.get("title").size() == 0)
+		if (results.get("summary").size() == 0)
 			return newInternalErrorResponse();
 
 		String eventFormat = "Okay, {title} ends at {end:time}.";
@@ -501,7 +503,7 @@ public class CalendarConversation extends Conversation {
 	private static SpeechletResponse newEventListResponse(Map<String, Vector<Object>> results,
 	                                                      Timestamp when, String prefix) {
 		String dateSsml = CalendarHelper.formatDateSsml(when);
-		String eventFormat = "<s>{title} at {start:time}</s>";
+		String eventFormat = "<s>{summary} at {start:time}</s>";
 		String eventsSsml = CalendarHelper.listEvents(eventFormat, results);
 		String responseSsml = prefix + dateSsml + " are: " + eventsSsml;
 		String repromptSsml = "Is there anything you would like to know about those events?";

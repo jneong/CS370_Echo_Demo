@@ -50,7 +50,7 @@ public class CalendarHelper {
 	 *
 	 * @return the message from {@code format} with all "{field}" tokens replaced with the values from
 	 *         {@code events} at the row specified by {@code index}.  For example,
-	 *         <code>"{title} is at {start:time}."</code> with valid {@code events} and {@code index}
+	 *         <code>"{summary} is at {start:time}."</code> with valid {@code events} and {@code index}
 	 *         might return the string {@code "IMS Basketball is at 4:00 PM"}.
 	 */
 	public static String formatEventSsml(final String format,
@@ -175,7 +175,7 @@ public class CalendarHelper {
 
 
 	public static String listEvents(final String format, final Map<String, Vector<Object>> events) {
-		final int eventsLength = events.get("title").size();
+		final int eventsLength = events.get("summary").size();
 		final StringBuilder responseBuilder = new StringBuilder(eventsLength * format.length());
 
 		for (int i = 0; i < eventsLength; i++)
@@ -189,7 +189,7 @@ public class CalendarHelper {
 		final Map<String, Integer> savedEvents = new HashMap<String, Integer>(numEvents);
 
 		for (int i = 0; i < numEvents; i++) {
-			final String key = (String) events.get("title").get(i);
+			final String key = (String) events.get("summary").get(i);
 			final Integer value = (Integer) events.get("event_id").get(i);
 			savedEvents.put(key, value);
 		}
