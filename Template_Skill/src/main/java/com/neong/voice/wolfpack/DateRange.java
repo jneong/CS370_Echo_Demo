@@ -22,6 +22,8 @@ import com.neong.voice.wolfpack.AmazonDateParser;
 public class DateRange {
 	@JsonProperty("begin") private final Date _begin;
 	@JsonProperty("end") private final Date _end;
+	private String relativeDate;
+	private String relativeDateWithPreposition;
 
 	public DateRange(final String dateString) {
 		final ImmutablePair<Date, Date> range =
@@ -29,12 +31,18 @@ public class DateRange {
 
 		_begin = range.left;
 		_end = range.right;
+		
+		relativeDate = AmazonDateParser.timeRange(dateString, false);
+		relativeDateWithPreposition = AmazonDateParser.timeRange(dateString, true);
 	}
 
 	@JsonCreator
 	public DateRange(final Map<String, Object> props) {
 		_begin = Date.valueOf((String) props.get("begin"));
 		_end = Date.valueOf((String) props.get("end"));
+		// Todo: Store relative dates in this constructor
+		relativeDate = "UNKNOWN RELATIVE DATE";
+		relativeDateWithPreposition = "UNKNOWN RELATIVE DATE";
 	}
 
 	public Date getBegin() {
@@ -43,6 +51,12 @@ public class DateRange {
 
 	public Date getEnd() {
 		return _end;
+	}
+	
+	public String getRelativeDate(boolean usePreposition){
+		if(usePreposition)
+			return relativeDateWithPreposition;
+		return relativeDate;
 	}
 
 	public Timestamp getTimestamp() {
