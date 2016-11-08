@@ -214,7 +214,7 @@ public class CalendarConversation extends Conversation {
 		if (results == null)
 			return newInternalErrorResponse();
 
-		String eventFormat = "The next event is {title}, on {start:date} at {start:time}.";
+		String eventFormat = "Okay, The next event is {title}, on {start:date} at {start:time}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 		String repromptSsml = "Is there anything you would like to know about this event?";
 
@@ -402,7 +402,7 @@ public class CalendarConversation extends Conversation {
 		if (results.get("title").size() == 0)
 			return newInternalErrorResponse();
 
-		String eventFormat = "General admission for {title} is {general_admission_fee}.";
+		String eventFormat = "Sure, General admission for {title} is {general_admission_fee}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
 		return newAffirmativeResponse(eventSsml, "Would you like anymore info?");
@@ -445,7 +445,7 @@ public class CalendarConversation extends Conversation {
 		if (results.get("title").size() == 0)
 			return newInternalErrorResponse();
 
-		String eventFormat = "{title} is located at {location}.";
+		String eventFormat = "Alrighty, {title} is located at {location}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
 		return newAffirmativeResponse(eventSsml, "Would you like to hear anything else?");
@@ -488,7 +488,7 @@ public class CalendarConversation extends Conversation {
 		if (results.get("title").size() == 0)
 			return newInternalErrorResponse();
 
-		String eventFormat = "{title} ends at {end:time}.";
+		String eventFormat = "Okay, {title} ends at {end:time}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
 		return newAffirmativeResponse(eventSsml, "Would you like to hear more?");
@@ -501,7 +501,7 @@ public class CalendarConversation extends Conversation {
 	private static SpeechletResponse newEventListResponse(Map<String, Vector<Object>> results,
 	                                                      Timestamp when, String prefix) {
 		String dateSsml = CalendarHelper.formatDateSsml(when);
-		String eventFormat = "<s>{title} at {start:time}</s>";
+		String eventFormat = "Cool, <s>{title} at {start:time}</s>";
 		String eventsSsml = CalendarHelper.listEvents(eventFormat, results);
 		String responseSsml = prefix + dateSsml + " are: " + eventsSsml;
 		String repromptSsml = "Is there anything you would like to know about those events?";
@@ -542,7 +542,7 @@ public class CalendarConversation extends Conversation {
 	 *         get wrapped in {@code <speak>...</speak>} tags.
 	 */
 	private static SpeechletResponse newAffirmativeResponse(String responseSsml, String repromptSsml) {
-		return newAskResponse("<speak>Okay. " + responseSsml + "</speak>", true,
+		return newAskResponse("<speak>" + responseSsml + "</speak>", true,
 		                      "<speak>" + repromptSsml + "</speak>", true);
 	}
 
