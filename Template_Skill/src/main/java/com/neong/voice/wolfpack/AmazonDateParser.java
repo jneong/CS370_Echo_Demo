@@ -37,8 +37,7 @@ public class AmazonDateParser {
 		} else if (givenDate.length() == 7) {
 			result = handleMonth(givenDate);
 		} else if (givenDate.contains("WE")) {
-			// TODO: handle weekend
-			result = null;
+			result = handleWeekend(givenDate);
 		} else if (givenDate.contains("W")) {
 			result = handleWeek(givenDate);
 		} else {
@@ -125,6 +124,36 @@ public class AmazonDateParser {
 		final Date end = calendarToDate(calendar);
 
 		return ImmutablePair.of(begin, end);
+	}
+	
+	
+	/**
+	  * @param date	A String representing a weekend from Amazon. The first
+	  * 			weekend of the year is the one that is after the first
+	  * 			week in the year that has a Thursday.
+	  * 			Example: 2010-W03-WE refers to 1/23/10 and 1/24/10.
+	  * 
+	  * @return The first date will be the Saturday of the specified weekend.
+	  * 		The second date will be the Monday after the given weekend.
+	  */
+	public static ImmutablePair<Date, Date> handleWeekend(final String date){
+		final String[] pieces = date.split("-W");
+		final int year = Integer.parseInt(pieces[0]);
+		pieces[1].replaceAll("-WE", "");
+		final int weekendNum = Integer.parseInt(pieces[1]);
+		
+		final Calendar calendar = Calendar.getInstance();
+		calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+		calendar.setMinimalDaysInFirstWeek(3);
+		calendar.set(Calendar.YEAR, year);
+		calendar.set(Calendar.WEEK_OF_YEAR, weekendNum);
+		calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+		
+		final Date begin = calendarToDate(calendar);
+		calendar.add(Calendar.DATE, 2);
+		final Date end = calendarToDate(calendar);
+		
+		return ImmutablePair.of(begin,  end);
 	}
 
 	
