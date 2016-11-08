@@ -40,9 +40,8 @@ public class DateRange {
 	public DateRange(final Map<String, Object> props) {
 		_begin = Date.valueOf((String) props.get("begin"));
 		_end = Date.valueOf((String) props.get("end"));
-		// Todo: Store relative dates in this constructor
-		relativeDate = "UNKNOWN RELATIVE DATE";
-		relativeDateWithPreposition = "UNKNOWN RELATIVE DATE";
+		relativeDate = props.get("relativeDate").toString();
+		relativeDateWithPreposition = props.get("relativeDateWithPreposition").toString();
 	}
 
 	public Date getBegin() {
