@@ -1,6 +1,60 @@
 {
   "intents": [
     {
+      "intent": "GetEventsOnDateIntent",
+      "slots": [
+        {
+          "name": "date",
+          "type": "AMAZON.DATE"
+        }
+      ]
+    },
+    {
+      "intent": "GetFeeDetailsIntent",
+        "slots": [
+          {
+            "name": "eventName",
+            "type": "LIST_OF_EVENTS"
+          }
+        ]
+    },
+    {
+      "intent": "GetLocationDetailsIntent",
+        "slots": [
+          {
+            "name": "eventName",
+            "type": "LIST_OF_EVENTS"
+          }
+        ]
+    },
+    {
+      "intent": "GetEndTimeIntent",
+        "slots": [
+          {
+            "name": "eventName",
+            "type": "LIST_OF_EVENTS"
+          }
+        ]
+    },
+    {
+      "intent": "AllCategoryIntent"
+    },
+    {
+      "intent": "SportsCategoryIntent"
+    },
+    {
+      "intent": "ArtsAndEntertainmentCategoryIntent"
+    },
+    {
+      "intent": "LecturesCategoryIntent"
+    },
+    {
+      "intent": "ClubsCategoryIntent"
+    },
+    {
+      "intent": "NextEventIntent"
+    },
+    {
       "intent": "StartKnockIntent"
     },
 	{

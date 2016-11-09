@@ -1,2 +1,2 @@
-# CS370_Echo_Demo
+# CS370_Echo_Demo [![Build Status](https://travis-ci.org/370-Alexa-Project/CS370_Echo_Demo.svg?branch=ssu-calendar)](https://travis-ci.org/370-Alexa-Project/CS370_Echo_Demo)
 CS 370 - Amazon Echo project template code and details
