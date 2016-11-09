@@ -1271,3 +1271,28 @@ ClubsCategoryIntent what's an event for club events
 ClubsCategoryIntent what's an event about club events
 ClubsCategoryIntent what's an occasion for club events
 ClubsCategoryIntent what's an occasion about club events
+GetEndTimeIntent give me the time for {eventName}
+GetEndTimeIntent give me a time for {eventName}
+GetEndTimeIntent tell me the time for {eventName}
+GetEndTimeIntent tell me a time for {eventName}
+GetEndTimeIntent give me what is the time for {eventName}
+GetEndTimeIntent give me what is a time for {eventName}
+GetEndTimeIntent give me what's the time for {eventName}
+GetEndTimeIntent give me what's a time for {eventName}
+GetEndTimeIntent tell me what is the time for {eventName}
+GetEndTimeIntent tell me what is a time for {eventName}
+GetEndTimeIntent tell me what's the time for {eventName}
+GetEndTimeIntent tell me what's a time for {eventName}
+GetEndTimeIntent is the time) for {eventName}
+GetEndTimeIntent is a time) for {eventName}
+GetEndTimeIntent to the time for {eventName}
+GetEndTimeIntent to a time for {eventName}
+GetEndTimeIntent I want the time for {eventName}
+GetEndTimeIntent I want a time for {eventName}
+GetEndTimeIntent I need the time for {eventName}
+GetEndTimeIntent I need a time for {eventName}
+GetEndTimeIntent a time for {eventName}
+GetEndTimeIntent what is the time for {eventName}
+GetEndTimeIntent what is a time for {eventName}
+GetEndTimeIntent what's the time for {eventName}
+GetEndTimeIntent what's a time for {eventName}

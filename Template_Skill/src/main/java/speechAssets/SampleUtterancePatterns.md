@@ -28,7 +28,13 @@ GetLocationDetailsIntent to (the|a) (location|place) for {eventName}
 GetLocationDetailsIntent I (want|need) (the|a) (location|place) for {eventName}
 GetLocationDetailsIntent a (location|place) for {eventName}
 GetLocationDetailsIntent (what is|what's) (the|a) (location|place) for {eventName}
-GetEndTimeIntent
+GetEndTimeIntent (give|tell) me (the|a) time for {eventName}
+GetEndTimeIntent (give|tell) me (what is|what's) (the|a) time for {eventName}
+GetEndTimeIntent is (the|a) time) for {eventName}
+GetEndTimeIntent to (the|a) time for {eventName}
+GetEndTimeIntent I (want|need) (the|a) time for {eventName}
+GetEndTimeIntent a time for {eventName}
+GetEndTimeIntent (what is|what's) (the|a) time for {eventName}
 AllCategoryIntent (give|tell) me (what is|what's) (scheduled|happening) 
 AllCategoryIntent (give|tell) me (what is|what's) up
 AllCategoryIntent is (the|a) (scheduled|happening)
