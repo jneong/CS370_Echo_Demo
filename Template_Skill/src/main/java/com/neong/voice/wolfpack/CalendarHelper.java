@@ -178,9 +178,11 @@ public class CalendarHelper {
 		final int eventsLength = events.get("title").size();
 		final StringBuilder responseBuilder = new StringBuilder(eventsLength * format.length());
 
-		for (int i = 0; i < eventsLength; i++)
+		for (int i = 0; i < eventsLength; i++){
+			if(i == eventsLength - 1)
+				responseBuilder.append(" and ");
 			responseBuilder.append(formatEventSsml(format, events, i));
-
+		}
 		return responseBuilder.toString();
 	}
 	
@@ -195,7 +197,12 @@ public class CalendarHelper {
 				dateInProgressSsml = eventDateSsml;
 				eventList += ". On " + dateInProgressSsml + " there is ";
 			} else{
-				eventList += ", ";
+				if(i == events.get("start").size() - 1 || 
+						!dateInProgressSsml.equals(CalendarHelper.formatDateSsml((Timestamp) events.get("start").get(i + 1)))){
+					eventList += ", and ";
+				}else{
+					eventList += ", ";
+				}
 			}
 			
 			eventList += CalendarHelper.formatEventSsml(format, events, i);
