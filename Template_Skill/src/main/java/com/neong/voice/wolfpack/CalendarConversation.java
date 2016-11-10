@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 
@@ -287,7 +288,7 @@ public class CalendarConversation extends Conversation {
 
 			String dateSsml = dateRange.getDateSsml();
 			String responseSsml = "I was able to find " + numEvents + " different events " +
-					dateRange.getRelativeDate(true) +  
+					dateRange.getRelativeDate(true) +
 					". What kind of events would you like to hear about?";
 			// TODO: only prompt for categories found in the list
 			String repromptSsml = "Would you like to hear about sports, entertainment, " +
@@ -373,6 +374,7 @@ public class CalendarConversation extends Conversation {
 		@SuppressWarnings("unchecked")
 		Map<String, Integer> savedEvents =
 			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
+		final Set<String> savedEventNames = savedEvents.keySet();
 
 		if (savedEvents == null)
 			return newBadStateResponse();
@@ -380,10 +382,14 @@ public class CalendarConversation extends Conversation {
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
 		String eventNameSlotValue;
 
-		if (eventSlot == null || (eventNameSlotValue = eventSlot.getValue()) == null)
+		if (savedEvents.size() == 1) {
+			eventNameSlotValue = (String) savedEventNames.toArray()[0];
+		} else if (eventSlot == null ||
+		           (eventNameSlotValue = eventSlot.getValue()) == null) {
 			return newBadSlotResponse("event");
+		}
 
-		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
+		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEventNames);
 		Integer eventId = savedEvents.get(eventName);
 
 		Map<String, Vector<Object>> results;
@@ -417,6 +423,7 @@ public class CalendarConversation extends Conversation {
 		@SuppressWarnings("unchecked")
 		Map<String, Integer> savedEvents =
 			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
+		final Set<String> savedEventNames = savedEvents.keySet();
 
 		if (savedEvents == null)
 			return newBadStateResponse();
@@ -424,10 +431,14 @@ public class CalendarConversation extends Conversation {
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
 		String eventNameSlotValue;
 
-		if (eventSlot == null || (eventNameSlotValue = eventSlot.getValue()) == null)
+		if (savedEvents.size() == 1) {
+			eventNameSlotValue = (String) savedEventNames.toArray()[0];
+		} else if (eventSlot == null ||
+		           (eventNameSlotValue = eventSlot.getValue()) == null) {
 			return newBadSlotResponse("event");
+		}
 
-		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
+		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEventNames);
 		Integer eventId = savedEvents.get(eventName);
 
 		Map<String, Vector<Object>> results;
@@ -461,6 +472,7 @@ public class CalendarConversation extends Conversation {
 		@SuppressWarnings("unchecked")
 		Map<String, Integer> savedEvents =
 			(HashMap<String, Integer>) session.getAttribute(ATTRIB_RECENTLYSAIDEVENTS);
+		final Set<String> savedEventNames = savedEvents.keySet();
 
 		if (savedEvents == null)
 			return newBadStateResponse();
@@ -468,10 +480,14 @@ public class CalendarConversation extends Conversation {
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
 		String eventNameSlotValue;
 
-		if (eventSlot == null || (eventNameSlotValue = eventSlot.getValue()) == null)
+		if (savedEvents.size() == 1) {
+			eventNameSlotValue = (String) savedEventNames.toArray()[0];
+		} else if (eventSlot == null ||
+		           (eventNameSlotValue = eventSlot.getValue()) == null) {
 			return newBadSlotResponse("event");
+		}
 
-		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEvents.keySet());
+		String eventName = CosineSim.getBestMatch(eventNameSlotValue, savedEventNames);
 		Integer eventId = savedEvents.get(eventName);
 
 		Map<String, Vector<Object>> results;
@@ -513,21 +529,21 @@ public class CalendarConversation extends Conversation {
 
 		return newAffirmativeResponse(responseSsml, repromptSsml);
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @param results	The results from a query. There must be start and title columns.
-	 * @param when		A dateRange built from results.
-	 * @param prefix	An introductory sentence. Example - "Okay, here is what I found."
-	 * 					Pass an empty string if there should not be a prefix.
-	 * @return			A string with a message such as "<prefix.> On <day> is <event>
-	 * 					at <time>, <event2> at <time2>... On <day2> there is...etc.
+	 *
+	 * @param results   The results from a query. There must be start and title columns.
+	 * @param when      A dateRange built from results.
+	 * @param prefix    An introductory sentence. Example - "Okay, here is what I found."
+	 *                  Pass an empty string if there should not be a prefix.
+	 * @return          A string with a message such as "<prefix.> On <day> is <event>
+	 *                  at <time>, <event2> at <time2>... On <day2> there is...etc.
 	 */
 	private static SpeechletResponse dayByDayEventsResponse(Map<String, Vector<Object>> results,
 													DateRange when, String prefix){
 		String eventFormat = "{title} at {start:time}";
-		
+
 		String responseSsml = prefix + CalendarHelper.listEventsWithDays(eventFormat, results);
 		String repromptSsml = "Is there anything you would like to know about those events?";
 		return newAffirmativeResponse(responseSsml, repromptSsml);
