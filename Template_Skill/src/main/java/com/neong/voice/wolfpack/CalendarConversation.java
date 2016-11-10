@@ -566,6 +566,7 @@ public class CalendarConversation extends Conversation {
 	 *         get wrapped in {@code <speak>...</speak>} tags.
 	 */
 	private static SpeechletResponse newAffirmativeResponse(String responseSsml, String repromptSsml) {
+		responseSsml = CalendarHelper.replacePartsOfNames(responseSsml);
 		return newAskResponse("<speak>" + responseSsml + "</speak>", true,
 		                      "<speak>" + repromptSsml + "</speak>", true);
 	}
