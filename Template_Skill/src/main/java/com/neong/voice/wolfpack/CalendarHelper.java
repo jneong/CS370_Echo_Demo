@@ -178,9 +178,11 @@ public class CalendarHelper {
 		final int eventsLength = events.get("title").size();
 		final StringBuilder responseBuilder = new StringBuilder(eventsLength * format.length());
 
-		for (int i = 0; i < eventsLength; i++)
+		for (int i = 0; i < eventsLength; i++){
+			if(i == eventsLength - 1)
+				responseBuilder.append(" and ");
 			responseBuilder.append(formatEventSsml(format, events, i));
-
+		}
 		return responseBuilder.toString();
 	}
 	
