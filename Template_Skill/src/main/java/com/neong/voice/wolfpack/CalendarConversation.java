@@ -364,7 +364,7 @@ public class CalendarConversation extends Conversation {
 		String categoryPrefix = "Cool. The " + category + " events ";
 
 
-		return newEventListResponse(results, dateRange, categoryPrefix);
+		return dayByDayEventsResponse(results, dateRange, categoryPrefix);
 	}
 
 
@@ -522,13 +522,14 @@ public class CalendarConversation extends Conversation {
 		String eventList = ". On " + CalendarHelper.formatDateSsml((Timestamp) results.get("start").get(0))
 						 + " there is ";
 		
-		Date dateInProgress = (Date) results.get("start").get(0);
+		Date dateInProgress = new Date(((Timestamp) results.get("start").get(0)).getTime());
 		Date eventDate = dateInProgress;
-		for(int i = 0; i < results.size(); i++){
-			eventDate = (Date) results.get("start").get(i);
+		for(int i = 0; i < results.get("start").size(); i++){
+			System.out.println("Size = " + results.size() + ", i = " + i);
+			eventDate = new Date(((Timestamp) results.get("start").get(i)).getTime());
 			
 			if(!eventDate.equals(dateInProgress)){
-				dateInProgress = (Date) results.get("start").get(i);
+				dateInProgress = eventDate;
 				eventList += ". On " + CalendarHelper.formatDateSsml((Timestamp) results.get("start").get(i))
 				 + " there is ";
 			} else{
