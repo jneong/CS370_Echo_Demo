@@ -361,7 +361,7 @@ public class CalendarConversation extends Conversation {
 		Timestamp start = (Timestamp) results.get("start").get(0);
 
 		// Format the first part of the response to indicate the category.
-		String categoryPrefix = "Cool. The " + category + " events ";
+		String categoryPrefix = "Cool. Here are the " + category + " events that I was able to find. ";
 
 
 		return dayByDayEventsResponse(results, dateRange, categoryPrefix);
@@ -517,8 +517,7 @@ public class CalendarConversation extends Conversation {
 	//Prefix - "Okay, here are the events happening "
 	private static SpeechletResponse dayByDayEventsResponse(Map<String, Vector<Object>> results,
 													DateRange when, String prefix){
-		String relativeDate = when.getRelativeDate(true);
-		String responseSsml = prefix + relativeDate + ". ";
+		String responseSsml = prefix;
 		
 		String dateInProgressSsml = CalendarHelper.formatDateSsml((Timestamp) results.get("start").get(0));
 		String eventDateSsml;
