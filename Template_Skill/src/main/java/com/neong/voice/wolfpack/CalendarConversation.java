@@ -513,8 +513,16 @@ public class CalendarConversation extends Conversation {
 		return newAffirmativeResponse(responseSsml, repromptSsml);
 	}
 	
-	//Expected Response: "Okay, here are the events happening this weekend. On Saturday, November 13 is IMS baseball at two p m, Fall dance concert at 4 p m, and Ice Tea Lecture at 8 p m
-	//Prefix - "Okay, here are the events happening "
+	
+	/**
+	 * 
+	 * @param results	The results from a query. There must be start and title columns.
+	 * @param when		A dateRange built from results.
+	 * @param prefix	An introductory sentence. Example - "Okay, here is what I found."
+	 * 					Pass an empty string if there should not be a prefix.
+	 * @return			A string with a message such as "<prefix.> On <day> is <event>
+	 * 					at <time>, <event2> at <time2>... On <day2> there is...etc.
+	 */
 	private static SpeechletResponse dayByDayEventsResponse(Map<String, Vector<Object>> results,
 													DateRange when, String prefix){
 		String eventFormat = "{title} at {start:time}";

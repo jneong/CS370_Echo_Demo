@@ -201,7 +201,7 @@ public class CalendarHelper {
 			eventList += CalendarHelper.formatEventSsml(format, events, i);
 		}
 		
-		eventList += eventList += ".";
+		eventList += ".";
 		return eventList;
 	}
 
