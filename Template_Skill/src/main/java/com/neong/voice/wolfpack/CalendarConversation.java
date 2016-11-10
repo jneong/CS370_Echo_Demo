@@ -517,25 +517,9 @@ public class CalendarConversation extends Conversation {
 	//Prefix - "Okay, here are the events happening "
 	private static SpeechletResponse dayByDayEventsResponse(Map<String, Vector<Object>> results,
 													DateRange when, String prefix){
-		String responseSsml = prefix;
+		String eventFormat = "{title} at {start:time}";
 		
-		String dateInProgressSsml = CalendarHelper.formatDateSsml((Timestamp) results.get("start").get(0));
-		String eventDateSsml;
-		String eventList = ". On " + dateInProgressSsml + " there is ";
-		
-		for(int i = 0; i < results.get("start").size(); i++){
-			eventDateSsml = CalendarHelper.formatDateSsml((Timestamp) results.get("start").get(i));
-			if(!eventDateSsml.equals(dateInProgressSsml)){
-				dateInProgressSsml = eventDateSsml;
-				eventList += ". On " + dateInProgressSsml + " there is ";
-			} else{
-				eventList += ", ";
-			}
-			
-			eventList += CalendarHelper.formatEventSsml("{title} at {start:time}", results, i);
-		}
-		
-		responseSsml += eventList += ".";
+		String responseSsml = prefix + CalendarHelper.listEventsWithDays(eventFormat, results);
 		String repromptSsml = "Is there anything you would like to know about those events?";
 		return newAffirmativeResponse(responseSsml, repromptSsml);
 	}
