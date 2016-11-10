@@ -163,7 +163,7 @@ public class CalendarConversation extends Conversation {
 			break;
 
 		default:
-			response = newBadStateResponse();
+			response = newBadStateResponse("handleDetailIntents");
 			break;
 		}
 
@@ -310,7 +310,7 @@ public class CalendarConversation extends Conversation {
 
 		// This should never happen.
 		if (dateRangeAttrib == null)
-			return newBadStateResponse();
+			return newBadStateResponse("handleNarrowDownIntent");
 
 		DateRange dateRange = new DateRange(dateRangeAttrib);
 
@@ -377,7 +377,7 @@ public class CalendarConversation extends Conversation {
 		final Set<String> savedEventNames = savedEvents.keySet();
 
 		if (savedEvents == null)
-			return newBadStateResponse();
+			return newBadStateResponse("handleGetFeeDetailsIntent");
 
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
 		String eventNameSlotValue;
@@ -426,7 +426,7 @@ public class CalendarConversation extends Conversation {
 		final Set<String> savedEventNames = savedEvents.keySet();
 
 		if (savedEvents == null)
-			return newBadStateResponse();
+			return newBadStateResponse("handleGetLocationDetailsIntent");
 
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
 		String eventNameSlotValue;
@@ -475,7 +475,7 @@ public class CalendarConversation extends Conversation {
 		final Set<String> savedEventNames = savedEvents.keySet();
 
 		if (savedEvents == null)
-			return newBadStateResponse();
+			return newBadStateResponse("handleGetEndTimeIntent");
 
 		Slot eventSlot = intentReq.getIntent().getSlot(SLOT_EVENT_NAME);
 		String eventNameSlotValue;
@@ -615,7 +615,8 @@ public class CalendarConversation extends Conversation {
 	/**
 	 * Generic response for when we don't know what's going on
 	 */
-	private SpeechletResponse newBadStateResponse() {
+	private SpeechletResponse newBadStateResponse(String msg) {
+		System.out.println(msg);
 		return newTellResponse("Sorry, I forgot what we were talking about.", false);
 	}
 }
