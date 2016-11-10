@@ -195,7 +195,11 @@ public class CalendarHelper {
 				dateInProgressSsml = eventDateSsml;
 				eventList += ". On " + dateInProgressSsml + " there is ";
 			} else{
-				eventList += ", ";
+				if(i == events.get("start").size() - 1){
+					eventList += ", and ";
+				}else{
+					eventList += ", ";
+				}
 			}
 			
 			eventList += CalendarHelper.formatEventSsml(format, events, i);
