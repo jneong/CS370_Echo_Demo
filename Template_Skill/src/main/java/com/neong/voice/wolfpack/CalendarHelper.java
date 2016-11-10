@@ -195,7 +195,8 @@ public class CalendarHelper {
 				dateInProgressSsml = eventDateSsml;
 				eventList += ". On " + dateInProgressSsml + " there is ";
 			} else{
-				if(i == events.get("start").size() - 1){
+				if(i == events.get("start").size() - 1 || 
+						!dateInProgressSsml.equals(CalendarHelper.formatDateSsml((Timestamp) events.get("start").get(i + 1)))){
 					eventList += ", and ";
 				}else{
 					eventList += ", ";
