@@ -4,6 +4,7 @@ jdk:
 - oraclejdk8
 
 script:
+  - export TERM=dumb
   - cd Template_Skill
   - gradle check
   - gradle fatJar
