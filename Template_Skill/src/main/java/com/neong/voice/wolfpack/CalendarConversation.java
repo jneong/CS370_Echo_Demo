@@ -519,19 +519,16 @@ public class CalendarConversation extends Conversation {
 													DateRange when, String prefix){
 		String relativeDate = when.getRelativeDate(true);
 		String responseSsml = prefix + relativeDate + ". ";
-		String eventList = ". On " + CalendarHelper.formatDateSsml((Timestamp) results.get("start").get(0))
-						 + " there is ";
 		
-		Date dateInProgress = new Date(((Timestamp) results.get("start").get(0)).getTime());
-		Date eventDate = dateInProgress;
+		String dateInProgressSsml = CalendarHelper.formatDateSsml((Timestamp) results.get("start").get(0));
+		String eventDateSsml;
+		String eventList = ". On " + dateInProgressSsml + " there is ";
+		
 		for(int i = 0; i < results.get("start").size(); i++){
-			System.out.println("Size = " + results.size() + ", i = " + i);
-			eventDate = new Date(((Timestamp) results.get("start").get(i)).getTime());
-			
-			if(!eventDate.equals(dateInProgress)){
-				dateInProgress = eventDate;
-				eventList += ". On " + CalendarHelper.formatDateSsml((Timestamp) results.get("start").get(i))
-				 + " there is ";
+			eventDateSsml = CalendarHelper.formatDateSsml((Timestamp) results.get("start").get(i));
+			if(!eventDateSsml.equals(dateInProgressSsml)){
+				dateInProgressSsml = eventDateSsml;
+				eventList += ". On " + dateInProgressSsml + " there is ";
 			} else{
 				eventList += ", ";
 			}
