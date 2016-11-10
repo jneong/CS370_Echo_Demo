@@ -214,7 +214,7 @@ public class CalendarConversation extends Conversation {
 		if (results == null)
 			return newInternalErrorResponse();
 
-		String eventFormat = "Okay, The next event is {title}, on {start:date} at {start:time}.";
+		String eventFormat = "The next event is {title}, on {start:date} at {start:time}.";
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 		String repromptSsml = "Is there anything you would like to know about this event?";
 
@@ -265,7 +265,7 @@ public class CalendarConversation extends Conversation {
 		// If there were not any events on the given day:
 		if (numEvents == 0) {
 			String dateSsml = dateRange.getDateSsml();
-			String responseSsml = "I couldn't find any events on " + dateSsml + ".";
+			String responseSsml = "I couldn't find any events " + dateRange.getRelativeDate(true) + ".";
 			String repromptSsml = "Can I help you find another event?";
 
 			return newFailureResponse(responseSsml, repromptSsml);
@@ -279,15 +279,16 @@ public class CalendarConversation extends Conversation {
 			session.setAttribute(ATTRIB_RECENTLYSAIDEVENTS, savedEvents);
 			session.setAttribute(ATTRIB_STATEID, SessionState.USER_HEARD_EVENTS);
 
-			String responsePrefix = "Okay. The events on ";
+			String responsePrefix = "The events ";
 
-			response = newEventListResponse(results, dateRange.getTimestamp(), responsePrefix);
+			response = newEventListResponse(results, dateRange, responsePrefix);
 		} else { // more than MAX_EVENTS
 			session.setAttribute(ATTRIB_STATEID, SessionState.LIST_TOO_LONG);
 
 			String dateSsml = dateRange.getDateSsml();
-			String responseSsml = "I was able to find " + numEvents + " different events on " + dateSsml + ". " +
-				"What kind of events would you like to hear about?";
+			String responseSsml = "I was able to find " + numEvents + " different events " +
+					dateRange.getRelativeDate(true) +  
+					". What kind of events would you like to hear about?";
 			// TODO: only prompt for categories found in the list
 			String repromptSsml = "Would you like to hear about sports, entertainment, " +
 				"clubs, lectures, or all of the events?";
@@ -360,9 +361,10 @@ public class CalendarConversation extends Conversation {
 		Timestamp start = (Timestamp) results.get("start").get(0);
 
 		// Format the first part of the response to indicate the category.
-		String categoryPrefix = "Cool. The " + category + " events on ";
+		String categoryPrefix = "Cool. Here are the " + category + " events that I was able to find. ";
 
-		return newEventListResponse(results, start, categoryPrefix);
+
+		return dayByDayEventsResponse(results, dateRange, categoryPrefix);
 	}
 
 
@@ -402,7 +404,8 @@ public class CalendarConversation extends Conversation {
 		if (results.get("title").size() == 0)
 			return newInternalErrorResponse();
 
-		String eventFormat = "Sure, General admission for {title} is {general_admission_fee}.";
+		String eventFormat = "General admission for {title} is {general_admission_fee}.";
+
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
 		return newAffirmativeResponse(eventSsml, "Would you like anymore info?");
@@ -446,6 +449,7 @@ public class CalendarConversation extends Conversation {
 			return newInternalErrorResponse();
 
 		String eventFormat = "Alrighty, {title} is located at {location}.";
+
 		String eventSsml = CalendarHelper.formatEventSsml(eventFormat, results);
 
 		return newAffirmativeResponse(eventSsml, "Would you like to hear anything else?");
@@ -499,13 +503,32 @@ public class CalendarConversation extends Conversation {
 	 * Generic response for a list of events on a given date
 	 */
 	private static SpeechletResponse newEventListResponse(Map<String, Vector<Object>> results,
-	                                                      Timestamp when, String prefix) {
-		String dateSsml = CalendarHelper.formatDateSsml(when);
+	                                                      DateRange when, String prefix) {
+		String dateSsml = when.getRelativeDate(true);
 		String eventFormat = "<s>{title} at {start:time}</s>";
 		String eventsSsml = CalendarHelper.listEvents(eventFormat, results);
 		String responseSsml = prefix + dateSsml + " are: " + eventsSsml;
 		String repromptSsml = "Is there anything you would like to know about those events?";
 
+		return newAffirmativeResponse(responseSsml, repromptSsml);
+	}
+	
+	
+	/**
+	 * 
+	 * @param results	The results from a query. There must be start and title columns.
+	 * @param when		A dateRange built from results.
+	 * @param prefix	An introductory sentence. Example - "Okay, here is what I found."
+	 * 					Pass an empty string if there should not be a prefix.
+	 * @return			A string with a message such as "<prefix.> On <day> is <event>
+	 * 					at <time>, <event2> at <time2>... On <day2> there is...etc.
+	 */
+	private static SpeechletResponse dayByDayEventsResponse(Map<String, Vector<Object>> results,
+													DateRange when, String prefix){
+		String eventFormat = "{title} at {start:time}";
+		
+		String responseSsml = prefix + CalendarHelper.listEventsWithDays(eventFormat, results);
+		String repromptSsml = "Is there anything you would like to know about those events?";
 		return newAffirmativeResponse(responseSsml, repromptSsml);
 	}
 
