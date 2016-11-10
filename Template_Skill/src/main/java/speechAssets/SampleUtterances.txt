@@ -335,8 +335,8 @@ GetEndTimeIntent I need a time for {eventName}
 
 GetEndTimeIntent a time for {eventName}
 
-GetEndTimeIntent is the time) for {eventName}
-GetEndTimeIntent is a time) for {eventName}
+GetEndTimeIntent is the time for {eventName}
+GetEndTimeIntent is a time for {eventName}
 
 GetEndTimeIntent to the time for {eventName}
 GetEndTimeIntent to a time for {eventName}
@@ -1370,3 +1370,4 @@ SportsCategoryIntent to tell me all the occasions about sports
 SportsCategoryIntent to tell me all the occasions about althetics
 SportsCategoryIntent to tell me all the occasions about intramural sports
 SportsCategoryIntent to tell me all the occasions about intramural athletics
+
