@@ -31,7 +31,7 @@ GetEndTimeIntent (give|tell) me (what is|what's) (the|a) time for {eventName}
 GetEndTimeIntent (what is|what's) (the|a) time for {eventName}
 GetEndTimeIntent I (want|need) (the|a) time for {eventName}
 GetEndTimeIntent a time for {eventName}
-GetEndTimeIntent is (the|a) time) for {eventName}
+GetEndTimeIntent is (the|a) time for {eventName}
 GetEndTimeIntent to (the|a) time for {eventName}
 GetEventsOnDateIntent (give|tell) me (a|an|the) event (that is|that's) on {date}
 GetEventsOnDateIntent (give|tell) me (what is|what's) (scheduled|happening) (for|on) the (events|s.s.u.|(sonoma state|sonoma state university))) calendar (for|on) {date}
