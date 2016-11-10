@@ -27,6 +27,7 @@ import com.amazon.speech.speechlet.Speechlet;
 import com.amazon.speech.speechlet.SpeechletException;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
+import com.amazon.speech.ui.Reprompt;
 import com.neong.voice.wolfpack.CalendarConversation;
 import com.neong.voice.model.base.Conversation;
 
@@ -84,11 +85,19 @@ public class TemplateBaseSkillSpeechlet implements Speechlet {
 
         String welcomeStr =
 	        "Welcome to the SSU Events skill. You can start by asking me what's " +
-	        " happening tomorrow.";
+	        " happening today or on another upcoming date.";
         PlainTextOutputSpeech outputSpeech = new PlainTextOutputSpeech();
         outputSpeech.setText(welcomeStr);
         
-        return SpeechletResponse.newTellResponse(outputSpeech);
+        String repromptStr = 
+        	"Try asking what's happening tomorrow.";
+        PlainTextOutputSpeech repromptOutputSpeech = new PlainTextOutputSpeech();
+        repromptOutputSpeech.setText(repromptStr);
+        
+        Reprompt reprompt = new Reprompt();
+        reprompt.setOutputSpeech(repromptOutputSpeech);
+        
+        return SpeechletResponse.newAskResponse(outputSpeech, reprompt);
     }
 
     
