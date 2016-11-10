@@ -27,7 +27,7 @@ import com.amazon.speech.speechlet.Speechlet;
 import com.amazon.speech.speechlet.SpeechletException;
 import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
-import com.neong.voice.example.KnockKnockConversation;
+import com.neong.voice.wolfpack.CalendarConversation;
 import com.neong.voice.model.base.Conversation;
 
 /**
@@ -63,7 +63,7 @@ public class TemplateBaseSkillSpeechlet implements Speechlet {
         
         
         //TODO EDIT HERE: Add Conversation objects to registry
-        supportedConversations.add(new KnockKnockConversation());
+        supportedConversations.add(new CalendarConversation());
         
         
         //Populate a map of supported intents to conversations for later dispatch
@@ -82,7 +82,9 @@ public class TemplateBaseSkillSpeechlet implements Speechlet {
         log.info("onLaunch requestId={}, sessionId={}", request.getRequestId(),
                 session.getSessionId());
 
-        String welcomeStr = "Welcome to Template test skill. Try asking me things.";
+        String welcomeStr =
+	        "Welcome to the SSU Events skill. You can start by asking me what's " +
+	        " happening tomorrow.";
         PlainTextOutputSpeech outputSpeech = new PlainTextOutputSpeech();
         outputSpeech.setText(welcomeStr);
         

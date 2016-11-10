@@ -1,28 +1,58 @@
 {
   "intents": [
     {
-      "intent": "StartKnockIntent"
-    },
-	{
-      "intent": "WhoDerIntent"
-    },
-    {
-      "intent": "DrWhoIntent"
-    },
-    {
-      "intent": "AMAZON.YesIntent"
+      "intent": "GetEventsOnDateIntent",
+      "slots": [
+        {
+          "name": "date",
+          "type": "AMAZON.DATE"
+        }
+      ]
     },
     {
-      "intent": "AMAZON.NoIntent"
+      "intent": "GetFeeDetailsIntent",
+        "slots": [
+          {
+            "name": "eventName",
+            "type": "LIST_OF_EVENTS"
+          }
+        ]
     },
     {
-      "intent": "AMAZON.HelpIntent"
+      "intent": "GetLocationDetailsIntent",
+        "slots": [
+          {
+            "name": "eventName",
+            "type": "LIST_OF_EVENTS"
+          }
+        ]
     },
     {
-      "intent": "AMAZON.StopIntent"
+      "intent": "GetEndTimeIntent",
+        "slots": [
+          {
+            "name": "eventName",
+            "type": "LIST_OF_EVENTS"
+          }
+        ]
     },
     {
-      "intent": "AMAZON.CancelIntent"
+      "intent": "AllCategoryIntent"
+    },
+    {
+      "intent": "SportsCategoryIntent"
+    },
+    {
+      "intent": "ArtsAndEntertainmentCategoryIntent"
+    },
+    {
+      "intent": "LecturesCategoryIntent"
+    },
+    {
+      "intent": "ClubsCategoryIntent"
+    },
+    {
+      "intent": "NextEventIntent"
     }
   ]
 }

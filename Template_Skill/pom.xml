@@ -62,6 +62,12 @@
       <artifactId>aws-java-sdk-dynamodb</artifactId>
       <version>1.9.40</version>
     </dependency>
+    <!-- ORACLE database driver -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>9.4-1202-jdbc42</version>
+    </dependency>
   </dependencies>
 
   <properties>

@@ -1,26 +1,1373 @@
-StartKnockIntent tell me a knock knock joke
-StartKnockIntent tell me a bad knock knock joke
-StartKnockIntent tell me a joke
-StartKnockIntent tell me a bad joke
-StartKnockIntent make me smile
+AllCategoryIntent give me what is scheduled
+AllCategoryIntent give me what is happening
+AllCategoryIntent give me what's scheduled
+AllCategoryIntent give me what's happening
+AllCategoryIntent tell me what is scheduled
+AllCategoryIntent tell me what is happening
+AllCategoryIntent tell me what's scheduled
+AllCategoryIntent tell me what's happening
 
-WhoDerIntent who's there
-WhoDerIntent whose there
-WhoDerIntent who there
+AllCategoryIntent give me what is up
+AllCategoryIntent give me what's up
+AllCategoryIntent tell me what is up
+AllCategoryIntent tell me what's up
 
-DrWhoIntent doctor who
-DrWhoIntent doctor hoo
+AllCategoryIntent what is an event
+AllCategoryIntent what is an occasion
+AllCategoryIntent what's an event
+AllCategoryIntent what's an occasion
 
-//Common Intents
-AMAZON.NoIntent nope
-AMAZON.NoIntent no way
-AMAZON.NoIntent hell no
-AMAZON.NoIntent niet
+AllCategoryIntent I want all the events
+AllCategoryIntent I want all the occasions
+AllCategoryIntent I need all the events
+AllCategoryIntent I need all the occasions
 
-AMAZON.YesIntent for sure
-AMAZON.YesIntent absolutely
-AMAZON.YesIntent why not
-AMAZON.YesIntent yes let's
-AMAZON.YesIntent sure
-AMAZON.YesIntent of course
-AMAZON.YesIntent go ahead
+AllCategoryIntent an event
+AllCategoryIntent an occasion
+
+AllCategoryIntent is the scheduled
+AllCategoryIntent is the happening
+AllCategoryIntent is a scheduled
+AllCategoryIntent is a happening
+
+AllCategoryIntent to give me all the events
+AllCategoryIntent to give me all the occasions
+AllCategoryIntent to tell me all the events
+AllCategoryIntent to tell me all the occasions
+
+ArtsAndEntertainmentCategoryIntent give me what is scheduled for arts
+ArtsAndEntertainmentCategoryIntent give me what is scheduled for entertainment
+ArtsAndEntertainmentCategoryIntent give me what is scheduled for arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what is scheduled about arts
+ArtsAndEntertainmentCategoryIntent give me what is scheduled about entertainment
+ArtsAndEntertainmentCategoryIntent give me what is scheduled about arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what is happening for arts
+ArtsAndEntertainmentCategoryIntent give me what is happening for entertainment
+ArtsAndEntertainmentCategoryIntent give me what is happening for arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what is happening about arts
+ArtsAndEntertainmentCategoryIntent give me what is happening about entertainment
+ArtsAndEntertainmentCategoryIntent give me what is happening about arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what's scheduled for arts
+ArtsAndEntertainmentCategoryIntent give me what's scheduled for entertainment
+ArtsAndEntertainmentCategoryIntent give me what's scheduled for arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what's scheduled about arts
+ArtsAndEntertainmentCategoryIntent give me what's scheduled about entertainment
+ArtsAndEntertainmentCategoryIntent give me what's scheduled about arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what's happening for arts
+ArtsAndEntertainmentCategoryIntent give me what's happening for entertainment
+ArtsAndEntertainmentCategoryIntent give me what's happening for arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what's happening about arts
+ArtsAndEntertainmentCategoryIntent give me what's happening about entertainment
+ArtsAndEntertainmentCategoryIntent give me what's happening about arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is scheduled for arts
+ArtsAndEntertainmentCategoryIntent tell me what is scheduled for entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is scheduled for arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is scheduled about arts
+ArtsAndEntertainmentCategoryIntent tell me what is scheduled about entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is scheduled about arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is happening for arts
+ArtsAndEntertainmentCategoryIntent tell me what is happening for entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is happening for arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is happening about arts
+ArtsAndEntertainmentCategoryIntent tell me what is happening about entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is happening about arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's scheduled for arts
+ArtsAndEntertainmentCategoryIntent tell me what's scheduled for entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's scheduled for arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's scheduled about arts
+ArtsAndEntertainmentCategoryIntent tell me what's scheduled about entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's scheduled about arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's happening for arts
+ArtsAndEntertainmentCategoryIntent tell me what's happening for entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's happening for arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's happening about arts
+ArtsAndEntertainmentCategoryIntent tell me what's happening about entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's happening about arts and entertainment
+
+ArtsAndEntertainmentCategoryIntent give me what is up for arts
+ArtsAndEntertainmentCategoryIntent give me what is up for entertainment
+ArtsAndEntertainmentCategoryIntent give me what is up for arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what is up about arts
+ArtsAndEntertainmentCategoryIntent give me what is up about entertainment
+ArtsAndEntertainmentCategoryIntent give me what is up about arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what is up with arts
+ArtsAndEntertainmentCategoryIntent give me what is up with entertainment
+ArtsAndEntertainmentCategoryIntent give me what is up with arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what's up for arts
+ArtsAndEntertainmentCategoryIntent give me what's up for entertainment
+ArtsAndEntertainmentCategoryIntent give me what's up for arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what's up about arts
+ArtsAndEntertainmentCategoryIntent give me what's up about entertainment
+ArtsAndEntertainmentCategoryIntent give me what's up about arts and entertainment
+ArtsAndEntertainmentCategoryIntent give me what's up with arts
+ArtsAndEntertainmentCategoryIntent give me what's up with entertainment
+ArtsAndEntertainmentCategoryIntent give me what's up with arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is up for arts
+ArtsAndEntertainmentCategoryIntent tell me what is up for entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is up for arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is up about arts
+ArtsAndEntertainmentCategoryIntent tell me what is up about entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is up about arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is up with arts
+ArtsAndEntertainmentCategoryIntent tell me what is up with entertainment
+ArtsAndEntertainmentCategoryIntent tell me what is up with arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's up for arts
+ArtsAndEntertainmentCategoryIntent tell me what's up for entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's up for arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's up about arts
+ArtsAndEntertainmentCategoryIntent tell me what's up about entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's up about arts and entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's up with arts
+ArtsAndEntertainmentCategoryIntent tell me what's up with entertainment
+ArtsAndEntertainmentCategoryIntent tell me what's up with arts and entertainment
+
+ArtsAndEntertainmentCategoryIntent what is an event for arts
+ArtsAndEntertainmentCategoryIntent what is an event for entertainment
+ArtsAndEntertainmentCategoryIntent what is an event for arts and entertainment
+ArtsAndEntertainmentCategoryIntent what is an event about arts
+ArtsAndEntertainmentCategoryIntent what is an event about entertainment
+ArtsAndEntertainmentCategoryIntent what is an event about arts and entertainment
+ArtsAndEntertainmentCategoryIntent what is an occasion for arts
+ArtsAndEntertainmentCategoryIntent what is an occasion for entertainment
+ArtsAndEntertainmentCategoryIntent what is an occasion for arts and entertainment
+ArtsAndEntertainmentCategoryIntent what is an occasion about arts
+ArtsAndEntertainmentCategoryIntent what is an occasion about entertainment
+ArtsAndEntertainmentCategoryIntent what is an occasion about arts and entertainment
+ArtsAndEntertainmentCategoryIntent what's an event for arts
+ArtsAndEntertainmentCategoryIntent what's an event for entertainment
+ArtsAndEntertainmentCategoryIntent what's an event for arts and entertainment
+ArtsAndEntertainmentCategoryIntent what's an event about arts
+ArtsAndEntertainmentCategoryIntent what's an event about entertainment
+ArtsAndEntertainmentCategoryIntent what's an event about arts and entertainment
+ArtsAndEntertainmentCategoryIntent what's an occasion for arts
+ArtsAndEntertainmentCategoryIntent what's an occasion for entertainment
+ArtsAndEntertainmentCategoryIntent what's an occasion for arts and entertainment
+ArtsAndEntertainmentCategoryIntent what's an occasion about arts
+ArtsAndEntertainmentCategoryIntent what's an occasion about entertainment
+ArtsAndEntertainmentCategoryIntent what's an occasion about arts and entertainment
+
+ArtsAndEntertainmentCategoryIntent I want all the events for arts
+ArtsAndEntertainmentCategoryIntent I want all the events for entertainment
+ArtsAndEntertainmentCategoryIntent I want all the events for arts and entertainment
+ArtsAndEntertainmentCategoryIntent I want all the events about arts
+ArtsAndEntertainmentCategoryIntent I want all the events about entertainment
+ArtsAndEntertainmentCategoryIntent I want all the events about arts and entertainment
+ArtsAndEntertainmentCategoryIntent I want all the occasions for arts
+ArtsAndEntertainmentCategoryIntent I want all the occasions for entertainment
+ArtsAndEntertainmentCategoryIntent I want all the occasions for arts and entertainment
+ArtsAndEntertainmentCategoryIntent I want all the occasions about arts
+ArtsAndEntertainmentCategoryIntent I want all the occasions about entertainment
+ArtsAndEntertainmentCategoryIntent I want all the occasions about arts and entertainment
+ArtsAndEntertainmentCategoryIntent I need all the events for arts
+ArtsAndEntertainmentCategoryIntent I need all the events for entertainment
+ArtsAndEntertainmentCategoryIntent I need all the events for arts and entertainment
+ArtsAndEntertainmentCategoryIntent I need all the events about arts
+ArtsAndEntertainmentCategoryIntent I need all the events about entertainment
+ArtsAndEntertainmentCategoryIntent I need all the events about arts and entertainment
+ArtsAndEntertainmentCategoryIntent I need all the occasions for arts
+ArtsAndEntertainmentCategoryIntent I need all the occasions for entertainment
+ArtsAndEntertainmentCategoryIntent I need all the occasions for arts and entertainment
+ArtsAndEntertainmentCategoryIntent I need all the occasions about arts
+ArtsAndEntertainmentCategoryIntent I need all the occasions about entertainment
+ArtsAndEntertainmentCategoryIntent I need all the occasions about arts and entertainment
+
+ArtsAndEntertainmentCategoryIntent an event for arts
+ArtsAndEntertainmentCategoryIntent an event for entertainment
+ArtsAndEntertainmentCategoryIntent an event for arts and entertainment
+ArtsAndEntertainmentCategoryIntent an event about arts
+ArtsAndEntertainmentCategoryIntent an event about entertainment
+ArtsAndEntertainmentCategoryIntent an event about arts and entertainment
+ArtsAndEntertainmentCategoryIntent an occasion for arts
+ArtsAndEntertainmentCategoryIntent an occasion for entertainment
+ArtsAndEntertainmentCategoryIntent an occasion for arts and entertainment
+ArtsAndEntertainmentCategoryIntent an occasion about arts
+ArtsAndEntertainmentCategoryIntent an occasion about entertainment
+ArtsAndEntertainmentCategoryIntent an occasion about arts and entertainment
+
+ArtsAndEntertainmentCategoryIntent is the for arts events
+ArtsAndEntertainmentCategoryIntent is the for entertainment events
+ArtsAndEntertainmentCategoryIntent is the for arts and entertainment events
+ArtsAndEntertainmentCategoryIntent is the about arts events
+ArtsAndEntertainmentCategoryIntent is the about entertainment events
+ArtsAndEntertainmentCategoryIntent is the about arts and entertainment events
+ArtsAndEntertainmentCategoryIntent is a for arts events
+ArtsAndEntertainmentCategoryIntent is a for entertainment events
+ArtsAndEntertainmentCategoryIntent is a for arts and entertainment events
+ArtsAndEntertainmentCategoryIntent is a about arts events
+ArtsAndEntertainmentCategoryIntent is a about entertainment events
+ArtsAndEntertainmentCategoryIntent is a about arts and entertainment events
+
+ArtsAndEntertainmentCategoryIntent to give me all the events for arts
+ArtsAndEntertainmentCategoryIntent to give me all the events for entertainment
+ArtsAndEntertainmentCategoryIntent to give me all the events for arts and entertainment
+ArtsAndEntertainmentCategoryIntent to give me all the events about arts
+ArtsAndEntertainmentCategoryIntent to give me all the events about entertainment
+ArtsAndEntertainmentCategoryIntent to give me all the events about arts and entertainment
+ArtsAndEntertainmentCategoryIntent to give me all the occasions for arts
+ArtsAndEntertainmentCategoryIntent to give me all the occasions for entertainment
+ArtsAndEntertainmentCategoryIntent to give me all the occasions for arts and entertainment
+ArtsAndEntertainmentCategoryIntent to give me all the occasions about arts
+ArtsAndEntertainmentCategoryIntent to give me all the occasions about entertainment
+ArtsAndEntertainmentCategoryIntent to give me all the occasions about arts and entertainment
+ArtsAndEntertainmentCategoryIntent to tell me all the events for arts
+ArtsAndEntertainmentCategoryIntent to tell me all the events for entertainment
+ArtsAndEntertainmentCategoryIntent to tell me all the events for arts and entertainment
+ArtsAndEntertainmentCategoryIntent to tell me all the events about arts
+ArtsAndEntertainmentCategoryIntent to tell me all the events about entertainment
+ArtsAndEntertainmentCategoryIntent to tell me all the events about arts and entertainment
+ArtsAndEntertainmentCategoryIntent to tell me all the occasions for arts
+ArtsAndEntertainmentCategoryIntent to tell me all the occasions for entertainment
+ArtsAndEntertainmentCategoryIntent to tell me all the occasions for arts and entertainment
+ArtsAndEntertainmentCategoryIntent to tell me all the occasions about arts
+ArtsAndEntertainmentCategoryIntent to tell me all the occasions about entertainment
+ArtsAndEntertainmentCategoryIntent to tell me all the occasions about arts and entertainment
+
+ClubsCategoryIntent give me what is scheduled for a club meeting
+ClubsCategoryIntent give me what is scheduled for club events
+ClubsCategoryIntent give me what is scheduled about a club meeting
+ClubsCategoryIntent give me what is scheduled about club events
+ClubsCategoryIntent give me what is happening for a club meeting
+ClubsCategoryIntent give me what is happening for club events
+ClubsCategoryIntent give me what is happening about a club meeting
+ClubsCategoryIntent give me what is happening about club events
+ClubsCategoryIntent give me what's scheduled for a club meeting
+ClubsCategoryIntent give me what's scheduled for club events
+ClubsCategoryIntent give me what's scheduled about a club meeting
+ClubsCategoryIntent give me what's scheduled about club events
+ClubsCategoryIntent give me what's happening for a club meeting
+ClubsCategoryIntent give me what's happening for club events
+ClubsCategoryIntent give me what's happening about a club meeting
+ClubsCategoryIntent give me what's happening about club events
+ClubsCategoryIntent tell me what is scheduled for a club meeting
+ClubsCategoryIntent tell me what is scheduled for club events
+ClubsCategoryIntent tell me what is scheduled about a club meeting
+ClubsCategoryIntent tell me what is scheduled about club events
+ClubsCategoryIntent tell me what is happening for a club meeting
+ClubsCategoryIntent tell me what is happening for club events
+ClubsCategoryIntent tell me what is happening about a club meeting
+ClubsCategoryIntent tell me what is happening about club events
+ClubsCategoryIntent tell me what's scheduled for a club meeting
+ClubsCategoryIntent tell me what's scheduled for club events
+ClubsCategoryIntent tell me what's scheduled about a club meeting
+ClubsCategoryIntent tell me what's scheduled about club events
+ClubsCategoryIntent tell me what's happening for a club meeting
+ClubsCategoryIntent tell me what's happening for club events
+ClubsCategoryIntent tell me what's happening about a club meeting
+ClubsCategoryIntent tell me what's happening about club events
+
+ClubsCategoryIntent give me what is up for a club meeting
+ClubsCategoryIntent give me what is up for club events
+ClubsCategoryIntent give me what is up about a club meeting
+ClubsCategoryIntent give me what is up about club events
+ClubsCategoryIntent give me what is up with a club meeting
+ClubsCategoryIntent give me what is up with club events
+ClubsCategoryIntent give me what's up for a club meeting
+ClubsCategoryIntent give me what's up for club events
+ClubsCategoryIntent give me what's up about a club meeting
+ClubsCategoryIntent give me what's up about club events
+ClubsCategoryIntent give me what's up with a club meeting
+ClubsCategoryIntent give me what's up with club events
+ClubsCategoryIntent tell me what is up for a club meeting
+ClubsCategoryIntent tell me what is up for club events
+ClubsCategoryIntent tell me what is up about a club meeting
+ClubsCategoryIntent tell me what is up about club events
+ClubsCategoryIntent tell me what is up with a club meeting
+ClubsCategoryIntent tell me what is up with club events
+ClubsCategoryIntent tell me what's up for a club meeting
+ClubsCategoryIntent tell me what's up for club events
+ClubsCategoryIntent tell me what's up about a club meeting
+ClubsCategoryIntent tell me what's up about club events
+ClubsCategoryIntent tell me what's up with a club meeting
+ClubsCategoryIntent tell me what's up with club events
+
+ClubsCategoryIntent what is an event for club events
+ClubsCategoryIntent what is an event about club events
+ClubsCategoryIntent what is an occasion for club events
+ClubsCategoryIntent what is an occasion about club events
+ClubsCategoryIntent what's an event for club events
+ClubsCategoryIntent what's an event about club events
+ClubsCategoryIntent what's an occasion for club events
+ClubsCategoryIntent what's an occasion about club events
+
+ClubsCategoryIntent I want all the club events
+ClubsCategoryIntent I need all the club events
+
+ClubsCategoryIntent an event for club events
+ClubsCategoryIntent an event about club events
+ClubsCategoryIntent an occasion for club events
+ClubsCategoryIntent an occasion about club events
+
+ClubsCategoryIntent is the for a club meeting
+ClubsCategoryIntent is the for club events
+ClubsCategoryIntent is the about a club meeting
+ClubsCategoryIntent is the about club events
+ClubsCategoryIntent is a for a club meeting
+ClubsCategoryIntent is a for club events
+ClubsCategoryIntent is a about a club meeting
+ClubsCategoryIntent is a about club events
+
+ClubsCategoryIntent to give me a club meeting
+ClubsCategoryIntent to tell me a club meeting
+
+GetEndTimeIntent give me the time for {eventName}
+GetEndTimeIntent give me a time for {eventName}
+GetEndTimeIntent tell me the time for {eventName}
+GetEndTimeIntent tell me a time for {eventName}
+
+GetEndTimeIntent give me what is the time for {eventName}
+GetEndTimeIntent give me what is a time for {eventName}
+GetEndTimeIntent give me what's the time for {eventName}
+GetEndTimeIntent give me what's a time for {eventName}
+GetEndTimeIntent tell me what is the time for {eventName}
+GetEndTimeIntent tell me what is a time for {eventName}
+GetEndTimeIntent tell me what's the time for {eventName}
+GetEndTimeIntent tell me what's a time for {eventName}
+
+GetEndTimeIntent what is the time for {eventName}
+GetEndTimeIntent what is a time for {eventName}
+GetEndTimeIntent what's the time for {eventName}
+GetEndTimeIntent what's a time for {eventName}
+
+GetEndTimeIntent I want the time for {eventName}
+GetEndTimeIntent I want a time for {eventName}
+GetEndTimeIntent I need the time for {eventName}
+GetEndTimeIntent I need a time for {eventName}
+
+GetEndTimeIntent a time for {eventName}
+
+GetEndTimeIntent is the time for {eventName}
+GetEndTimeIntent is a time for {eventName}
+
+GetEndTimeIntent to the time for {eventName}
+GetEndTimeIntent to a time for {eventName}
+
+GetEventsOnDateIntent give me a event that is on {date}
+GetEventsOnDateIntent give me a event that's on {date}
+GetEventsOnDateIntent give me an event that is on {date}
+GetEventsOnDateIntent give me an event that's on {date}
+GetEventsOnDateIntent give me the event that is on {date}
+GetEventsOnDateIntent give me the event that's on {date}
+GetEventsOnDateIntent tell me a event that is on {date}
+GetEventsOnDateIntent tell me a event that's on {date}
+GetEventsOnDateIntent tell me an event that is on {date}
+GetEventsOnDateIntent tell me an event that's on {date}
+GetEventsOnDateIntent tell me the event that is on {date}
+GetEventsOnDateIntent tell me the event that's on {date}
+
+GetEventsOnDateIntent give me what is scheduled for the events calendar for {date}
+GetEventsOnDateIntent give me what is scheduled for the events calendar on {date}
+GetEventsOnDateIntent give me what is scheduled for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what is scheduled for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what is scheduled for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what is scheduled for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what is scheduled for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what is scheduled for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what is scheduled on the events calendar for {date}
+GetEventsOnDateIntent give me what is scheduled on the events calendar on {date}
+GetEventsOnDateIntent give me what is scheduled on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what is scheduled on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what is scheduled on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what is scheduled on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what is scheduled on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what is scheduled on the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what is happening for the events calendar for {date}
+GetEventsOnDateIntent give me what is happening for the events calendar on {date}
+GetEventsOnDateIntent give me what is happening for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what is happening for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what is happening for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what is happening for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what is happening for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what is happening for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what is happening on the events calendar for {date}
+GetEventsOnDateIntent give me what is happening on the events calendar on {date}
+GetEventsOnDateIntent give me what is happening on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what is happening on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what is happening on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what is happening on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what is happening on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what is happening on the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's scheduled for the events calendar for {date}
+GetEventsOnDateIntent give me what's scheduled for the events calendar on {date}
+GetEventsOnDateIntent give me what's scheduled for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's scheduled for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's scheduled for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's scheduled for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's scheduled for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's scheduled for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's scheduled on the events calendar for {date}
+GetEventsOnDateIntent give me what's scheduled on the events calendar on {date}
+GetEventsOnDateIntent give me what's scheduled on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's scheduled on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's scheduled on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's scheduled on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's scheduled on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's scheduled on the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's happening for the events calendar for {date}
+GetEventsOnDateIntent give me what's happening for the events calendar on {date}
+GetEventsOnDateIntent give me what's happening for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's happening for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's happening for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's happening for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's happening for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's happening for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's happening on the events calendar for {date}
+GetEventsOnDateIntent give me what's happening on the events calendar on {date}
+GetEventsOnDateIntent give me what's happening on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's happening on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's happening on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's happening on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's happening on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's happening on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled for the events calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled for the events calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled on the events calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled on the events calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what is scheduled on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what is scheduled on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what is happening for the events calendar for {date}
+GetEventsOnDateIntent tell me what is happening for the events calendar on {date}
+GetEventsOnDateIntent tell me what is happening for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what is happening for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what is happening for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what is happening for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what is happening for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what is happening for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what is happening on the events calendar for {date}
+GetEventsOnDateIntent tell me what is happening on the events calendar on {date}
+GetEventsOnDateIntent tell me what is happening on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what is happening on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what is happening on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what is happening on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what is happening on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what is happening on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled for the events calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled for the events calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled on the events calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled on the events calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's scheduled on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's scheduled on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's happening for the events calendar for {date}
+GetEventsOnDateIntent tell me what's happening for the events calendar on {date}
+GetEventsOnDateIntent tell me what's happening for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's happening for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's happening for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's happening for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's happening for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's happening for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's happening on the events calendar for {date}
+GetEventsOnDateIntent tell me what's happening on the events calendar on {date}
+GetEventsOnDateIntent tell me what's happening on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's happening on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's happening on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's happening on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's happening on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's happening on the sonoma state university calendar on {date}
+
+GetEventsOnDateIntent give me what is up for the events calendar for {date}
+GetEventsOnDateIntent give me what is up for the events calendar on {date}
+GetEventsOnDateIntent give me what is up for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what is up for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what is up for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what is up for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what is up for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what is up for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what is up on the events calendar for {date}
+GetEventsOnDateIntent give me what is up on the events calendar on {date}
+GetEventsOnDateIntent give me what is up on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what is up on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what is up on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what is up on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what is up on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what is up on the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's up for the events calendar for {date}
+GetEventsOnDateIntent give me what's up for the events calendar on {date}
+GetEventsOnDateIntent give me what's up for the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's up for the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's up for the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's up for the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's up for the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's up for the sonoma state university calendar on {date}
+GetEventsOnDateIntent give me what's up on the events calendar for {date}
+GetEventsOnDateIntent give me what's up on the events calendar on {date}
+GetEventsOnDateIntent give me what's up on the s.s.u. calendar for {date}
+GetEventsOnDateIntent give me what's up on the s.s.u. calendar on {date}
+GetEventsOnDateIntent give me what's up on the sonoma state calendar for {date}
+GetEventsOnDateIntent give me what's up on the sonoma state calendar on {date}
+GetEventsOnDateIntent give me what's up on the sonoma state university calendar for {date}
+GetEventsOnDateIntent give me what's up on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what is up for the events calendar for {date}
+GetEventsOnDateIntent tell me what is up for the events calendar on {date}
+GetEventsOnDateIntent tell me what is up for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what is up for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what is up for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what is up for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what is up for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what is up for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what is up on the events calendar for {date}
+GetEventsOnDateIntent tell me what is up on the events calendar on {date}
+GetEventsOnDateIntent tell me what is up on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what is up on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what is up on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what is up on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what is up on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what is up on the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's up for the events calendar for {date}
+GetEventsOnDateIntent tell me what's up for the events calendar on {date}
+GetEventsOnDateIntent tell me what's up for the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's up for the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's up for the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's up for the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's up for the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's up for the sonoma state university calendar on {date}
+GetEventsOnDateIntent tell me what's up on the events calendar for {date}
+GetEventsOnDateIntent tell me what's up on the events calendar on {date}
+GetEventsOnDateIntent tell me what's up on the s.s.u. calendar for {date}
+GetEventsOnDateIntent tell me what's up on the s.s.u. calendar on {date}
+GetEventsOnDateIntent tell me what's up on the sonoma state calendar for {date}
+GetEventsOnDateIntent tell me what's up on the sonoma state calendar on {date}
+GetEventsOnDateIntent tell me what's up on the sonoma state university calendar for {date}
+GetEventsOnDateIntent tell me what's up on the sonoma state university calendar on {date}
+
+GetEventsOnDateIntent give me what is on {date}
+GetEventsOnDateIntent give me what's on {date}
+GetEventsOnDateIntent give me what's up on {date}
+GetEventsOnDateIntent tell me what is on {date}
+GetEventsOnDateIntent tell me what's on {date}
+GetEventsOnDateIntent tell me what's up on {date}
+
+GetEventsOnDateIntent what is on {date} that is fun
+GetEventsOnDateIntent what is on {date} that is interesting
+GetEventsOnDateIntent what is on {date} that is cool
+GetEventsOnDateIntent what is on {date} that's fun
+GetEventsOnDateIntent what is on {date} that's interesting
+GetEventsOnDateIntent what is on {date} that's cool
+GetEventsOnDateIntent what's on {date} that is fun
+GetEventsOnDateIntent what's on {date} that is interesting
+GetEventsOnDateIntent what's on {date} that is cool
+GetEventsOnDateIntent what's on {date} that's fun
+GetEventsOnDateIntent what's on {date} that's interesting
+GetEventsOnDateIntent what's on {date} that's cool
+
+GetEventsOnDateIntent what is on {date} for fun
+GetEventsOnDateIntent what is on {date} for me to do
+GetEventsOnDateIntent what is on {date} for an activity
+GetEventsOnDateIntent what's on {date} for fun
+GetEventsOnDateIntent what's on {date} for me to do
+GetEventsOnDateIntent what's on {date} for an activity
+
+GetEventsOnDateIntent I want something to do on {date}
+GetEventsOnDateIntent I want something to attend on {date}
+GetEventsOnDateIntent I want an event to do on {date}
+GetEventsOnDateIntent I want an event to attend on {date}
+GetEventsOnDateIntent I need something to do on {date}
+GetEventsOnDateIntent I need something to attend on {date}
+GetEventsOnDateIntent I need an event to do on {date}
+GetEventsOnDateIntent I need an event to attend on {date}
+
+GetEventsOnDateIntent I want a gathering on {date}
+GetEventsOnDateIntent I want a fun time on {date}
+GetEventsOnDateIntent I need a gathering on {date}
+GetEventsOnDateIntent I need a fun time on {date}
+
+GetEventsOnDateIntent I want an event on {date}
+GetEventsOnDateIntent I want an occasion on {date}
+GetEventsOnDateIntent I need an event on {date}
+GetEventsOnDateIntent I need an occasion on {date}
+
+GetFeeDetailsIntent a price for {eventName}
+GetFeeDetailsIntent a price about {eventName}
+GetFeeDetailsIntent a cost for {eventName}
+GetFeeDetailsIntent a cost about {eventName}
+GetFeeDetailsIntent a amount for {eventName}
+GetFeeDetailsIntent a amount about {eventName}
+GetFeeDetailsIntent a fee for {eventName}
+GetFeeDetailsIntent a fee about {eventName}
+GetFeeDetailsIntent a charge for {eventName}
+GetFeeDetailsIntent a charge about {eventName}
+GetFeeDetailsIntent an price for {eventName}
+GetFeeDetailsIntent an price about {eventName}
+GetFeeDetailsIntent an cost for {eventName}
+GetFeeDetailsIntent an cost about {eventName}
+GetFeeDetailsIntent an amount for {eventName}
+GetFeeDetailsIntent an amount about {eventName}
+GetFeeDetailsIntent an fee for {eventName}
+GetFeeDetailsIntent an fee about {eventName}
+GetFeeDetailsIntent an charge for {eventName}
+GetFeeDetailsIntent an charge about {eventName}
+
+GetFeeDetailsIntent give me the price for {eventName}
+GetFeeDetailsIntent give me the price about {eventName}
+GetFeeDetailsIntent give me the cost for {eventName}
+GetFeeDetailsIntent give me the cost about {eventName}
+GetFeeDetailsIntent give me the amount for {eventName}
+GetFeeDetailsIntent give me the amount about {eventName}
+GetFeeDetailsIntent give me the fee for {eventName}
+GetFeeDetailsIntent give me the fee about {eventName}
+GetFeeDetailsIntent give me the charge for {eventName}
+GetFeeDetailsIntent give me the charge about {eventName}
+GetFeeDetailsIntent give me a price for {eventName}
+GetFeeDetailsIntent give me a price about {eventName}
+GetFeeDetailsIntent give me a cost for {eventName}
+GetFeeDetailsIntent give me a cost about {eventName}
+GetFeeDetailsIntent give me a amount for {eventName}
+GetFeeDetailsIntent give me a amount about {eventName}
+GetFeeDetailsIntent give me a fee for {eventName}
+GetFeeDetailsIntent give me a fee about {eventName}
+GetFeeDetailsIntent give me a charge for {eventName}
+GetFeeDetailsIntent give me a charge about {eventName}
+GetFeeDetailsIntent tell me the price for {eventName}
+GetFeeDetailsIntent tell me the price about {eventName}
+GetFeeDetailsIntent tell me the cost for {eventName}
+GetFeeDetailsIntent tell me the cost about {eventName}
+GetFeeDetailsIntent tell me the amount for {eventName}
+GetFeeDetailsIntent tell me the amount about {eventName}
+GetFeeDetailsIntent tell me the fee for {eventName}
+GetFeeDetailsIntent tell me the fee about {eventName}
+GetFeeDetailsIntent tell me the charge for {eventName}
+GetFeeDetailsIntent tell me the charge about {eventName}
+GetFeeDetailsIntent tell me a price for {eventName}
+GetFeeDetailsIntent tell me a price about {eventName}
+GetFeeDetailsIntent tell me a cost for {eventName}
+GetFeeDetailsIntent tell me a cost about {eventName}
+GetFeeDetailsIntent tell me a amount for {eventName}
+GetFeeDetailsIntent tell me a amount about {eventName}
+GetFeeDetailsIntent tell me a fee for {eventName}
+GetFeeDetailsIntent tell me a fee about {eventName}
+GetFeeDetailsIntent tell me a charge for {eventName}
+GetFeeDetailsIntent tell me a charge about {eventName}
+
+GetFeeDetailsIntent to the price for {eventName}
+GetFeeDetailsIntent to the cost for {eventName}
+GetFeeDetailsIntent to the amount for {eventName}
+GetFeeDetailsIntent to the fee for {eventName}
+GetFeeDetailsIntent to the charge for {eventName}
+GetFeeDetailsIntent to a price for {eventName}
+GetFeeDetailsIntent to a cost for {eventName}
+GetFeeDetailsIntent to a amount for {eventName}
+GetFeeDetailsIntent to a fee for {eventName}
+GetFeeDetailsIntent to a charge for {eventName}
+GetFeeDetailsIntent for the price for {eventName}
+GetFeeDetailsIntent for the cost for {eventName}
+GetFeeDetailsIntent for the amount for {eventName}
+GetFeeDetailsIntent for the fee for {eventName}
+GetFeeDetailsIntent for the charge for {eventName}
+GetFeeDetailsIntent for a price for {eventName}
+GetFeeDetailsIntent for a cost for {eventName}
+GetFeeDetailsIntent for a amount for {eventName}
+GetFeeDetailsIntent for a fee for {eventName}
+GetFeeDetailsIntent for a charge for {eventName}
+
+GetFeeDetailsIntent what is the price for {eventName}
+GetFeeDetailsIntent what is the price about {eventName}
+GetFeeDetailsIntent what is the cost for {eventName}
+GetFeeDetailsIntent what is the cost about {eventName}
+GetFeeDetailsIntent what is the amount for {eventName}
+GetFeeDetailsIntent what is the amount about {eventName}
+GetFeeDetailsIntent what is the fee for {eventName}
+GetFeeDetailsIntent what is the fee about {eventName}
+GetFeeDetailsIntent what is the charge for {eventName}
+GetFeeDetailsIntent what is the charge about {eventName}
+GetFeeDetailsIntent what is a price for {eventName}
+GetFeeDetailsIntent what is a price about {eventName}
+GetFeeDetailsIntent what is a cost for {eventName}
+GetFeeDetailsIntent what is a cost about {eventName}
+GetFeeDetailsIntent what is a amount for {eventName}
+GetFeeDetailsIntent what is a amount about {eventName}
+GetFeeDetailsIntent what is a fee for {eventName}
+GetFeeDetailsIntent what is a fee about {eventName}
+GetFeeDetailsIntent what is a charge for {eventName}
+GetFeeDetailsIntent what is a charge about {eventName}
+GetFeeDetailsIntent what's the price for {eventName}
+GetFeeDetailsIntent what's the price about {eventName}
+GetFeeDetailsIntent what's the cost for {eventName}
+GetFeeDetailsIntent what's the cost about {eventName}
+GetFeeDetailsIntent what's the amount for {eventName}
+GetFeeDetailsIntent what's the amount about {eventName}
+GetFeeDetailsIntent what's the fee for {eventName}
+GetFeeDetailsIntent what's the fee about {eventName}
+GetFeeDetailsIntent what's the charge for {eventName}
+GetFeeDetailsIntent what's the charge about {eventName}
+GetFeeDetailsIntent what's a price for {eventName}
+GetFeeDetailsIntent what's a price about {eventName}
+GetFeeDetailsIntent what's a cost for {eventName}
+GetFeeDetailsIntent what's a cost about {eventName}
+GetFeeDetailsIntent what's a amount for {eventName}
+GetFeeDetailsIntent what's a amount about {eventName}
+GetFeeDetailsIntent what's a fee for {eventName}
+GetFeeDetailsIntent what's a fee about {eventName}
+GetFeeDetailsIntent what's a charge for {eventName}
+GetFeeDetailsIntent what's a charge about {eventName}
+
+GetFeeDetailsIntent I want the price for {eventName}
+GetFeeDetailsIntent I want the price about {eventName}
+GetFeeDetailsIntent I want the cost for {eventName}
+GetFeeDetailsIntent I want the cost about {eventName}
+GetFeeDetailsIntent I want the amount for {eventName}
+GetFeeDetailsIntent I want the amount about {eventName}
+GetFeeDetailsIntent I want the fee for {eventName}
+GetFeeDetailsIntent I want the fee about {eventName}
+GetFeeDetailsIntent I want the charge for {eventName}
+GetFeeDetailsIntent I want the charge about {eventName}
+GetFeeDetailsIntent I want a price for {eventName}
+GetFeeDetailsIntent I want a price about {eventName}
+GetFeeDetailsIntent I want a cost for {eventName}
+GetFeeDetailsIntent I want a cost about {eventName}
+GetFeeDetailsIntent I want a amount for {eventName}
+GetFeeDetailsIntent I want a amount about {eventName}
+GetFeeDetailsIntent I want a fee for {eventName}
+GetFeeDetailsIntent I want a fee about {eventName}
+GetFeeDetailsIntent I want a charge for {eventName}
+GetFeeDetailsIntent I want a charge about {eventName}
+GetFeeDetailsIntent I need the price for {eventName}
+GetFeeDetailsIntent I need the price about {eventName}
+GetFeeDetailsIntent I need the cost for {eventName}
+GetFeeDetailsIntent I need the cost about {eventName}
+GetFeeDetailsIntent I need the amount for {eventName}
+GetFeeDetailsIntent I need the amount about {eventName}
+GetFeeDetailsIntent I need the fee for {eventName}
+GetFeeDetailsIntent I need the fee about {eventName}
+GetFeeDetailsIntent I need the charge for {eventName}
+GetFeeDetailsIntent I need the charge about {eventName}
+GetFeeDetailsIntent I need a price for {eventName}
+GetFeeDetailsIntent I need a price about {eventName}
+GetFeeDetailsIntent I need a cost for {eventName}
+GetFeeDetailsIntent I need a cost about {eventName}
+GetFeeDetailsIntent I need a amount for {eventName}
+GetFeeDetailsIntent I need a amount about {eventName}
+GetFeeDetailsIntent I need a fee for {eventName}
+GetFeeDetailsIntent I need a fee about {eventName}
+GetFeeDetailsIntent I need a charge for {eventName}
+GetFeeDetailsIntent I need a charge about {eventName}
+
+GetFeeDetailsIntent how much does it cost for {eventName}
+GetFeeDetailsIntent how much will I be charged for {eventName}
+GetFeeDetailsIntent how much will I need to pay for {eventName}
+GetFeeDetailsIntent how much will it cost for {eventName}
+GetFeeDetailsIntent how much will I need for {eventName}
+
+GetFeeDetailsIntent is the price for {eventName}
+GetFeeDetailsIntent is the price about {eventName}
+GetFeeDetailsIntent is the cost for {eventName}
+GetFeeDetailsIntent is the cost about {eventName}
+GetFeeDetailsIntent is the amount for {eventName}
+GetFeeDetailsIntent is the amount about {eventName}
+GetFeeDetailsIntent is the fee for {eventName}
+GetFeeDetailsIntent is the fee about {eventName}
+GetFeeDetailsIntent is the charge for {eventName}
+GetFeeDetailsIntent is the charge about {eventName}
+GetFeeDetailsIntent is a price for {eventName}
+GetFeeDetailsIntent is a price about {eventName}
+GetFeeDetailsIntent is a cost for {eventName}
+GetFeeDetailsIntent is a cost about {eventName}
+GetFeeDetailsIntent is a amount for {eventName}
+GetFeeDetailsIntent is a amount about {eventName}
+GetFeeDetailsIntent is a fee for {eventName}
+GetFeeDetailsIntent is a fee about {eventName}
+GetFeeDetailsIntent is a charge for {eventName}
+GetFeeDetailsIntent is a charge about {eventName}
+
+GetLocationDetailsIntent give me the location for {eventName}
+GetLocationDetailsIntent give me the place for {eventName}
+GetLocationDetailsIntent give me a location for {eventName}
+GetLocationDetailsIntent give me a place for {eventName}
+GetLocationDetailsIntent tell me the location for {eventName}
+GetLocationDetailsIntent tell me the place for {eventName}
+GetLocationDetailsIntent tell me a location for {eventName}
+GetLocationDetailsIntent tell me a place for {eventName}
+
+GetLocationDetailsIntent give me what is the location for {eventName}
+GetLocationDetailsIntent give me what is the place for {eventName}
+GetLocationDetailsIntent give me what is a location for {eventName}
+GetLocationDetailsIntent give me what is a place for {eventName}
+GetLocationDetailsIntent give me what's the location for {eventName}
+GetLocationDetailsIntent give me what's the place for {eventName}
+GetLocationDetailsIntent give me what's a location for {eventName}
+GetLocationDetailsIntent give me what's a place for {eventName}
+GetLocationDetailsIntent tell me what is the location for {eventName}
+GetLocationDetailsIntent tell me what is the place for {eventName}
+GetLocationDetailsIntent tell me what is a location for {eventName}
+GetLocationDetailsIntent tell me what is a place for {eventName}
+GetLocationDetailsIntent tell me what's the location for {eventName}
+GetLocationDetailsIntent tell me what's the place for {eventName}
+GetLocationDetailsIntent tell me what's a location for {eventName}
+GetLocationDetailsIntent tell me what's a place for {eventName}
+
+GetLocationDetailsIntent what is the location for {eventName}
+GetLocationDetailsIntent what is the place for {eventName}
+GetLocationDetailsIntent what is a location for {eventName}
+GetLocationDetailsIntent what is a place for {eventName}
+GetLocationDetailsIntent what's the location for {eventName}
+GetLocationDetailsIntent what's the place for {eventName}
+GetLocationDetailsIntent what's a location for {eventName}
+GetLocationDetailsIntent what's a place for {eventName}
+
+GetLocationDetailsIntent I want the location for {eventName}
+GetLocationDetailsIntent I want the place for {eventName}
+GetLocationDetailsIntent I want a location for {eventName}
+GetLocationDetailsIntent I want a place for {eventName}
+GetLocationDetailsIntent I need the location for {eventName}
+GetLocationDetailsIntent I need the place for {eventName}
+GetLocationDetailsIntent I need a location for {eventName}
+GetLocationDetailsIntent I need a place for {eventName}
+
+GetLocationDetailsIntent a location for {eventName}
+GetLocationDetailsIntent a place for {eventName}
+
+GetLocationDetailsIntent is the location for {eventName}
+GetLocationDetailsIntent is the place for {eventName}
+GetLocationDetailsIntent is a location for {eventName}
+GetLocationDetailsIntent is a place for {eventName}
+
+GetLocationDetailsIntent to the location for {eventName}
+GetLocationDetailsIntent to the place for {eventName}
+GetLocationDetailsIntent to a location for {eventName}
+GetLocationDetailsIntent to a place for {eventName}
+
+LecturesCategoryIntent give me what is scheduled for a lecture
+LecturesCategoryIntent give me what is scheduled for lectures
+LecturesCategoryIntent give me what is scheduled about a lecture
+LecturesCategoryIntent give me what is scheduled about lectures
+LecturesCategoryIntent give me what is happening for a lecture
+LecturesCategoryIntent give me what is happening for lectures
+LecturesCategoryIntent give me what is happening about a lecture
+LecturesCategoryIntent give me what is happening about lectures
+LecturesCategoryIntent give me what's scheduled for a lecture
+LecturesCategoryIntent give me what's scheduled for lectures
+LecturesCategoryIntent give me what's scheduled about a lecture
+LecturesCategoryIntent give me what's scheduled about lectures
+LecturesCategoryIntent give me what's happening for a lecture
+LecturesCategoryIntent give me what's happening for lectures
+LecturesCategoryIntent give me what's happening about a lecture
+LecturesCategoryIntent give me what's happening about lectures
+LecturesCategoryIntent tell me what is scheduled for a lecture
+LecturesCategoryIntent tell me what is scheduled for lectures
+LecturesCategoryIntent tell me what is scheduled about a lecture
+LecturesCategoryIntent tell me what is scheduled about lectures
+LecturesCategoryIntent tell me what is happening for a lecture
+LecturesCategoryIntent tell me what is happening for lectures
+LecturesCategoryIntent tell me what is happening about a lecture
+LecturesCategoryIntent tell me what is happening about lectures
+LecturesCategoryIntent tell me what's scheduled for a lecture
+LecturesCategoryIntent tell me what's scheduled for lectures
+LecturesCategoryIntent tell me what's scheduled about a lecture
+LecturesCategoryIntent tell me what's scheduled about lectures
+LecturesCategoryIntent tell me what's happening for a lecture
+LecturesCategoryIntent tell me what's happening for lectures
+LecturesCategoryIntent tell me what's happening about a lecture
+LecturesCategoryIntent tell me what's happening about lectures
+
+LecturesCategoryIntent give me what is up for a lecture
+LecturesCategoryIntent give me what is up for lectures
+LecturesCategoryIntent give me what is up about a lecture
+LecturesCategoryIntent give me what is up about lectures
+LecturesCategoryIntent give me what is up with a lecture
+LecturesCategoryIntent give me what is up with lectures
+LecturesCategoryIntent give me what's up for a lecture
+LecturesCategoryIntent give me what's up for lectures
+LecturesCategoryIntent give me what's up about a lecture
+LecturesCategoryIntent give me what's up about lectures
+LecturesCategoryIntent give me what's up with a lecture
+LecturesCategoryIntent give me what's up with lectures
+LecturesCategoryIntent tell me what is up for a lecture
+LecturesCategoryIntent tell me what is up for lectures
+LecturesCategoryIntent tell me what is up about a lecture
+LecturesCategoryIntent tell me what is up about lectures
+LecturesCategoryIntent tell me what is up with a lecture
+LecturesCategoryIntent tell me what is up with lectures
+LecturesCategoryIntent tell me what's up for a lecture
+LecturesCategoryIntent tell me what's up for lectures
+LecturesCategoryIntent tell me what's up about a lecture
+LecturesCategoryIntent tell me what's up about lectures
+LecturesCategoryIntent tell me what's up with a lecture
+LecturesCategoryIntent tell me what's up with lectures
+
+LecturesCategoryIntent what is an event for lectures
+LecturesCategoryIntent what is an event about lectures
+LecturesCategoryIntent what is an occasion for lectures
+LecturesCategoryIntent what is an occasion about lectures
+LecturesCategoryIntent what's an event for lectures
+LecturesCategoryIntent what's an event about lectures
+LecturesCategoryIntent what's an occasion for lectures
+LecturesCategoryIntent what's an occasion about lectures
+
+LecturesCategoryIntent I want all the lectures
+LecturesCategoryIntent I need all the lectures
+
+LecturesCategoryIntent an event for lectures
+LecturesCategoryIntent an event about lectures
+LecturesCategoryIntent an occasion for lectures
+LecturesCategoryIntent an occasion about lectures
+
+LecturesCategoryIntent is the for a lecture
+LecturesCategoryIntent is the for lectures
+LecturesCategoryIntent is the about a lecture
+LecturesCategoryIntent is the about lectures
+LecturesCategoryIntent is a for a lecture
+LecturesCategoryIntent is a for lectures
+LecturesCategoryIntent is a about a lecture
+LecturesCategoryIntent is a about lectures
+
+LecturesCategoryIntent to give me a lecture
+LecturesCategoryIntent to tell me a lecture
+
+NextEventIntent give me what is next to do that is fun
+NextEventIntent give me what is next to do that is interesting
+NextEventIntent give me what is next to do that is cool
+NextEventIntent give me what is next to do that's fun
+NextEventIntent give me what is next to do that's interesting
+NextEventIntent give me what is next to do that's cool
+NextEventIntent give me what is next to see that is fun
+NextEventIntent give me what is next to see that is interesting
+NextEventIntent give me what is next to see that is cool
+NextEventIntent give me what is next to see that's fun
+NextEventIntent give me what is next to see that's interesting
+NextEventIntent give me what is next to see that's cool
+NextEventIntent give me what is next to go to that is fun
+NextEventIntent give me what is next to go to that is interesting
+NextEventIntent give me what is next to go to that is cool
+NextEventIntent give me what is next to go to that's fun
+NextEventIntent give me what is next to go to that's interesting
+NextEventIntent give me what is next to go to that's cool
+NextEventIntent give me what's next to do that is fun
+NextEventIntent give me what's next to do that is interesting
+NextEventIntent give me what's next to do that is cool
+NextEventIntent give me what's next to do that's fun
+NextEventIntent give me what's next to do that's interesting
+NextEventIntent give me what's next to do that's cool
+NextEventIntent give me what's next to see that is fun
+NextEventIntent give me what's next to see that is interesting
+NextEventIntent give me what's next to see that is cool
+NextEventIntent give me what's next to see that's fun
+NextEventIntent give me what's next to see that's interesting
+NextEventIntent give me what's next to see that's cool
+NextEventIntent give me what's next to go to that is fun
+NextEventIntent give me what's next to go to that is interesting
+NextEventIntent give me what's next to go to that is cool
+NextEventIntent give me what's next to go to that's fun
+NextEventIntent give me what's next to go to that's interesting
+NextEventIntent give me what's next to go to that's cool
+NextEventIntent tell me what is next to do that is fun
+NextEventIntent tell me what is next to do that is interesting
+NextEventIntent tell me what is next to do that is cool
+NextEventIntent tell me what is next to do that's fun
+NextEventIntent tell me what is next to do that's interesting
+NextEventIntent tell me what is next to do that's cool
+NextEventIntent tell me what is next to see that is fun
+NextEventIntent tell me what is next to see that is interesting
+NextEventIntent tell me what is next to see that is cool
+NextEventIntent tell me what is next to see that's fun
+NextEventIntent tell me what is next to see that's interesting
+NextEventIntent tell me what is next to see that's cool
+NextEventIntent tell me what is next to go to that is fun
+NextEventIntent tell me what is next to go to that is interesting
+NextEventIntent tell me what is next to go to that is cool
+NextEventIntent tell me what is next to go to that's fun
+NextEventIntent tell me what is next to go to that's interesting
+NextEventIntent tell me what is next to go to that's cool
+NextEventIntent tell me what's next to do that is fun
+NextEventIntent tell me what's next to do that is interesting
+NextEventIntent tell me what's next to do that is cool
+NextEventIntent tell me what's next to do that's fun
+NextEventIntent tell me what's next to do that's interesting
+NextEventIntent tell me what's next to do that's cool
+NextEventIntent tell me what's next to see that is fun
+NextEventIntent tell me what's next to see that is interesting
+NextEventIntent tell me what's next to see that is cool
+NextEventIntent tell me what's next to see that's fun
+NextEventIntent tell me what's next to see that's interesting
+NextEventIntent tell me what's next to see that's cool
+NextEventIntent tell me what's next to go to that is fun
+NextEventIntent tell me what's next to go to that is interesting
+NextEventIntent tell me what's next to go to that is cool
+NextEventIntent tell me what's next to go to that's fun
+NextEventIntent tell me what's next to go to that's interesting
+NextEventIntent tell me what's next to go to that's cool
+
+NextEventIntent give me the next event
+NextEventIntent give me the next thing
+NextEventIntent give me the next thing to do
+NextEventIntent give me the most recent event
+NextEventIntent give me the most recent thing
+NextEventIntent give me the most recent thing to do
+NextEventIntent give me the upcoming event
+NextEventIntent give me the upcoming thing
+NextEventIntent give me the upcoming thing to do
+NextEventIntent give me the newest event
+NextEventIntent give me the newest thing
+NextEventIntent give me the newest thing to do
+NextEventIntent give me the latest event
+NextEventIntent give me the latest thing
+NextEventIntent give me the latest thing to do
+NextEventIntent tell me the next event
+NextEventIntent tell me the next thing
+NextEventIntent tell me the next thing to do
+NextEventIntent tell me the most recent event
+NextEventIntent tell me the most recent thing
+NextEventIntent tell me the most recent thing to do
+NextEventIntent tell me the upcoming event
+NextEventIntent tell me the upcoming thing
+NextEventIntent tell me the upcoming thing to do
+NextEventIntent tell me the newest event
+NextEventIntent tell me the newest thing
+NextEventIntent tell me the newest thing to do
+NextEventIntent tell me the latest event
+NextEventIntent tell me the latest thing
+NextEventIntent tell me the latest thing to do
+
+NextEventIntent something that is next
+NextEventIntent something that's next
+NextEventIntent an event that is next
+NextEventIntent an event that's next
+
+NextEventIntent what is next
+NextEventIntent what's next
+
+NextEventIntent what is next for the events calendar
+NextEventIntent what is next for the s.s.u. calendar
+NextEventIntent what is next for the sonoma state calendar
+NextEventIntent what is next for the sonoma state university calendar
+NextEventIntent what is next on the events calendar
+NextEventIntent what is next on the s.s.u. calendar
+NextEventIntent what is next on the sonoma state calendar
+NextEventIntent what is next on the sonoma state university calendar
+NextEventIntent what's next for the events calendar
+NextEventIntent what's next for the s.s.u. calendar
+NextEventIntent what's next for the sonoma state calendar
+NextEventIntent what's next for the sonoma state university calendar
+NextEventIntent what's next on the events calendar
+NextEventIntent what's next on the s.s.u. calendar
+NextEventIntent what's next on the sonoma state calendar
+NextEventIntent what's next on the sonoma state university calendar
+
+NextEventIntent I want a next
+NextEventIntent I want the next
+NextEventIntent I need a next
+NextEventIntent I need the next
+
+NextEventIntent a thing that is next
+NextEventIntent a thing that's next
+NextEventIntent a thing to do that is next
+NextEventIntent a thing to do that's next
+
+NextEventIntent an event that is next
+NextEventIntent an event that's next
+NextEventIntent an occasion that is next
+NextEventIntent an occasion that's next
+
+NextEventIntent is happening next for the events calendar
+NextEventIntent is happening next for the s.s.u. calendar
+NextEventIntent is happening next for the sonoma state calendar
+NextEventIntent is happening next for the sonoma state university calendar
+NextEventIntent is happening next on the events calendar
+NextEventIntent is happening next on the s.s.u. calendar
+NextEventIntent is happening next on the sonoma state calendar
+NextEventIntent is happening next on the sonoma state university calendar
+NextEventIntent is scheduled next for the events calendar
+NextEventIntent is scheduled next for the s.s.u. calendar
+NextEventIntent is scheduled next for the sonoma state calendar
+NextEventIntent is scheduled next for the sonoma state university calendar
+NextEventIntent is scheduled next on the events calendar
+NextEventIntent is scheduled next on the s.s.u. calendar
+NextEventIntent is scheduled next on the sonoma state calendar
+NextEventIntent is scheduled next on the sonoma state university calendar
+
+NextEventIntent to locate something that is happening next
+NextEventIntent to locate something that is scheduled next
+NextEventIntent to locate something that's happening next
+NextEventIntent to locate something that's scheduled next
+NextEventIntent to locate a thing that is happening next
+NextEventIntent to locate a thing that is scheduled next
+NextEventIntent to locate a thing that's happening next
+NextEventIntent to locate a thing that's scheduled next
+NextEventIntent to locate something to do that is happening next
+NextEventIntent to locate something to do that is scheduled next
+NextEventIntent to locate something to do that's happening next
+NextEventIntent to locate something to do that's scheduled next
+NextEventIntent to locate something fun that is happening next
+NextEventIntent to locate something fun that is scheduled next
+NextEventIntent to locate something fun that's happening next
+NextEventIntent to locate something fun that's scheduled next
+NextEventIntent to find something that is happening next
+NextEventIntent to find something that is scheduled next
+NextEventIntent to find something that's happening next
+NextEventIntent to find something that's scheduled next
+NextEventIntent to find a thing that is happening next
+NextEventIntent to find a thing that is scheduled next
+NextEventIntent to find a thing that's happening next
+NextEventIntent to find a thing that's scheduled next
+NextEventIntent to find something to do that is happening next
+NextEventIntent to find something to do that is scheduled next
+NextEventIntent to find something to do that's happening next
+NextEventIntent to find something to do that's scheduled next
+NextEventIntent to find something fun that is happening next
+NextEventIntent to find something fun that is scheduled next
+NextEventIntent to find something fun that's happening next
+NextEventIntent to find something fun that's scheduled next
+
+SportsCategoryIntent give me what is scheduled for sports
+SportsCategoryIntent give me what is scheduled for althetics
+SportsCategoryIntent give me what is scheduled for intramural sports
+SportsCategoryIntent give me what is scheduled for intramural athletics
+SportsCategoryIntent give me what is scheduled about sports
+SportsCategoryIntent give me what is scheduled about althetics
+SportsCategoryIntent give me what is scheduled about intramural sports
+SportsCategoryIntent give me what is scheduled about intramural athletics
+SportsCategoryIntent give me what is happening for sports
+SportsCategoryIntent give me what is happening for althetics
+SportsCategoryIntent give me what is happening for intramural sports
+SportsCategoryIntent give me what is happening for intramural athletics
+SportsCategoryIntent give me what is happening about sports
+SportsCategoryIntent give me what is happening about althetics
+SportsCategoryIntent give me what is happening about intramural sports
+SportsCategoryIntent give me what is happening about intramural athletics
+SportsCategoryIntent give me what's scheduled for sports
+SportsCategoryIntent give me what's scheduled for althetics
+SportsCategoryIntent give me what's scheduled for intramural sports
+SportsCategoryIntent give me what's scheduled for intramural athletics
+SportsCategoryIntent give me what's scheduled about sports
+SportsCategoryIntent give me what's scheduled about althetics
+SportsCategoryIntent give me what's scheduled about intramural sports
+SportsCategoryIntent give me what's scheduled about intramural athletics
+SportsCategoryIntent give me what's happening for sports
+SportsCategoryIntent give me what's happening for althetics
+SportsCategoryIntent give me what's happening for intramural sports
+SportsCategoryIntent give me what's happening for intramural athletics
+SportsCategoryIntent give me what's happening about sports
+SportsCategoryIntent give me what's happening about althetics
+SportsCategoryIntent give me what's happening about intramural sports
+SportsCategoryIntent give me what's happening about intramural athletics
+SportsCategoryIntent tell me what is scheduled for sports
+SportsCategoryIntent tell me what is scheduled for althetics
+SportsCategoryIntent tell me what is scheduled for intramural sports
+SportsCategoryIntent tell me what is scheduled for intramural athletics
+SportsCategoryIntent tell me what is scheduled about sports
+SportsCategoryIntent tell me what is scheduled about althetics
+SportsCategoryIntent tell me what is scheduled about intramural sports
+SportsCategoryIntent tell me what is scheduled about intramural athletics
+SportsCategoryIntent tell me what is happening for sports
+SportsCategoryIntent tell me what is happening for althetics
+SportsCategoryIntent tell me what is happening for intramural sports
+SportsCategoryIntent tell me what is happening for intramural athletics
+SportsCategoryIntent tell me what is happening about sports
+SportsCategoryIntent tell me what is happening about althetics
+SportsCategoryIntent tell me what is happening about intramural sports
+SportsCategoryIntent tell me what is happening about intramural athletics
+SportsCategoryIntent tell me what's scheduled for sports
+SportsCategoryIntent tell me what's scheduled for althetics
+SportsCategoryIntent tell me what's scheduled for intramural sports
+SportsCategoryIntent tell me what's scheduled for intramural athletics
+SportsCategoryIntent tell me what's scheduled about sports
+SportsCategoryIntent tell me what's scheduled about althetics
+SportsCategoryIntent tell me what's scheduled about intramural sports
+SportsCategoryIntent tell me what's scheduled about intramural athletics
+SportsCategoryIntent tell me what's happening for sports
+SportsCategoryIntent tell me what's happening for althetics
+SportsCategoryIntent tell me what's happening for intramural sports
+SportsCategoryIntent tell me what's happening for intramural athletics
+SportsCategoryIntent tell me what's happening about sports
+SportsCategoryIntent tell me what's happening about althetics
+SportsCategoryIntent tell me what's happening about intramural sports
+SportsCategoryIntent tell me what's happening about intramural athletics
+
+SportsCategoryIntent give me what is up for sports
+SportsCategoryIntent give me what is up for althetics
+SportsCategoryIntent give me what is up for intramural sports
+SportsCategoryIntent give me what is up for intramural athletics
+SportsCategoryIntent give me what is up about sports
+SportsCategoryIntent give me what is up about althetics
+SportsCategoryIntent give me what is up about intramural sports
+SportsCategoryIntent give me what is up about intramural athletics
+SportsCategoryIntent give me what is up with sports
+SportsCategoryIntent give me what is up with althetics
+SportsCategoryIntent give me what is up with intramural sports
+SportsCategoryIntent give me what is up with intramural athletics
+SportsCategoryIntent give me what's up for sports
+SportsCategoryIntent give me what's up for althetics
+SportsCategoryIntent give me what's up for intramural sports
+SportsCategoryIntent give me what's up for intramural athletics
+SportsCategoryIntent give me what's up about sports
+SportsCategoryIntent give me what's up about althetics
+SportsCategoryIntent give me what's up about intramural sports
+SportsCategoryIntent give me what's up about intramural athletics
+SportsCategoryIntent give me what's up with sports
+SportsCategoryIntent give me what's up with althetics
+SportsCategoryIntent give me what's up with intramural sports
+SportsCategoryIntent give me what's up with intramural athletics
+SportsCategoryIntent tell me what is up for sports
+SportsCategoryIntent tell me what is up for althetics
+SportsCategoryIntent tell me what is up for intramural sports
+SportsCategoryIntent tell me what is up for intramural athletics
+SportsCategoryIntent tell me what is up about sports
+SportsCategoryIntent tell me what is up about althetics
+SportsCategoryIntent tell me what is up about intramural sports
+SportsCategoryIntent tell me what is up about intramural athletics
+SportsCategoryIntent tell me what is up with sports
+SportsCategoryIntent tell me what is up with althetics
+SportsCategoryIntent tell me what is up with intramural sports
+SportsCategoryIntent tell me what is up with intramural athletics
+SportsCategoryIntent tell me what's up for sports
+SportsCategoryIntent tell me what's up for althetics
+SportsCategoryIntent tell me what's up for intramural sports
+SportsCategoryIntent tell me what's up for intramural athletics
+SportsCategoryIntent tell me what's up about sports
+SportsCategoryIntent tell me what's up about althetics
+SportsCategoryIntent tell me what's up about intramural sports
+SportsCategoryIntent tell me what's up about intramural athletics
+SportsCategoryIntent tell me what's up with sports
+SportsCategoryIntent tell me what's up with althetics
+SportsCategoryIntent tell me what's up with intramural sports
+SportsCategoryIntent tell me what's up with intramural athletics
+
+SportsCategoryIntent what is an event for sports
+SportsCategoryIntent what is an event for althetics
+SportsCategoryIntent what is an event for intramural sports
+SportsCategoryIntent what is an event for intramural athletics
+SportsCategoryIntent what is an event about sports
+SportsCategoryIntent what is an event about althetics
+SportsCategoryIntent what is an event about intramural sports
+SportsCategoryIntent what is an event about intramural athletics
+SportsCategoryIntent what is an occasion for sports
+SportsCategoryIntent what is an occasion for althetics
+SportsCategoryIntent what is an occasion for intramural sports
+SportsCategoryIntent what is an occasion for intramural athletics
+SportsCategoryIntent what is an occasion about sports
+SportsCategoryIntent what is an occasion about althetics
+SportsCategoryIntent what is an occasion about intramural sports
+SportsCategoryIntent what is an occasion about intramural athletics
+SportsCategoryIntent what's an event for sports
+SportsCategoryIntent what's an event for althetics
+SportsCategoryIntent what's an event for intramural sports
+SportsCategoryIntent what's an event for intramural athletics
+SportsCategoryIntent what's an event about sports
+SportsCategoryIntent what's an event about althetics
+SportsCategoryIntent what's an event about intramural sports
+SportsCategoryIntent what's an event about intramural athletics
+SportsCategoryIntent what's an occasion for sports
+SportsCategoryIntent what's an occasion for althetics
+SportsCategoryIntent what's an occasion for intramural sports
+SportsCategoryIntent what's an occasion for intramural athletics
+SportsCategoryIntent what's an occasion about sports
+SportsCategoryIntent what's an occasion about althetics
+SportsCategoryIntent what's an occasion about intramural sports
+SportsCategoryIntent what's an occasion about intramural athletics
+
+SportsCategoryIntent I want all the events for sports
+SportsCategoryIntent I want all the events for althetics
+SportsCategoryIntent I want all the events for intramural sports
+SportsCategoryIntent I want all the events for intramural athletics
+SportsCategoryIntent I want all the events about sports
+SportsCategoryIntent I want all the events about althetics
+SportsCategoryIntent I want all the events about intramural sports
+SportsCategoryIntent I want all the events about intramural athletics
+SportsCategoryIntent I want all the occasions for sports
+SportsCategoryIntent I want all the occasions for althetics
+SportsCategoryIntent I want all the occasions for intramural sports
+SportsCategoryIntent I want all the occasions for intramural athletics
+SportsCategoryIntent I want all the occasions about sports
+SportsCategoryIntent I want all the occasions about althetics
+SportsCategoryIntent I want all the occasions about intramural sports
+SportsCategoryIntent I want all the occasions about intramural athletics
+SportsCategoryIntent I need all the events for sports
+SportsCategoryIntent I need all the events for althetics
+SportsCategoryIntent I need all the events for intramural sports
+SportsCategoryIntent I need all the events for intramural athletics
+SportsCategoryIntent I need all the events about sports
+SportsCategoryIntent I need all the events about althetics
+SportsCategoryIntent I need all the events about intramural sports
+SportsCategoryIntent I need all the events about intramural athletics
+SportsCategoryIntent I need all the occasions for sports
+SportsCategoryIntent I need all the occasions for althetics
+SportsCategoryIntent I need all the occasions for intramural sports
+SportsCategoryIntent I need all the occasions for intramural athletics
+SportsCategoryIntent I need all the occasions about sports
+SportsCategoryIntent I need all the occasions about althetics
+SportsCategoryIntent I need all the occasions about intramural sports
+SportsCategoryIntent I need all the occasions about intramural athletics
+
+SportsCategoryIntent an event for sports
+SportsCategoryIntent an event for althetics
+SportsCategoryIntent an event for intramural sports
+SportsCategoryIntent an event for intramural athletics
+SportsCategoryIntent an event about sports
+SportsCategoryIntent an event about althetics
+SportsCategoryIntent an event about intramural sports
+SportsCategoryIntent an event about intramural athletics
+SportsCategoryIntent an occasion for sports
+SportsCategoryIntent an occasion for althetics
+SportsCategoryIntent an occasion for intramural sports
+SportsCategoryIntent an occasion for intramural athletics
+SportsCategoryIntent an occasion about sports
+SportsCategoryIntent an occasion about althetics
+SportsCategoryIntent an occasion about intramural sports
+SportsCategoryIntent an occasion about intramural athletics
+
+SportsCategoryIntent is the for sports event
+SportsCategoryIntent is the for althetics event
+SportsCategoryIntent is the for intramural sports event
+SportsCategoryIntent is the for intramural athletics event
+SportsCategoryIntent is the about sports event
+SportsCategoryIntent is the about althetics event
+SportsCategoryIntent is the about intramural sports event
+SportsCategoryIntent is the about intramural athletics event
+SportsCategoryIntent is a for sports event
+SportsCategoryIntent is a for althetics event
+SportsCategoryIntent is a for intramural sports event
+SportsCategoryIntent is a for intramural athletics event
+SportsCategoryIntent is a about sports event
+SportsCategoryIntent is a about althetics event
+SportsCategoryIntent is a about intramural sports event
+SportsCategoryIntent is a about intramural athletics event
+
+SportsCategoryIntent to give me all the events for sports
+SportsCategoryIntent to give me all the events for althetics
+SportsCategoryIntent to give me all the events for intramural sports
+SportsCategoryIntent to give me all the events for intramural athletics
+SportsCategoryIntent to give me all the events about sports
+SportsCategoryIntent to give me all the events about althetics
+SportsCategoryIntent to give me all the events about intramural sports
+SportsCategoryIntent to give me all the events about intramural athletics
+SportsCategoryIntent to give me all the occasions for sports
+SportsCategoryIntent to give me all the occasions for althetics
+SportsCategoryIntent to give me all the occasions for intramural sports
+SportsCategoryIntent to give me all the occasions for intramural athletics
+SportsCategoryIntent to give me all the occasions about sports
+SportsCategoryIntent to give me all the occasions about althetics
+SportsCategoryIntent to give me all the occasions about intramural sports
+SportsCategoryIntent to give me all the occasions about intramural athletics
+SportsCategoryIntent to tell me all the events for sports
+SportsCategoryIntent to tell me all the events for althetics
+SportsCategoryIntent to tell me all the events for intramural sports
+SportsCategoryIntent to tell me all the events for intramural athletics
+SportsCategoryIntent to tell me all the events about sports
+SportsCategoryIntent to tell me all the events about althetics
+SportsCategoryIntent to tell me all the events about intramural sports
+SportsCategoryIntent to tell me all the events about intramural athletics
+SportsCategoryIntent to tell me all the occasions for sports
+SportsCategoryIntent to tell me all the occasions for althetics
+SportsCategoryIntent to tell me all the occasions for intramural sports
+SportsCategoryIntent to tell me all the occasions for intramural athletics
+SportsCategoryIntent to tell me all the occasions about sports
+SportsCategoryIntent to tell me all the occasions about althetics
+SportsCategoryIntent to tell me all the occasions about intramural sports
+SportsCategoryIntent to tell me all the occasions about intramural athletics
+
