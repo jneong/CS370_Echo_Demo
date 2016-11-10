@@ -183,6 +183,27 @@ public class CalendarHelper {
 
 		return responseBuilder.toString();
 	}
+	
+	public static String listEventsWithDays(final String format, final Map<String, Vector<Object>> events){
+		String dateInProgressSsml = CalendarHelper.formatDateSsml((Timestamp) events.get("start").get(0));
+		String eventDateSsml;
+		String eventList = "On " + dateInProgressSsml + " there is ";
+		
+		for(int i = 0; i < events.get("start").size(); i++){
+			eventDateSsml = CalendarHelper.formatDateSsml((Timestamp) events.get("start").get(i));
+			if(!eventDateSsml.equals(dateInProgressSsml)){
+				dateInProgressSsml = eventDateSsml;
+				eventList += ". On " + dateInProgressSsml + " there is ";
+			} else{
+				eventList += ", ";
+			}
+			
+			eventList += CalendarHelper.formatEventSsml(format, events, i);
+		}
+		
+		eventList += ".";
+		return eventList;
+	}
 
 
 	public static Map<String, Integer> extractEventIds(Map<String, Vector<Object>> events, int numEvents) {
