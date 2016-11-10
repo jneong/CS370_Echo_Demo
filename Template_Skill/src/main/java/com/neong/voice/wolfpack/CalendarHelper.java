@@ -139,6 +139,25 @@ public class CalendarHelper {
 	public static String replaceUnspeakables(final String ssml) {
 		return ssml.replaceAll("&", " and ");
 	}
+	
+	
+	public static String replacePartsOfNames(final String ssml){
+		String newSsml =  ssml;
+		newSsml =  newSsml.replaceAll("AOii", "Alpha Omnicron Pi");
+		newSsml =  newSsml.replaceAll("KDZ", "Kappa Delta Zeta");
+		newSsml =  newSsml.replaceAll("S@S", "Sundays at Schroeder");
+		newSsml =  newSsml.replaceAll("GPhi", "Gamma Phi");
+		newSsml =  newSsml.replaceAll("IMS", "Intermural");
+		newSsml =  newSsml.replaceAll("MGC", "Multicultural Greek Council");
+		newSsml =  newSsml.replaceAll("FAASU", "Filipino American Association");
+		newSsml =  newSsml.replaceAll("AGD", "Alpha Gamma Delta");
+		newSsml =  newSsml.replaceAll("IFC", "Internfraternity Council");
+		newSsml =  newSsml.replaceAll("IEW", "International Education Week");
+		newSsml =  newSsml.replaceAll("ADPi", "Alpha Delta Pi");
+		newSsml =  newSsml.replaceAll("W.I.T.S.", "World Instructor Training Schools");
+		
+		return newSsml;
+	}
 
 
 	public static String formatDateSsml(final Timestamp when) {
