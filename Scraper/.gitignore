@@ -1,0 +1,11 @@
+bin/
+include/
+local/
+lib/
+lib64/
+share/
+tmp/
+*.pyc
+pip-selfcheck.json
+secrets.py
+Scraper.zip
