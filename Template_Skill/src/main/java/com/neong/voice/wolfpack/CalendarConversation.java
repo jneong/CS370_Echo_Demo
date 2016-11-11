@@ -33,14 +33,12 @@ public class CalendarConversation extends Conversation {
 	private final static String INTENT_GETLOCATIONDETAILS = "GetLocationDetailsIntent";
 	private final static String INTENT_GETENDTIME = "GetEndTimeIntent";
 	private final static String INTENT_ALLCATEGORY = "AllCategoryIntent";
-	private final static String INTENT_SPORTSCATEGORY = "SportsCategoryIntent";
-	private final static String INTENT_ARTSANDENTERTAINMENTCATEGORY = "ArtsAndEntertainmentCategoryIntent";
-	private final static String INTENT_LECTURESCATEGORY = "LecturesCategoryIntent";
-	private final static String INTENT_CLUBSCATEGORY = "ClubsCategoryIntent";
+	private final static String INTENT_SPECIFICCATEGORY = "GetSpecificCategoryIntent";
 
 	// Slot names (from the intent schema)
 	private final static String SLOT_EVENT_NAME = "eventName";
 	private final static String SLOT_AMAZON_DATE = "date";
+	private final static String SLOT_CATEGORY = "category";
 
 	// Session attribute names
 	private final static String ATTRIB_STATEID = "stateId";
@@ -71,10 +69,7 @@ public class CalendarConversation extends Conversation {
 		supportedIntentNames.add(INTENT_GETLOCATIONDETAILS);
 		supportedIntentNames.add(INTENT_GETENDTIME);
 		supportedIntentNames.add(INTENT_ALLCATEGORY);
-		supportedIntentNames.add(INTENT_SPORTSCATEGORY);
-		supportedIntentNames.add(INTENT_ARTSANDENTERTAINMENTCATEGORY);
-		supportedIntentNames.add(INTENT_LECTURESCATEGORY);
-		supportedIntentNames.add(INTENT_CLUBSCATEGORY);
+		supportedIntentNames.add(INTENT_SPECIFICCATEGORY);
 	}
 
 
@@ -115,6 +110,7 @@ public class CalendarConversation extends Conversation {
 	/**
 	 * Dispatch intent request handlers for state-sensitive intents
 	 */
+
 	private SpeechletResponse handleStateSensitiveIntents(IntentRequest intentReq, Session session) {
 		SpeechletResponse response;
 		SessionState state;
@@ -145,6 +141,7 @@ public class CalendarConversation extends Conversation {
 	/**
 	 * Dispatch detail intents
 	 */
+
 	private SpeechletResponse handleDetailIntents(IntentRequest intentReq, Session session) {
 		SpeechletResponse response;
 		String intentName = intentReq.getIntent().getName();
@@ -174,6 +171,7 @@ public class CalendarConversation extends Conversation {
 	/**
 	 * Map narrow-down intents by category
 	 */
+
 	private SpeechletResponse handleNarrowDownIntents(IntentRequest intentReq, Session session) {
 		String intentName = intentReq.getIntent().getName();
 		String category;
@@ -183,7 +181,7 @@ public class CalendarConversation extends Conversation {
 			category = "all";
 			break;
 
-		case INTENT_SPORTSCATEGORY:
+		case INTENT_SPECIFICCATEGORY:
 			category = "Athletics";
 			break;
 
@@ -206,6 +204,32 @@ public class CalendarConversation extends Conversation {
 
 		return handleNarrowDownIntent(intentReq, session, category);
 	}
+
+
+	/**
+	 * Map categories to the category slot
+	 */
+	private SpeechletResponse handleGetSpecificCategoryIntent(IntentRequest intentReq, Session session) {
+		String category = intentReq.getIntent().getName();
+		String categoryUserResponse;
+
+		switch (category) {
+		case INTENT_ALLCATEGORY:
+			categoryUserResponse = "All";
+			break;
+
+		case INTENT_SPECIFICCATEGORY:
+			categoryUserResponse = "Athletics";
+			break;
+
+		default:
+			// TODO: Should inform the user what the categories are
+			return newTellResponse("Sorry, I'm not quite sure what you meant.", false);
+		}
+
+		return handleNarrowDownIntent(intentReq, session, category);
+	}
+
 
 
 	private SpeechletResponse handleNextEventIntent(IntentRequest intentReq, Session session) {

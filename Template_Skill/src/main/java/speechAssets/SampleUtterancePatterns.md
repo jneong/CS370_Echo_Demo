@@ -21,9 +21,9 @@ GetFeeDetailsIntent How much does (it cost to go to|it cost to attend|tickets fo
 GetLocationDetailsIntent (Where is|Where's) {eventName} (at|going to be|happening|located|located at|going on|being held|being held at)
 GetLocationDetailsIntent (Where's|where is) {eventName}
 GetLocationDetailsIntent Where will {eventName} be (at|happening|located|located at|going on|held|held at)
-LecturesCategoryIntent (lectures|talks|speeches|colloquiums|teachings|the lecture category|talks and lessons)
+LecturesCategoryIntent (lectures|talks|speeches|colloquiums|the lecture category|talks and lessons)
 LecturesCategoryIntent (tell me about|I want to hear about|lets do|lets hear about|how about) (lectures|talks|speeches|colloquiums|teachings|the lecture category|talks and lessons)
-NextEventIntent (the next|the next upcoming) (|big) (thing|event|party till you drop|fun time|good time|fun thing|good thing|show|gathering|occasion|affair|shindig)
+NextEventIntent (|the next) (|big) (thing|event|fun thing|show)
 NextEventIntent (what is|what's) (the next event|coming up|the next event on the calendar)
 NextEventIntent something (to do|fun) (|that's|that is) (soon|coming up)
 SportsCategoryIntent (tell me about|I want to hear about|lets do|lets hear about|how about) (the sports category|sports|sports stuff|sports games|sport events|sporting events|athletics|athletic events|games|sports game events|matches)
